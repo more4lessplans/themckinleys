@@ -3,209 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exploring the intersection of Truth and Love through the life of Jesus Christ.">
+    <meta name="author" content="The McKinleys">
     <title>Jesus Loves You | Grace and Truth</title>
+
+    <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/50/000000/cross.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --apple-black: #1d1d1f;
             --apple-gray: #86868b;
-            --tesla-red: #e82127; /* Used very sparingly for impact */
-            --bg-soft: #f5f5f7;
             --white: #ffffff;
+            --animation-speed: 0.8s;
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
             color: var(--apple-black);
             background-color: var(--white);
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
         .page-wrapper {
-            /* Your custom background preference integrated as a subtle overlay */
-            background: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)), 
+            background: linear-gradient(rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.96)), 
                         url('main.png');
             background-size: cover;
             background-attachment: fixed;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .nav-minimal {
-            padding: 30px;
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all var(--animation-speed) cubic-bezier(0.2, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        nav {
+            padding: 40px 0;
             text-align: center;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
             color: var(--apple-gray);
         }
 
-        .container {
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
         header {
             text-align: center;
-            padding: 100px 0 80px;
+            padding: 10vh 0;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            margin: 0;
+            font-size: clamp(2.5rem, 10vw, 4.5rem);
             font-weight: 700;
-            letter-spacing: -1px;
+            margin: 0;
+            letter-spacing: -0.02em;
         }
 
         .hero-subtext {
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
             color: var(--apple-gray);
             font-weight: 300;
             margin-top: 20px;
-            line-height: 1.4;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .section {
-            margin-bottom: 120px;
-        }
-
-        .bible-cta {
+        .cta-card {
             background: var(--apple-black);
             color: var(--white);
             padding: 80px 40px;
-            border-radius: 20px;
+            border-radius: 30px;
             text-align: center;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 100px;
         }
 
-        .bible-cta:hover {
-            transform: scale(1.01);
-        }
-
-        .btn-apple {
+        .btn-link {
+            display: inline-block;
             background: var(--white);
             color: var(--apple-black);
-            padding: 16px 32px;
-            border-radius: 30px;
+            padding: 18px 45px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            display: inline-block;
             margin-top: 30px;
-            transition: opacity 0.2s;
+            transition: transform 0.3s ease;
         }
 
-        .btn-apple:hover {
-            opacity: 0.9;
-        }
+        .btn-link:hover { transform: scale(1.05); }
 
-        .grid {
+        /* Symmetrical 6-Grid Layout */
+        .resource-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr); 
             gap: 60px;
-            margin-top: 40px;
+            margin-bottom: 120px;
         }
 
-        h2 {
-            font-size: 2rem;
-            font-weight: 600;
+        .resource-group h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--apple-gray);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 15px;
             margin-bottom: 20px;
         }
 
         .resource-item {
-            border-top: 1px solid #e5e5e5;
-            padding: 20px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 12px 0;
             text-decoration: none;
-            color: inherit;
-            transition: color 0.2s;
+            color: var(--apple-black);
+            font-size: 1.05rem;
+            transition: color 0.3s ease;
+        }
+
+        .resource-item span.arrow {
+            transition: transform 0.3s ease;
+            font-weight: 300;
+            opacity: 0.6;
         }
 
         .resource-item:hover {
             color: var(--apple-gray);
         }
 
-        .tag {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--apple-gray);
-            margin-bottom: 10px;
-            display: block;
+        .resource-item:hover span.arrow {
+            transform: translateX(8px);
+            opacity: 1;
         }
 
         footer {
-            padding: 60px 0;
+            padding: 100px 0 60px;
             text-align: center;
             border-top: 1px solid #f2f2f2;
             color: var(--apple-gray);
             font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
+        .contact-link {
+            color: var(--apple-black);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        @media (max-width: 900px) {
+            .resource-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .resource-grid { grid-template-columns: 1fr; }
             h1 { font-size: 2.5rem; }
-            .grid { grid-template-columns: 1fr; }
+            .resource-grid { gap: 40px; }
         }
     </style>
 </head>
 <body>
 
 <div class="page-wrapper">
-    <div class="nav-minimal">Solus Christus • Sola Gratia • Sola Fide</div>
+    <nav class="reveal">Solus Christus • Sola Gratia • Sola Fide</nav>
 
     <div class="container">
-        <header>
+        <header class="reveal">
             <h1>Jesus Loves You!</h1>
             <p class="hero-subtext">He wants your heart! So much so that he died for you!!</p>
         </header>
 
-        <section class="section">
-            <div class="bible-cta">
-                <span class="tag" style="color: #86868b;">The Primary Source</span>
-                <h2 style="color: white; margin-top: 10px;">Encounter the Word</h2>
-                <p style="max-width: 500px; margin: 0 auto; opacity: 0.8;">The beauty of the Gospel is best seen in the person of Jesus. We invite you to read the account of John and see how Truth and Love were perfectly embodied.</p>
-                <a href="https://www.biblegateway.com/passage/?search=John+1&version=ESV" target="_blank" class="btn-apple">Read the Gospel of John</a>
+        <section class="cta-card reveal">
+            <h2 style="font-size: 2.2rem; color: white;">The Gospel of John</h2>
+            <p style="opacity: 0.8; max-width: 500px; margin: 20px auto;">The ultimate resource for knowing Truth and Love is the life of Jesus. Read the eyewitness account.</p>
+            <a href="https://www.biblegateway.com/passage/?search=John+1&version=ESV" target="_blank" class="btn-link">Begin Reading</a>
+        </section>
+
+        <div class="resource-grid">
+            <div class="resource-group reveal">
+                <h3>Reason</h3>
+                <a href="#" class="resource-item">The Historical Jesus <span class="arrow">→</span></a>
+                <a href="#" class="resource-item">Evidence for Faith <span class="arrow">→</span></a>
             </div>
-        </section>
-
-        <section class="section">
-            <div class="grid">
-                <div>
-                    <span class="tag">Reasoned Faith</span>
-                    <h2>Thinking Clearly <br>About God</h2>
-                    <p>Worshiping God with the mind is a fundamental calling. Explore the historical and philosophical foundations of the Christian faith.</p>
-                    
-                    <a href="#" class="resource-item"><span>Historical Evidence for the Cross</span> <span>→</span></a>
-                    <a href="#" class="resource-item"><span>Faith and Modern Science</span> <span>→</span></a>
-                    <a href="#" class="resource-item"><span>The Logical Necessity of God</span> <span>→</span></a>
-                </div>
-                <div>
-                    <span class="tag">The Universal Church</span>
-                    <h2>Grace and <br>Commonality</h2>
-                    <p>Rooted in the great Reformers yet reaching out to the whole Body of Christ, we seek to love our neighbors as He loved us.</p>
-                    
-                    <a href="#" class="resource-item"><span>Why Grace Changes Everything</span> <span>→</span></a>
-                    <a href="#" class="resource-item"><span>Love in a Divided Culture</span> <span>→</span></a>
-                    <a href="#" class="resource-item"><span>Understanding the Gospel of Peace</span> <span>→</span></a>
-                </div>
+            <div class="resource-group reveal">
+                <h3>Science</h3>
+                <a href="#" class="resource-item">Cosmos & Creator <span class="arrow">→</span></a>
+                <a href="#" class="resource-item">Biology & Design <span class="arrow">→</span></a>
             </div>
-        </section>
+            <div class="resource-group reveal">
+                <h3>The Gospel</h3>
+                <a href="#" class="resource-item">What is Grace? <span class="arrow">→</span></a>
+                <a href="#" class="resource-item">Meaning of the Cross <span class="arrow">→</span></a>
+            </div>
+            <div class="resource-group reveal">
+                <h3>Hard Questions</h3>
+                <a href="#" class="resource-item">Why Suffering? <span class="arrow">→</span></a>
+                <a href="#" class="resource-item">Christianity & Culture <span class="arrow">→</span></a>
+            </div>
+            <div class="resource-group reveal">
+                <h3>Reformed Roots</h3>
+                <a href="#" class="resource-item">The Five Solas <span class="arrow">→</span></a>
+                <a href="#" class="resource-item">The Word Alone <span class="arrow">→</span></a>
+            </div>
+            <div class="resource-group reveal">
+                <h3>Universal Body</h3>
+                <a href="#" class="resource-item">The Global Church <span class="arrow">→</span></a>
+                <a href="#" class="resource-item">Walking in Love <span class="arrow">→</span></a>
+            </div>
+        </div>
 
-        <section class="section" style="text-align: center; padding: 40px 0;">
-            <p style="font-style: italic; font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--apple-gray);">
-                "The heart has its reasons which reason knows nothing of."
-            </p>
-        </section>
-
-        <footer>
+        <footer class="reveal">
             <p>Seeking Truth. Walking in Love.</p>
+            <p style="margin-top: 15px;">
+                If you want to talk about this, email 
+                <a href="mailto:&#48;&#55;&#46;&#102;&#114;&#105;&#101;&#110;&#100;&#115;&#45;&#116;&#114;&#105;&#108;&#108;&#64;&#105;&#99;&#108;&#111;&#117;&#100;&#46;&#99;&#111;&#109;" class="contact-link">here</a>.
+            </p>
         </footer>
     </div>
 </div>
+
+<script>
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            var elementVisible = 100;
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add("active");
+            }
+        }
+    }
+    window.addEventListener("scroll", reveal);
+    reveal();
+</script>
 
 </body>
 </html>
