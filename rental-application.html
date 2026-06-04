@@ -744,12 +744,12 @@
         <div class="field-wrap">
           <label for="idNumber">ID Number</label>
           <input class="field-input" type="text" id="idNumber" name="ID Number" placeholder="Document number" aria-label="ID number">
-          <p class="legal-note">Optional — required only if you cannot upload your ID document. Full ID numbers are not retained after identity is confirmed.</p>
+         
         </div>
       </div>
 
-      <div class="field-wrap" style="margin-top:4px;">
-        <label>Upload Government ID <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;"></span></label>
+      <div class="field-wrap" id="idUploadWrap" style="margin-top:4px;">
+        <label>Upload Government ID <span style="color:#C0392B;">*</span></label>
         <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents" style="margin-top:0;">
           <input type="file" id="idDocsInput" name="ID Documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true">
@@ -759,6 +759,7 @@
           <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver's Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>
         </div>
         <div class="file-list" id="idFileList"></div>
+        <div class="error-msg" id="idUploadError" role="alert">Please upload a government-issued photo ID.</div>
       </div>
 
       <div class="section-divider"></div>
@@ -988,18 +989,21 @@
       </div>
 
       <div class="section-divider"></div>
-      <p class="sub-section-label">Supporting Documents</p>
+      <p class="sub-section-label">Supporting Documents <span style="color:#C0392B;">*</span></p>
       <p style="font-size:13px;color:#8C8578;font-weight:300;margin-bottom:22px;line-height:1.65;">Upload recent pay stubs, your employment letter, or NOA/T1 for self-employed applicants. Accepted: PDF, JPG, PNG. Max 5MB total across all uploads.</p>
 
-      <div class="upload-zone" id="financialDocsZone" role="button" aria-label="Upload financial documents">
-        <input type="file" id="financialDocsInput" name="Financial Documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload financial documents" onchange="handleFiles(event,'financialFileList')">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 10px;display:block;" aria-hidden="true">
-          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
-        <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag & drop files here, or tap to browse</p>
-        <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Pay stubs · Employment letter · NOA / T1 General</p>
+      <div class="field-wrap" id="financialUploadWrap">
+        <div class="upload-zone" id="financialDocsZone" role="button" aria-label="Upload financial documents">
+          <input type="file" id="financialDocsInput" name="Financial Documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload financial documents" onchange="handleFiles(event,'financialFileList')">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 10px;display:block;" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag & drop files here, or tap to browse</p>
+          <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Pay stubs · Employment letter · NOA / T1 General</p>
+        </div>
+        <div class="file-list" id="financialFileList"></div>
+        <div class="error-msg" id="financialUploadError" role="alert">Please upload at least one supporting financial document.</div>
       </div>
-      <div class="file-list" id="financialFileList"></div>
 
       <div class="nav-row">
         <button type="button" class="btn-secondary" onclick="goToStep(1)">← Back</button>
@@ -1277,6 +1281,15 @@
       valid = req('moveInDate') & valid;
       valid = req('numOccupants') & valid;
       valid = req('idType') & valid;
+      // ID upload required
+      if (uploadedFiles.id.length === 0) {
+        document.getElementById('idUploadError').style.display = 'block';
+        document.getElementById('idDocsZone').style.borderColor = '#C0392B';
+        valid = false;
+      } else {
+        document.getElementById('idUploadError').style.display = 'none';
+        document.getElementById('idDocsZone').style.borderColor = '';
+      }
       valid = req('currentAddress') & valid;
       valid = req('currentCity') & valid;
       valid = req('currentProvince') & valid;
@@ -1302,6 +1315,15 @@
       }
       if (emp === 'Retired' || emp === 'Student' || emp === 'Other') {
         valid = req('retiredIncome') & valid;
+      }
+      // Financial documents upload required
+      if (uploadedFiles.financial.length === 0) {
+        document.getElementById('financialUploadError').style.display = 'block';
+        document.getElementById('financialDocsZone').style.borderColor = '#C0392B';
+        valid = false;
+      } else {
+        document.getElementById('financialUploadError').style.display = 'none';
+        document.getElementById('financialDocsZone').style.borderColor = '';
       }
     }
     if (step === 3) {
