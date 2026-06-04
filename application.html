@@ -1340,14 +1340,24 @@
   // ─── FORM SUBMIT ───
   const MAKE_WEBHOOK = 'https://hook.us2.make.com/caa3phwd3dqhgaxx9iki8o7bvgmsr9wn';
 
+  // Convert a File to a base64 data string
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]); // strip data:...;base64,
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   document.getElementById('mainCard').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const creditOk = document.getElementById('consentCredit').checked;
+    const creditOk  = document.getElementById('consentCredit').checked;
     const accuracyOk = document.getElementById('declareAccurate').checked;
-    const sigOk = !!document.getElementById('signatureName').value.trim();
+    const sigOk     = !!document.getElementById('signatureName').value.trim();
 
-    document.getElementById('consentCreditError').style.display = creditOk ? 'none' : 'block';
+    document.getElementById('consentCreditError').style.display  = creditOk  ? 'none' : 'block';
     document.getElementById('declareAccurateError').style.display = accuracyOk ? 'none' : 'block';
     if (!sigOk) req('signatureName');
     if (!creditOk || !accuracyOk || !sigOk) return;
@@ -1356,45 +1366,51 @@
     btn.disabled = true;
     btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Submitting…';
 
-    // Build multipart/form-data — includes actual file binaries
-    const fd = new FormData();
-
-    // Text fields
-    const form = document.getElementById('mainCard');
-    form.querySelectorAll('input:not([type="file"]):not([type="checkbox"]), select, textarea').forEach(el => {
-      if (el.name && el.value.trim()) fd.append(el.name, el.value.trim());
-    });
-
-    // Checkbox fields (explicit true/false)
-    fd.append('Consent to Credit Check', document.getElementById('consentCredit').checked ? 'Yes' : 'No');
-    fd.append('No Eviction Declaration',  document.getElementById('declareEviction').checked  ? 'Yes' : 'No');
-    fd.append('No Bankruptcy Declaration',document.getElementById('declareBankruptcy').checked ? 'Yes' : 'No');
-    fd.append('Declaration of Accuracy',  document.getElementById('declareAccurate').checked  ? 'Yes' : 'No');
-    fd.append('Submission Date', new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' }));
-
-    // Actual file binaries
-    uploadedFiles.financial.forEach(f => fd.append('Financial Documents', f, f.name));
-    uploadedFiles.id.forEach(f => fd.append('ID Documents', f, f.name));
-
     try {
+      // ── 1. Collect text fields ──────────────────────────────────────
+      const data = {};
+      const form = document.getElementById('mainCard');
+      form.querySelectorAll('input:not([type="file"]):not([type="checkbox"]), select, textarea').forEach(el => {
+        if (el.name && el.value.trim()) data[el.name] = el.value.trim();
+      });
+      data['Consent to Credit Check']    = document.getElementById('consentCredit').checked    ? 'Yes' : 'No';
+      data['No Eviction Declaration']    = document.getElementById('declareEviction').checked   ? 'Yes' : 'No';
+      data['No Bankruptcy Declaration']  = document.getElementById('declareBankruptcy').checked ? 'Yes' : 'No';
+      data['Declaration of Accuracy']    = document.getElementById('declareAccurate').checked   ? 'Yes' : 'No';
+      data['Submission Date']            = new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' });
+
+      // ── 2. Encode uploaded files as base64 ─────────────────────────
+      const encodeGroup = async (files, label) => {
+        const out = [];
+        for (const f of files) {
+          const b64 = await fileToBase64(f);
+          out.push({ name: f.name, type: f.type, size: f.size, data: b64 });
+        }
+        return out;
+      };
+
+      data['Financial Documents'] = await encodeGroup(uploadedFiles.financial, 'financial');
+      data['ID Documents']        = await encodeGroup(uploadedFiles.id, 'id');
+
+      // ── 3. POST as JSON — works with Make.com webhook CORS policy ──
       const res = await fetch(MAKE_WEBHOOK, {
         method: 'POST',
-        body: fd   // no Content-Type header — browser sets boundary automatically
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       });
 
-      if (res.ok) {
-        // Hide all steps, show success screen
-        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-        document.getElementById('successScreen').classList.add('active');
-        document.getElementById('progressFill').style.width = '100%';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        throw new Error('Server responded with status ' + res.status);
-      }
+      if (!res.ok) throw new Error('Webhook returned status ' + res.status);
+
+      // ── 4. Success ─────────────────────────────────────────────────
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('successScreen').classList.add('active');
+      document.getElementById('progressFill').style.width = '100%';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
     } catch (err) {
       btn.disabled = false;
       btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg> Submit Application';
-      alert('There was a problem submitting your application. Please check your connection and try again.\n\n(' + err.message + ')');
+      alert('Submission failed — please check your connection and try again.\n\n(' + err.message + ')');
     }
   });
 
