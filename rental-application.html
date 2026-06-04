@@ -638,7 +638,7 @@
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.5" aria-hidden="true">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
       </svg>
-      <span>This data is transmitted securely and handled in compliance with <strong>PIPEDA</strong>. Your information will never be shared with third parties.</span>
+      <span>Your information is collected solely to evaluate this tenancy application, in compliance with <strong>PIPEDA</strong> and the <strong>Ontario Human Rights Code</strong>. We will not collect or use prohibited grounds (race, religion, sex, disability, family status, etc.). Information is never sold or shared with third parties.</span>
     </div>
 
     <!-- ═══════════ STEP 1: PERSONAL ═══════════ -->
@@ -1164,7 +1164,7 @@
 
       <div class="privacy-box">
         <p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#8C8578;font-weight:500;margin-bottom:10px;">Privacy & PIPEDA Notice</p>
-        <p style="font-size:12px;color:#8C8578;line-height:1.8;">The personal information collected on this form is used solely for evaluating your tenancy application in accordance with the <em>Personal Information Protection and Electronic Documents Act (PIPEDA)</em>. Your information will be retained only as long as necessary to complete the assessment. Unsuccessful applications will be securely destroyed. We will not share your personal information with any third party without your express written consent.</p>
+        <p style="font-size:12px;color:#8C8578;line-height:1.8;">The personal information collected on this form is used solely for evaluating your tenancy application under the <em>Residential Tenancies Act, 2006 (Ontario)</em> and the <em>Personal Information Protection and Electronic Documents Act (PIPEDA)</em>. Under the <strong>Ontario Human Rights Code</strong>, landlords are prohibited from collecting or using information based on race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex, sexual orientation, gender identity, age, marital or family status, disability, or the receipt of public assistance. Your information will be retained only as long as necessary to complete the screening assessment. Unsuccessful applications will be securely and permanently destroyed. You have the right to request access to or correction of your personal information at any time.</p>
       </div>
 
       <div class="public-records-box">
@@ -1232,7 +1232,7 @@
   <p class="footer-name">12 Dugdale Avenue · Beeton, Ontario · For Lease</p>
   <p class="footer-privacy">
     Data collected via this form is used solely for tenant screening and is stored securely in accordance with PIPEDA.
-    <a href="#privacy-policy" onclick="alert('Privacy Policy\n\nAll personal information collected through this rental application is used exclusively for tenant screening purposes.\n\nData is handled in strict compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA) and the Ontario Human Rights Code (OHRC).\n\nYour information is:\n• Used only to evaluate your tenancy application\n• Never sold or shared with third parties\n• Retained only as long as necessary for the screening process\n• Securely destroyed once no longer needed\n\nApplications from unsuccessful candidates are permanently and securely deleted.\n\nFor questions about your data, contact us via the email provided in your application acknowledgement.');return false;">Privacy Policy</a>
+    <a href="#privacy-policy" onclick="alert('Privacy Policy\n\nAll personal information collected through this rental application is used exclusively for tenant screening purposes under the Residential Tenancies Act, 2006 (Ontario).\n\nData is handled in strict compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA) and the Ontario Human Rights Code (OHRC).\n\nUnder the OHRC, landlords are prohibited from collecting or using information based on race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex, sexual orientation, gender identity or expression, age, marital or family status, disability, or receipt of public assistance.\n\nYour information is:\n\u2022 Used only to evaluate your tenancy application\n\u2022 Never sold or shared with third parties without express written consent\n\u2022 Retained only as long as necessary for the screening process\n\u2022 Securely and permanently destroyed once no longer needed\n\nYou have the right to request access to or correction of your personal information at any time by contacting the landlord.\n\nApplications from unsuccessful candidates are permanently and securely deleted.');return false;">Privacy Policy</a>
   </p>
 </footer>
 
@@ -1503,7 +1503,7 @@
       '<div class="field-wrap" id="coapp-idupload-' + serial + '" style="display:none;margin-top:4px;">' +
         '<label>Upload Government ID <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;"></span></label>' +
         '<div class="upload-zone" id="coapp-idzone-' + serial + '" role="button" aria-label="Upload co-applicant identity document" style="margin-top:0;">' +
-          '<input type="file" name="Co-Applicant ' + num + ' ID Document" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant identity document" onchange="handleFiles(event,\'idFileList\')">' +
+          '<input type="file" name="Co-Applicant ' + num + ' ID Document" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant identity document" onchange="handleFiles(event,\'coapp-idfilelist-' + serial + '\')">' +
           '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>' +
           '<p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop your ID, or tap to browse</p>' +
           '<p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver\'s Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>' +
@@ -1524,7 +1524,7 @@
         const dt = new DataTransfer();
         Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
         input.files = dt.files;
-        handleFiles({ target: input }, 'idFileList');
+        handleFiles({ target: input }, 'coapp-idfilelist-' + serial);
       }
     });
 
@@ -1567,7 +1567,7 @@
         '</div>' +
         '<div class="grid-2">' +
           '<div class="field-wrap"><label>Year</label><input class="field-input" type="text" name="Vehicle ' + i + ' Year" placeholder="e.g. 2019" maxlength="4" autocomplete="off"></div>' +
-          '<div class="field-wrap"><label>Licence Plate</label><input class="field-input" type="text" name="Vehicle ' + i + ' Plate" placeholder="e.g. ABCD 123" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Licence Plate <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></label><input class="field-input" type="text" name="Vehicle ' + i + ' Plate" placeholder="e.g. ABCD 123" autocomplete="off"></div>' +
         '</div>';
       wrap.appendChild(block);
     }
@@ -1624,11 +1624,39 @@
       pill.querySelector('button').addEventListener('click', () => {
         uploadedFiles[bucket] = uploadedFiles[bucket].filter(f => f !== file);
         pill.remove();
+        updateUploadIndicator(listId);
       });
       container.appendChild(pill);
     });
     // Reset input so same file can be re-added after removal
     e.target.value = '';
+    updateUploadIndicator(listId);
+  }
+
+  function updateUploadIndicator(listId) {
+    // Find the indicator element that lives alongside this file list
+    const indicatorId = listId + '-indicator';
+    let indicator = document.getElementById(indicatorId);
+    const container = document.getElementById(listId);
+    if (!container) return;
+
+    const count = container.querySelectorAll('.file-pill').length;
+
+    if (count > 0) {
+      if (!indicator) {
+        indicator = document.createElement('div');
+        indicator.id = indicatorId;
+        indicator.style.cssText = 'display:flex;align-items:center;gap:8px;margin-top:12px;padding:10px 14px;background:rgba(58,122,92,0.07);border:1px solid rgba(58,122,92,0.22);border-radius:6px;animation:fadeUp 0.25s ease;';
+        indicator.innerHTML =
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3A7A5C" stroke-width="2.5" style="flex-shrink:0;" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>' +
+          '<span id="' + indicatorId + '-text" style="font-size:12px;color:#3A7A5C;font-weight:500;letter-spacing:0.02em;"></span>';
+        container.parentNode.insertBefore(indicator, container.nextSibling);
+      }
+      const label = count === 1 ? '1 document uploaded successfully' : count + ' documents uploaded successfully';
+      document.getElementById(indicatorId + '-text').textContent = label;
+    } else if (indicator) {
+      indicator.remove();
+    }
   }
 
   // Drag highlight
