@@ -632,8 +632,7 @@
   </div>
 
   <!-- ─── FORM CARD ─── -->
-  <!-- FormBold integration: action + method + enctype set here -->
-  <form class="form-card" id="mainCard" action="https://formbold.com/s/3OO8R" method="POST" enctype="multipart/form-data" novalidate>
+  <form class="form-card" id="mainCard" novalidate>
 
     <div class="security-notice">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.5" aria-hidden="true">
@@ -1333,21 +1332,65 @@
   });
 
   // ─── FORM SUBMIT ───
-  document.getElementById('mainCard').addEventListener('submit', function(e) {
+  const MAKE_WEBHOOK = 'https://hook.us2.make.com/caa3phwd3dqhgaxx9iki8o7bvgmsr9wn';
+
+  document.getElementById('mainCard').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
     const creditOk = document.getElementById('consentCredit').checked;
     const accuracyOk = document.getElementById('declareAccurate').checked;
     const sigOk = !!document.getElementById('signatureName').value.trim();
-    let ok = true;
 
     document.getElementById('consentCreditError').style.display = creditOk ? 'none' : 'block';
     document.getElementById('declareAccurateError').style.display = accuracyOk ? 'none' : 'block';
     if (!sigOk) req('signatureName');
-    if (!creditOk || !accuracyOk || !sigOk) { e.preventDefault(); ok = false; }
+    if (!creditOk || !accuracyOk || !sigOk) return;
 
-    if (ok) {
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Submitting…';
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Submitting…';
+
+    // Collect all named form fields into a plain object
+    const data = {};
+    const form = document.getElementById('mainCard');
+    new FormData(form).forEach((value, key) => {
+      if (key in data) {
+        // Handle duplicate keys (e.g. multi-select checkboxes) as arrays
+        data[key] = [].concat(data[key], value);
+      } else {
+        data[key] = value;
+      }
+    });
+    // Add checkbox states explicitly (FormData skips unchecked boxes)
+    data['Consent to Credit Check'] = document.getElementById('consentCredit').checked;
+    data['Declaration of Accuracy']  = document.getElementById('declareAccurate').checked;
+    data['Submission Date'] = new Date().toISOString();
+
+    try {
+      const res = await fetch(MAKE_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        // Show success state
+        form.innerHTML =
+          '<div style="text-align:center;padding:48px 24px;">' +
+            '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.5" style="margin-bottom:20px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>' +
+            '<p style="font-family:\'Cormorant Garamond\',serif;font-size:28px;font-weight:300;letter-spacing:-0.01em;color:#1A1A18;margin-bottom:12px;">Application Submitted</p>' +
+            '<p style="font-size:14px;color:#4A4840;line-height:1.8;max-width:400px;margin:0 auto;">Thank you — your application has been received. We\'ll be in touch shortly to confirm next steps.</p>' +
+          '</div>';
+        document.getElementById('introHero') && (document.getElementById('introHero').style.display = 'none');
+        document.querySelector('.site-header').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error('Server responded with ' + res.status);
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = 'Submit Application <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>';
+      alert('There was a problem submitting your application. Please check your connection and try again.\n\n(' + err.message + ')');
     }
   });
 
