@@ -391,7 +391,30 @@
   }
   .nav-row-end { justify-content: flex-end; }
 
-  /* ─── UPLOAD ZONE ─── */
+  /* ─── NO PRIOR RENTAL CHECKBOX ─── */
+  .no-prior-rental-label {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #8C8578;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+  }
+  .no-prior-rental-label input[type="checkbox"] {
+    width: 13px;
+    height: 13px;
+    min-width: 13px;
+    margin-top: 2px;
+    accent-color: #8C8578;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  .no-prior-rental-label:hover { color: #4A4840; }
+
+
   .upload-zone {
     border: 1.5px dashed rgba(26,26,24,0.18);
     border-radius: 6px;
@@ -1018,8 +1041,16 @@
     <div class="step-panel" id="step3">
       <p class="form-section-label">Step 3 of 4</p>
       <h2 class="form-section-title">Rental<br><em>References</em></h2>
-      <p style="font-size:13px;color:#8C8578;font-weight:300;line-height:1.75;margin-bottom:32px;max-width:560px;">Please provide contact information for at least two previous landlords. References will be contacted and verified. Accurate information significantly strengthens your application.</p>
+      <p style="font-size:13px;color:#8C8578;font-weight:300;line-height:1.75;margin-bottom:20px;max-width:560px;">Please provide contact information for at least two previous landlords. References will be contacted and verified. Accurate information significantly strengthens your application.</p>
 
+      <div style="margin-bottom:28px;">
+        <label class="no-prior-rental-label" for="noPriorRental">
+          <input type="checkbox" id="noPriorRental" name="No Prior Rental History" onchange="toggleAllRefs(this.checked)">
+          <span>I have not previously rented and am unable to provide landlord references</span>
+        </label>
+      </div>
+
+      <div id="ref1Block">
       <div class="reference-block">
         <p class="sub-section-label">Landlord Reference #1 <span style="color:#C0392B;">*</span></p>
         <div class="grid-2">
@@ -1071,9 +1102,10 @@
           <div class="error-msg" role="alert">Please enter the monthly rent paid.</div>
         </div>
       </div>
+      </div><!-- /ref1Block -->
 
-      <div class="reference-block">
-        <p class="sub-section-label">Landlord Reference #2 <span style="color:#C0392B;">*</span></p>
+      <div class="reference-block" id="ref2Block">
+        <p class="sub-section-label" id="ref2Heading">Landlord Reference #2 <span style="color:#C0392B;">*</span></p>
         <div class="grid-2">
           <div class="field-wrap">
             <label for="ref2Name">Landlord Full Name *</label>
@@ -1117,7 +1149,7 @@
             <div class="error-msg" role="alert">Please enter the tenancy end date.</div>
           </div>
         </div>
-      </div>
+      </div><!-- /ref2Block -->
 
       <div class="nav-row">
         <button type="button" class="btn-secondary" onclick="goToStep(2)">← Back</button>
@@ -1327,17 +1359,20 @@
       }
     }
     if (step === 3) {
-      valid = req('ref1Name') & valid;
-      valid = req('ref1Phone') & valid;
-      valid = req('ref1Address') & valid;
-      valid = req('ref1From') & valid;
-      valid = req('ref1To') & valid;
-      valid = req('ref1MonthlyRent') & valid;
-      valid = req('ref2Name') & valid;
-      valid = req('ref2Phone') & valid;
-      valid = req('ref2Address') & valid;
-      valid = req('ref2From') & valid;
-      valid = req('ref2To') & valid;
+      const noPrior = document.getElementById('noPriorRental').checked;
+      if (!noPrior) {
+        valid = req('ref1Name') & valid;
+        valid = req('ref1Phone') & valid;
+        valid = req('ref1Address') & valid;
+        valid = req('ref1From') & valid;
+        valid = req('ref1To') & valid;
+        valid = req('ref1MonthlyRent') & valid;
+        valid = req('ref2Name') & valid;
+        valid = req('ref2Phone') & valid;
+        valid = req('ref2Address') & valid;
+        valid = req('ref2From') & valid;
+        valid = req('ref2To') & valid;
+      }
     }
     if (!valid) {
       const first = document.querySelector('.has-error');
@@ -1679,6 +1714,23 @@
       }
     });
   });
+
+  // ─── NO PRIOR RENTAL TOGGLE ───
+  function toggleAllRefs(checked) {
+    ['ref1Block','ref2Block'].forEach(id => {
+      const block = document.getElementById(id);
+      if (!block) return;
+      block.style.opacity = checked ? '0.35' : '1';
+      block.style.pointerEvents = checked ? 'none' : '';
+    });
+    if (checked) {
+      ['ref1Name','ref1Phone','ref1Address','ref1From','ref1To','ref1MonthlyRent',
+       'ref2Name','ref2Phone','ref2Address','ref2From','ref2To'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { const w = el.closest('.field-wrap'); if (w) w.classList.remove('has-error'); }
+      });
+    }
+  }
 
   // ─── INIT ───
   // Set move-in date min to today
