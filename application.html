@@ -1206,7 +1206,7 @@
   </form><!-- /form-card -->
 
   <p class="below-card-note">
-    Submissions processed securely via <a href="https://formbold.com" target="_blank" rel="noopener">FormBold</a> · Encrypted in transit · PIPEDA compliant
+    Encrypted in transit · PIPEDA compliant
   </p>
 
 </main>
@@ -1331,6 +1331,12 @@
     });
   });
 
+  // ─── FILE STORE — tracks actual File objects for submission ───
+  const uploadedFiles = {
+    financial: [],
+    id: []
+  };
+
   // ─── FORM SUBMIT ───
   const MAKE_WEBHOOK = 'https://hook.us2.make.com/caa3phwd3dqhgaxx9iki8o7bvgmsr9wn';
 
@@ -1350,46 +1356,44 @@
     btn.disabled = true;
     btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Submitting…';
 
-    // Collect all named form fields into a plain object
-    const data = {};
+    // Build multipart/form-data — includes actual file binaries
+    const fd = new FormData();
+
+    // Text fields
     const form = document.getElementById('mainCard');
-    new FormData(form).forEach((value, key) => {
-      if (key in data) {
-        // Handle duplicate keys (e.g. multi-select checkboxes) as arrays
-        data[key] = [].concat(data[key], value);
-      } else {
-        data[key] = value;
-      }
+    form.querySelectorAll('input:not([type="file"]):not([type="checkbox"]), select, textarea').forEach(el => {
+      if (el.name && el.value.trim()) fd.append(el.name, el.value.trim());
     });
-    // Add checkbox states explicitly (FormData skips unchecked boxes)
-    data['Consent to Credit Check'] = document.getElementById('consentCredit').checked;
-    data['Declaration of Accuracy']  = document.getElementById('declareAccurate').checked;
-    data['Submission Date'] = new Date().toISOString();
+
+    // Checkbox fields (explicit true/false)
+    fd.append('Consent to Credit Check', document.getElementById('consentCredit').checked ? 'Yes' : 'No');
+    fd.append('No Eviction Declaration',  document.getElementById('declareEviction').checked  ? 'Yes' : 'No');
+    fd.append('No Bankruptcy Declaration',document.getElementById('declareBankruptcy').checked ? 'Yes' : 'No');
+    fd.append('Declaration of Accuracy',  document.getElementById('declareAccurate').checked  ? 'Yes' : 'No');
+    fd.append('Submission Date', new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' }));
+
+    // Actual file binaries
+    uploadedFiles.financial.forEach(f => fd.append('Financial Documents', f, f.name));
+    uploadedFiles.id.forEach(f => fd.append('ID Documents', f, f.name));
 
     try {
       const res = await fetch(MAKE_WEBHOOK, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: fd   // no Content-Type header — browser sets boundary automatically
       });
 
       if (res.ok) {
-        // Show success state
-        form.innerHTML =
-          '<div style="text-align:center;padding:48px 24px;">' +
-            '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.5" style="margin-bottom:20px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>' +
-            '<p style="font-family:\'Cormorant Garamond\',serif;font-size:28px;font-weight:300;letter-spacing:-0.01em;color:#1A1A18;margin-bottom:12px;">Application Submitted</p>' +
-            '<p style="font-size:14px;color:#4A4840;line-height:1.8;max-width:400px;margin:0 auto;">Thank you — your application has been received. We\'ll be in touch shortly to confirm next steps.</p>' +
-          '</div>';
-        document.getElementById('introHero') && (document.getElementById('introHero').style.display = 'none');
-        document.querySelector('.site-header').style.display = 'none';
+        // Hide all steps, show success screen
+        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('successScreen').classList.add('active');
+        document.getElementById('progressFill').style.width = '100%';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        throw new Error('Server responded with ' + res.status);
+        throw new Error('Server responded with status ' + res.status);
       }
     } catch (err) {
       btn.disabled = false;
-      btn.innerHTML = 'Submit Application <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>';
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg> Submit Application';
       alert('There was a problem submitting your application. Please check your connection and try again.\n\n(' + err.message + ')');
     }
   });
@@ -1483,9 +1487,14 @@
 
   // ─── FILE UPLOADS ───
   function handleFiles(e, listId) {
+    const bucket = listId === 'financialFileList' ? 'financial' : 'id';
     const files = Array.from(e.target.files);
     const container = document.getElementById(listId);
     files.forEach(file => {
+      // Store the File object for submission
+      uploadedFiles[bucket].push(file);
+      const fileIndex = uploadedFiles[bucket].length - 1;
+
       const pill = document.createElement('div');
       pill.className = 'file-pill';
       const isPdf = file.type === 'application/pdf';
@@ -1493,7 +1502,12 @@
         ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>'
         : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>';
       const name = file.name.length > 26 ? file.name.substring(0,23)+'…' : file.name;
-      pill.innerHTML = icon + '<span>' + name + '</span><button type="button" onclick="this.parentNode.remove()" aria-label="Remove file">×</button>';
+      pill.innerHTML = icon + '<span>' + name + '</span><button type="button" aria-label="Remove file">×</button>';
+      // Remove from store when pill is dismissed
+      pill.querySelector('button').addEventListener('click', () => {
+        uploadedFiles[bucket] = uploadedFiles[bucket].filter(f => f !== file);
+        pill.remove();
+      });
       container.appendChild(pill);
     });
     // Reset input so same file can be re-added after removal
