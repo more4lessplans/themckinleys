@@ -744,12 +744,12 @@
         <div class="field-wrap">
           <label for="idNumber">ID Number</label>
           <input class="field-input" type="text" id="idNumber" name="ID Number" placeholder="Document number" aria-label="ID number">
-          <p class="legal-note">Used for identity verification only.</p>
+          <p class="legal-note">Optional — required only if you cannot upload your ID document. Full ID numbers are not retained after identity is confirmed.</p>
         </div>
       </div>
 
       <div class="field-wrap" style="margin-top:4px;">
-        <label>Upload Government ID <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(recommended)</span></label>
+        <label>Upload Government ID <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;"></span></label>
         <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents" style="margin-top:0;">
           <input type="file" id="idDocsInput" name="ID Documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true">
@@ -817,8 +817,9 @@
           <div class="error-msg" role="alert">Required.</div>
         </div>
         <div class="field-wrap">
-          <label for="reasonForLeaving">Reason for Leaving</label>
-          <input class="field-input" type="text" id="reasonForLeaving" name="Reason for Leaving" placeholder="e.g. Relocation, end of lease…" aria-label="Reason for leaving">
+          <label for="reasonForLeaving">Reason for Leaving *</label>
+          <input class="field-input" type="text" id="reasonForLeaving" name="Reason for Leaving" placeholder="e.g. Relocation, end of lease…" aria-label="Reason for leaving" aria-required="true">
+          <div class="error-msg" role="alert">Please enter your reason for leaving.</div>
         </div>
       </div>
 
@@ -880,12 +881,13 @@
         </div>
         <div class="grid-2">
           <div class="field-wrap">
-            <label for="employerPhone">Employer Phone</label>
-            <input class="field-input" type="tel" id="employerPhone" name="Employer Phone" placeholder="HR or manager number" aria-label="Employer phone">
+            <label for="employerPhone">Employer Phone *</label>
+            <input class="field-input" type="tel" id="employerPhone" name="Employer Phone" placeholder="HR or manager number" aria-label="Employer phone" aria-required="true">
+            <div class="error-msg" role="alert">Please enter an employer phone number.</div>
           </div>
           <div class="field-wrap">
-            <label for="employmentLength">Time with Employer</label>
-            <select class="field-input" id="employmentLength" name="Employment Length" aria-label="Time with employer">
+            <label for="employmentLength">Time with Employer *</label>
+            <select class="field-input" id="employmentLength" name="Employment Length" aria-label="Time with employer" aria-required="true">
               <option value="">Select…</option>
               <option value="Under 6 months">Less than 6 months</option>
               <option value="6–12 months">6–12 months</option>
@@ -893,6 +895,7 @@
               <option value="3–5 years">3–5 years</option>
               <option value="5+ years">5+ years</option>
             </select>
+            <div class="error-msg" role="alert">Please select your time with this employer.</div>
           </div>
         </div>
         <div class="grid-2">
@@ -1042,22 +1045,26 @@
           </div>
         </div>
         <div class="field-wrap">
-          <label for="ref1Address">Rental Property Address</label>
-          <input class="field-input" type="text" id="ref1Address" name="Ref 1 Address" placeholder="Address of the rental you occupied" aria-label="Reference 1 property address">
+          <label for="ref1Address">Rental Property Address *</label>
+          <input class="field-input" type="text" id="ref1Address" name="Ref 1 Address" placeholder="Address of the rental you occupied" aria-label="Reference 1 property address" aria-required="true">
+          <div class="error-msg" role="alert">Please enter the rental property address.</div>
         </div>
         <div class="grid-2">
           <div class="field-wrap">
-            <label for="ref1From">Tenancy From</label>
-            <input class="field-input" type="month" id="ref1From" name="Ref 1 Tenancy From" aria-label="Tenancy start date">
+            <label for="ref1From">Tenancy From *</label>
+            <input class="field-input" type="month" id="ref1From" name="Ref 1 Tenancy From" aria-label="Tenancy start date" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the tenancy start date.</div>
           </div>
           <div class="field-wrap">
-            <label for="ref1To">Tenancy To</label>
-            <input class="field-input" type="month" id="ref1To" name="Ref 1 Tenancy To" aria-label="Tenancy end date">
+            <label for="ref1To">Tenancy To *</label>
+            <input class="field-input" type="month" id="ref1To" name="Ref 1 Tenancy To" aria-label="Tenancy end date" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the tenancy end date.</div>
           </div>
         </div>
         <div class="field-wrap" style="max-width:200px;">
-          <label for="ref1MonthlyRent">Monthly Rent Paid</label>
-          <input class="field-input" type="text" id="ref1MonthlyRent" name="Ref 1 Monthly Rent" placeholder="$0,000/mo" aria-label="Reference 1 monthly rent">
+          <label for="ref1MonthlyRent">Monthly Rent Paid *</label>
+          <input class="field-input" type="text" id="ref1MonthlyRent" name="Ref 1 Monthly Rent" placeholder="$0,000/mo" aria-label="Reference 1 monthly rent" aria-required="true">
+          <div class="error-msg" role="alert">Please enter the monthly rent paid.</div>
         </div>
       </div>
 
@@ -1090,17 +1097,20 @@
           </div>
         </div>
         <div class="field-wrap">
-          <label for="ref2Address">Rental Property Address</label>
-          <input class="field-input" type="text" id="ref2Address" name="Ref 2 Address" placeholder="Address of the rental you occupied" aria-label="Reference 2 property address">
+          <label for="ref2Address">Rental Property Address *</label>
+          <input class="field-input" type="text" id="ref2Address" name="Ref 2 Address" placeholder="Address of the rental you occupied" aria-label="Reference 2 property address" aria-required="true">
+          <div class="error-msg" role="alert">Please enter the rental property address.</div>
         </div>
         <div class="grid-2">
           <div class="field-wrap">
-            <label for="ref2From">Tenancy From</label>
-            <input class="field-input" type="month" id="ref2From" name="Ref 2 Tenancy From" aria-label="Tenancy 2 start date">
+            <label for="ref2From">Tenancy From *</label>
+            <input class="field-input" type="month" id="ref2From" name="Ref 2 Tenancy From" aria-label="Tenancy 2 start date" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the tenancy start date.</div>
           </div>
           <div class="field-wrap">
-            <label for="ref2To">Tenancy To</label>
-            <input class="field-input" type="month" id="ref2To" name="Ref 2 Tenancy To" aria-label="Tenancy 2 end date">
+            <label for="ref2To">Tenancy To *</label>
+            <input class="field-input" type="month" id="ref2To" name="Ref 2 Tenancy To" aria-label="Tenancy 2 end date" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the tenancy end date.</div>
           </div>
         </div>
       </div>
@@ -1132,13 +1142,15 @@
       <p class="sub-section-label">Declarations</p>
       <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:32px;">
         <div class="check-wrap">
-          <input type="checkbox" id="declareEviction" name="No Eviction Declaration" aria-label="Eviction declaration">
-          <label class="check-label" for="declareEviction">I have <strong>not</strong> been evicted from a rental property in the past 5 years, nor have I been subject to an eviction order through the Ontario Landlord and Tenant Board.</label>
+          <input type="checkbox" id="declareEviction" name="No Eviction Declaration" aria-label="Eviction declaration" aria-required="true">
+          <label class="check-label" for="declareEviction">I have <strong>not</strong> been evicted from a rental property in the past 5 years, nor have I been subject to an eviction order through the Ontario Landlord and Tenant Board. <span style="color:#C0392B;">*</span></label>
         </div>
+        <div id="declareEvictionError" style="font-size:11px;color:#C0392B;margin-left:31px;display:none;" role="alert">You must complete this declaration.</div>
         <div class="check-wrap">
-          <input type="checkbox" id="declareBankruptcy" name="No Bankruptcy Declaration" aria-label="Bankruptcy declaration">
-          <label class="check-label" for="declareBankruptcy">I have <strong>not</strong> filed for bankruptcy in the past 7 years, or if I have, I have been discharged and can provide documentation upon request.</label>
+          <input type="checkbox" id="declareBankruptcy" name="No Bankruptcy Declaration" aria-label="Bankruptcy declaration" aria-required="true">
+          <label class="check-label" for="declareBankruptcy">I have <strong>not</strong> filed for bankruptcy in the past 7 years, or if I have, I have been discharged and can provide documentation upon request. <span style="color:#C0392B;">*</span></label>
         </div>
+        <div id="declareBankruptcyError" style="font-size:11px;color:#C0392B;margin-left:31px;display:none;" role="alert">You must complete this declaration.</div>
         <div class="check-wrap">
           <input type="checkbox" id="declareAccurate" name="Accuracy Declaration" aria-label="Accuracy declaration" aria-required="true">
           <label class="check-label" for="declareAccurate"><strong>I declare that all information provided is true, complete, and accurate.</strong> I understand that providing false information may result in rejection of this application or lease termination. <span style="color:#C0392B;">*</span></label>
@@ -1270,6 +1282,7 @@
       valid = req('currentProvince') & valid;
       valid = req('currentPostal') & valid;
       valid = req('currentLengthOfStay') & valid;
+      valid = req('reasonForLeaving') & valid;
     }
     if (step === 2) {
       valid = req('employmentStatus') & valid;
@@ -1277,6 +1290,8 @@
       if (emp === 'Employed — Full-Time' || emp === 'Employed — Part-Time') {
         valid = req('employerName') & valid;
         valid = req('jobTitle') & valid;
+        valid = req('employerPhone') & valid;
+        valid = req('employmentLength') & valid;
         valid = req('grossIncome') & valid;
       }
       if (emp === 'Contract / Freelance') {
@@ -1292,8 +1307,15 @@
     if (step === 3) {
       valid = req('ref1Name') & valid;
       valid = req('ref1Phone') & valid;
+      valid = req('ref1Address') & valid;
+      valid = req('ref1From') & valid;
+      valid = req('ref1To') & valid;
+      valid = req('ref1MonthlyRent') & valid;
       valid = req('ref2Name') & valid;
       valid = req('ref2Phone') & valid;
+      valid = req('ref2Address') & valid;
+      valid = req('ref2From') & valid;
+      valid = req('ref2To') & valid;
     }
     if (!valid) {
       const first = document.querySelector('.has-error');
@@ -1354,13 +1376,17 @@
     e.preventDefault();
 
     const creditOk  = document.getElementById('consentCredit').checked;
+    const evictionOk = document.getElementById('declareEviction').checked;
+    const bankruptcyOk = document.getElementById('declareBankruptcy').checked;
     const accuracyOk = document.getElementById('declareAccurate').checked;
     const sigOk     = !!document.getElementById('signatureName').value.trim();
 
     document.getElementById('consentCreditError').style.display  = creditOk  ? 'none' : 'block';
+    document.getElementById('declareEvictionError').style.display = evictionOk ? 'none' : 'block';
+    document.getElementById('declareBankruptcyError').style.display = bankruptcyOk ? 'none' : 'block';
     document.getElementById('declareAccurateError').style.display = accuracyOk ? 'none' : 'block';
     if (!sigOk) req('signatureName');
-    if (!creditOk || !accuracyOk || !sigOk) return;
+    if (!creditOk || !evictionOk || !bankruptcyOk || !accuracyOk || !sigOk) return;
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
@@ -1453,7 +1479,7 @@
         '</select>' +
       '</div>' +
       '<div class="field-wrap" id="coapp-idupload-' + serial + '" style="display:none;margin-top:4px;">' +
-        '<label>Upload Government ID <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(recommended)</span></label>' +
+        '<label>Upload Government ID <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;"></span></label>' +
         '<div class="upload-zone" id="coapp-idzone-' + serial + '" role="button" aria-label="Upload co-applicant identity document" style="margin-top:0;">' +
           '<input type="file" name="Co-Applicant ' + num + ' ID Document" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant identity document" onchange="handleFiles(event,\'idFileList\')">' +
           '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>' +
