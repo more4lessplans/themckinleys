@@ -632,8 +632,7 @@
   </div>
 
   <!-- ─── FORM CARD ─── -->
-  <!-- FormBold integration: action + method + enctype set here -->
-  <form class="form-card" id="mainCard" action="https://formbold.com/s/3OO8R" method="POST" enctype="multipart/form-data" novalidate>
+  <form class="form-card" id="mainCard" novalidate>
 
     <div class="security-notice">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.5" aria-hidden="true">
@@ -679,6 +678,7 @@
         <label for="moveInDate">Desired Move-In Date *</label>
         <input class="field-input" type="date" id="moveInDate" name="Move-In Date" aria-label="Desired move-in date" aria-required="true">
         <div class="error-msg" role="alert">Please select a move-in date.</div>
+        <p class="legal-note">Property is available from mid-June 2025.</p>
       </div>
 
       <div class="grid-2">
@@ -712,19 +712,18 @@
         <input class="field-input" type="text" id="petDetails" name="Pet Details" placeholder="Breed, size, age…" aria-label="Pet description">
       </div>
 
-      <div class="field-wrap">
+      <div class="field-wrap" style="max-width:260px;">
         <label for="numVehicles">Number of Vehicles</label>
-        <select class="field-input" id="numVehicles" name="Vehicles" aria-label="Number of vehicles">
+        <select class="field-input" id="numVehicles" name="Number of Vehicles" aria-label="Number of vehicles">
           <option value="0">None</option>
           <option value="1">1</option>
           <option value="2">2</option>
-          <option value="3+">3 or more</option>
+          <option value="3">3 or more</option>
         </select>
       </div>
 
-      <div class="field-wrap" id="vehicleDetailsWrap" style="display:none;">
-        <label for="vehicleDetails">Vehicle Details (Make, Model, Year, Plate)</label>
-        <input class="field-input" type="text" id="vehicleDetails" name="Vehicle Details" placeholder="e.g. 2019 Honda Civic, ABCD 123" aria-label="Vehicle details">
+      <div id="vehicleDetailsWrap" style="display:none;">
+        <!-- Vehicle rows injected here by JS -->
       </div>
 
       <div class="section-divider"></div>
@@ -749,6 +748,19 @@
         </div>
       </div>
 
+      <div class="field-wrap" style="margin-top:4px;">
+        <label>Upload Government ID <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(recommended)</span></label>
+        <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents" style="margin-top:0;">
+          <input type="file" id="idDocsInput" name="ID Documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+          </svg>
+          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag & drop your ID, or tap to browse</p>
+          <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver's Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>
+        </div>
+        <div class="file-list" id="idFileList"></div>
+      </div>
+
       <div class="section-divider"></div>
       <p class="sub-section-label">Current Address</p>
 
@@ -768,16 +780,19 @@
           <label for="currentProvince">Province *</label>
           <select class="field-input" id="currentProvince" name="Province" aria-label="Province" aria-required="true">
             <option value="">Select…</option>
-            <option value="ON" selected>Ontario</option>
+            <option value="ON">Ontario</option>
             <option value="AB">Alberta</option>
             <option value="BC">British Columbia</option>
             <option value="MB">Manitoba</option>
             <option value="NB">New Brunswick</option>
-            <option value="NL">Newfoundland</option>
+            <option value="NL">Newfoundland & Labrador</option>
             <option value="NS">Nova Scotia</option>
-            <option value="PE">PEI</option>
+            <option value="NT">Northwest Territories</option>
+            <option value="NU">Nunavut</option>
+            <option value="PE">Prince Edward Island</option>
             <option value="QC">Quebec</option>
             <option value="SK">Saskatchewan</option>
+            <option value="YT">Yukon</option>
           </select>
           <div class="error-msg" role="alert">Required.</div>
         </div>
@@ -850,7 +865,7 @@
         <div class="error-msg" role="alert">Please select employment type.</div>
       </div>
 
-      <div id="employedSection">
+      <div id="employedSection" style="display:none;">
         <div class="grid-2">
           <div class="field-wrap">
             <label for="employerName">Employer Name *</label>
@@ -899,6 +914,20 @@
         </div>
       </div>
 
+      <div id="contractSection" style="display:none;">
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="contractClient">Primary Client / Company</label>
+            <input class="field-input" type="text" id="contractClient" name="Contract Client" placeholder="Main client or company" aria-label="Contract client">
+          </div>
+          <div class="field-wrap">
+            <label for="contractIncome">Annual Gross Income *</label>
+            <input class="field-input" type="text" id="contractIncome" name="Contract Income" placeholder="$0,000" aria-label="Contract income" aria-required="true">
+            <div class="error-msg" role="alert">Please enter your income.</div>
+          </div>
+        </div>
+      </div>
+
       <div id="selfEmployedSection" style="display:none;">
         <div class="grid-2">
           <div class="field-wrap">
@@ -929,6 +958,20 @@
         </div>
       </div>
 
+      <div id="retiredStudentSection" style="display:none;">
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="retiredIncome">Annual Income *</label>
+            <input class="field-input" type="text" id="retiredIncome" name="Retired/Student Income" placeholder="$0,000" aria-label="Retired or student income">
+            <div class="error-msg" role="alert">Please enter your income or primary source of funds.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="retiredIncomeSource">Primary Income Source</label>
+            <input class="field-input" type="text" id="retiredIncomeSource" name="Income Source" placeholder="e.g. CPP, RRSP, student loan, family support…" aria-label="Income source">
+          </div>
+        </div>
+      </div>
+
       <div class="section-divider"></div>
       <p class="sub-section-label">Additional Income <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></p>
 
@@ -943,7 +986,7 @@
 
       <div class="section-divider"></div>
       <p class="sub-section-label">Supporting Documents</p>
-      <p style="font-size:13px;color:#8C8578;font-weight:300;margin-bottom:22px;line-height:1.65;">Upload recent pay stubs, your employment letter, or NOA/T1 for self-employed applicants. Accepted: PDF, JPG, PNG. Max 10MB per file.</p>
+      <p style="font-size:13px;color:#8C8578;font-weight:300;margin-bottom:22px;line-height:1.65;">Upload recent pay stubs, your employment letter, or NOA/T1 for self-employed applicants. Accepted: PDF, JPG, PNG. Max 5MB total across all uploads.</p>
 
       <div class="upload-zone" id="financialDocsZone" role="button" aria-label="Upload financial documents">
         <input type="file" id="financialDocsInput" name="Financial Documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload financial documents" onchange="handleFiles(event,'financialFileList')">
@@ -1062,20 +1105,6 @@
         </div>
       </div>
 
-      <div class="section-divider"></div>
-      <p class="sub-section-label">Identity & Supporting Documents</p>
-      <p style="font-size:13px;color:#8C8578;font-weight:300;margin-bottom:22px;line-height:1.65;">Upload a copy of your government-issued photo ID. You may also include any additional supporting documentation.</p>
-
-      <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents">
-        <input type="file" id="idDocsInput" name="ID Documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 10px;display:block;" aria-hidden="true">
-          <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
-        </svg>
-        <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag & drop your ID, or tap to browse</p>
-        <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver's Licence · Passport · Government Photo ID</p>
-      </div>
-      <div class="file-list" id="idFileList"></div>
-
       <div class="nav-row">
         <button type="button" class="btn-secondary" onclick="goToStep(2)">← Back</button>
         <button type="button" class="btn-primary" onclick="goToStep(4)">
@@ -1177,7 +1206,7 @@
   </form><!-- /form-card -->
 
   <p class="below-card-note">
-    Submissions processed securely via <a href="https://formbold.com" target="_blank" rel="noopener">FormBold</a> · Encrypted in transit · PIPEDA compliant
+    Encrypted in transit · PIPEDA compliant
   </p>
 
 </main>
@@ -1195,6 +1224,7 @@
   'use strict';
   let currentStep = 1;
   let coApplicantCount = 0;
+  let coApplicantSerial = 0; // ever-incrementing ID so removed blocks don't conflict
   const progressMap = {1:'25%',2:'50%',3:'75%',4:'100%'};
 
   // ─── STEP NAVIGATION ───
@@ -1221,7 +1251,6 @@
       }
     });
 
-    // Scroll header into view (smooth)
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -1245,12 +1274,20 @@
     if (step === 2) {
       valid = req('employmentStatus') & valid;
       const emp = document.getElementById('employmentStatus').value;
-      if (emp && emp !== 'Self-Employed' && emp !== 'Retired' && emp !== 'Student') {
+      if (emp === 'Employed — Full-Time' || emp === 'Employed — Part-Time') {
         valid = req('employerName') & valid;
         valid = req('jobTitle') & valid;
         valid = req('grossIncome') & valid;
       }
-      if (emp === 'Self-Employed') valid = req('selfIncome') & valid;
+      if (emp === 'Contract / Freelance') {
+        valid = req('contractIncome') & valid;
+      }
+      if (emp === 'Self-Employed') {
+        valid = req('selfIncome') & valid;
+      }
+      if (emp === 'Retired' || emp === 'Student' || emp === 'Other') {
+        valid = req('retiredIncome') & valid;
+      }
     }
     if (step === 3) {
       valid = req('ref1Name') & valid;
@@ -1288,82 +1325,245 @@
       const wrap = inp.closest('.field-wrap');
       if (wrap && inp.value.trim()) wrap.classList.remove('has-error');
     });
+    inp.addEventListener('change', () => {
+      const wrap = inp.closest('.field-wrap');
+      if (wrap && inp.value.trim()) wrap.classList.remove('has-error');
+    });
   });
 
-  // ─── FORM SUBMIT (validation on step 4, then native POST to FormBold) ───
-  document.getElementById('mainCard').addEventListener('submit', function(e) {
-    // Validate step 4 before allowing native submit
-    const creditOk = document.getElementById('consentCredit').checked;
-    const accuracyOk = document.getElementById('declareAccurate').checked;
-    const sigOk = !!document.getElementById('signatureName').value.trim();
-    let ok = true;
+  // ─── FILE STORE — tracks actual File objects for submission ───
+  const uploadedFiles = {
+    financial: [],
+    id: []
+  };
 
-    document.getElementById('consentCreditError').style.display = creditOk ? 'none' : 'block';
+  // ─── FORM SUBMIT ───
+  const MAKE_WEBHOOK = 'https://hook.us2.make.com/caa3phwd3dqhgaxx9iki8o7bvgmsr9wn';
+
+  // Convert a File to a base64 data string
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]); // strip data:...;base64,
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.getElementById('mainCard').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const creditOk  = document.getElementById('consentCredit').checked;
+    const accuracyOk = document.getElementById('declareAccurate').checked;
+    const sigOk     = !!document.getElementById('signatureName').value.trim();
+
+    document.getElementById('consentCreditError').style.display  = creditOk  ? 'none' : 'block';
     document.getElementById('declareAccurateError').style.display = accuracyOk ? 'none' : 'block';
     if (!sigOk) req('signatureName');
-    if (!creditOk || !accuracyOk || !sigOk) { e.preventDefault(); ok = false; }
+    if (!creditOk || !accuracyOk || !sigOk) return;
 
-    if (ok) {
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Submitting…';
-      // Native form submit proceeds — FormBold receives it via POST
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Submitting…';
+
+    try {
+      // ── 1. Collect text fields ──────────────────────────────────────
+      const data = {};
+      const form = document.getElementById('mainCard');
+      form.querySelectorAll('input:not([type="file"]):not([type="checkbox"]), select, textarea').forEach(el => {
+        if (el.name && el.value.trim()) data[el.name] = el.value.trim();
+      });
+      data['Consent to Credit Check']    = document.getElementById('consentCredit').checked    ? 'Yes' : 'No';
+      data['No Eviction Declaration']    = document.getElementById('declareEviction').checked   ? 'Yes' : 'No';
+      data['No Bankruptcy Declaration']  = document.getElementById('declareBankruptcy').checked ? 'Yes' : 'No';
+      data['Declaration of Accuracy']    = document.getElementById('declareAccurate').checked   ? 'Yes' : 'No';
+      data['Submission Date']            = new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' });
+
+      // ── 2. Encode uploaded files as base64 ─────────────────────────
+      const encodeGroup = async (files, label) => {
+        const out = [];
+        for (const f of files) {
+          const b64 = await fileToBase64(f);
+          out.push({ name: f.name, type: f.type, size: f.size, data: b64 });
+        }
+        return out;
+      };
+
+      data['Financial Documents'] = await encodeGroup(uploadedFiles.financial, 'financial');
+      data['ID Documents']        = await encodeGroup(uploadedFiles.id, 'id');
+
+      // ── 3. POST as JSON — works with Make.com webhook CORS policy ──
+      const res = await fetch(MAKE_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (!res.ok) throw new Error('Webhook returned status ' + res.status);
+
+      // ── 4. Success ─────────────────────────────────────────────────
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('successScreen').classList.add('active');
+      document.getElementById('progressFill').style.width = '100%';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg> Submit Application';
+      alert('Submission failed — please check your connection and try again.\n\n(' + err.message + ')');
     }
   });
 
   // ─── CO-APPLICANT ───
   document.getElementById('addCoApplicantBtn').addEventListener('click', () => {
+    if (coApplicantCount >= 3) return;
     coApplicantCount++;
+    coApplicantSerial++;
+    const serial = coApplicantSerial;
+    const num = coApplicantCount;
     const c = document.getElementById('coApplicantContainer');
     const b = document.createElement('div');
     b.className = 'coapplicant-block';
-    b.id = 'coapp' + coApplicantCount;
+    b.id = 'coapp' + serial;
     b.innerHTML =
       '<div class="coapplicant-header">' +
-        '<p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;">Co-Applicant ' + coApplicantCount + '</p>' +
-        '<button type="button" onclick="removeCoApp(' + coApplicantCount + ')" style="background:none;border:none;color:#8C8578;cursor:pointer;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-family:inherit;transition:color 0.2s;" onmouseover="this.style.color=\'#C0392B\'" onmouseout="this.style.color=\'#8C8578\'">Remove</button>' +
+        '<p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;">Co-Applicant ' + num + '</p>' +
+        '<button type="button" onclick="removeCoApp(' + serial + ')" style="background:none;border:none;color:#8C8578;cursor:pointer;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-family:inherit;transition:color 0.2s;" onmouseover="this.style.color=\'#C0392B\'" onmouseout="this.style.color=\'#8C8578\'">Remove</button>' +
       '</div>' +
       '<div class="grid-2">' +
-        '<div class="field-wrap"><label>First Name</label><input class="field-input" type="text" name="Co-Applicant ' + coApplicantCount + ' First Name" placeholder="Given name" aria-label="Co-applicant first name"></div>' +
-        '<div class="field-wrap"><label>Last Name</label><input class="field-input" type="text" name="Co-Applicant ' + coApplicantCount + ' Last Name" placeholder="Family name" aria-label="Co-applicant last name"></div>' +
+        '<div class="field-wrap"><label>First Name</label><input class="field-input" type="text" name="Co-Applicant ' + num + ' First Name" placeholder="Given name" autocomplete="off"></div>' +
+        '<div class="field-wrap"><label>Last Name</label><input class="field-input" type="text" name="Co-Applicant ' + num + ' Last Name" placeholder="Family name" autocomplete="off"></div>' +
       '</div>' +
       '<div class="grid-2">' +
-        '<div class="field-wrap"><label>Email</label><input class="field-input" type="email" name="Co-Applicant ' + coApplicantCount + ' Email" placeholder="email@example.com" aria-label="Co-applicant email"></div>' +
-        '<div class="field-wrap"><label>Phone</label><input class="field-input" type="tel" name="Co-Applicant ' + coApplicantCount + ' Phone" placeholder="(416) 555-0100" aria-label="Co-applicant phone"></div>' +
+        '<div class="field-wrap"><label>Email</label><input class="field-input" type="email" name="Co-Applicant ' + num + ' Email" placeholder="email@example.com" autocomplete="off"></div>' +
+        '<div class="field-wrap"><label>Phone</label><input class="field-input" type="tel" name="Co-Applicant ' + num + ' Phone" placeholder="(416) 555-0100" autocomplete="off"></div>' +
       '</div>' +
       '<div class="grid-2">' +
-        '<div class="field-wrap"><label>Employer</label><input class="field-input" type="text" name="Co-Applicant ' + coApplicantCount + ' Employer" placeholder="Employer name" aria-label="Co-applicant employer"></div>' +
-        '<div class="field-wrap"><label>Annual Income</label><input class="field-input" type="text" name="Co-Applicant ' + coApplicantCount + ' Income" placeholder="$0,000" aria-label="Co-applicant income"></div>' +
+        '<div class="field-wrap"><label>Employer</label><input class="field-input" type="text" name="Co-Applicant ' + num + ' Employer" placeholder="Employer name" autocomplete="off"></div>' +
+        '<div class="field-wrap"><label>Annual Income</label><input class="field-input" type="text" name="Co-Applicant ' + num + ' Income" placeholder="$0,000" autocomplete="off"></div>' +
       '</div>' +
-      '<div class="field-wrap"><label>Government ID Type</label><select class="field-input" name="Co-Applicant ' + coApplicantCount + ' ID Type" aria-label="Co-applicant ID type"><option value="">Select…</option><option>Driver\'s Licence</option><option>Passport</option><option>Other Government ID</option></select></div>';
+      '<div class="field-wrap">' +
+        '<label>Government ID Type</label>' +
+        '<select class="field-input" name="Co-Applicant ' + num + ' ID Type" id="coapp-idtype-' + serial + '" onchange="toggleCoAppIdUpload(' + serial + ', this.value)">' +
+          '<option value="">Select…</option>' +
+          '<option>Driver\'s Licence</option>' +
+          '<option>Passport</option>' +
+          '<option>Permanent Resident Card</option>' +
+          '<option>Other Government ID</option>' +
+        '</select>' +
+      '</div>' +
+      '<div class="field-wrap" id="coapp-idupload-' + serial + '" style="display:none;margin-top:4px;">' +
+        '<label>Upload Government ID <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(recommended)</span></label>' +
+        '<div class="upload-zone" id="coapp-idzone-' + serial + '" role="button" aria-label="Upload co-applicant identity document" style="margin-top:0;">' +
+          '<input type="file" name="Co-Applicant ' + num + ' ID Document" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant identity document" onchange="handleFiles(event,\'idFileList\')">' +
+          '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>' +
+          '<p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop your ID, or tap to browse</p>' +
+          '<p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver\'s Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>' +
+        '</div>' +
+        '<div class="file-list" id="coapp-idfilelist-' + serial + '"></div>' +
+      '</div>';
     c.appendChild(b);
+
+    // Wire up drag-and-drop for the new upload zone
+    const zone = document.getElementById('coapp-idzone-' + serial);
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      const input = zone.querySelector('input[type="file"]');
+      if (input && e.dataTransfer.files.length) {
+        const dt = new DataTransfer();
+        Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+        input.files = dt.files;
+        handleFiles({ target: input }, 'idFileList');
+      }
+    });
+
     if (coApplicantCount >= 3) document.getElementById('addCoApplicantBtn').style.display = 'none';
   });
 
-  function removeCoApp(n) {
-    const el = document.getElementById('coapp' + n);
-    if (el) el.remove();
-    document.getElementById('addCoApplicantBtn').style.display = 'inline-flex';
+  function toggleCoAppIdUpload(serial, value) {
+    const uploadWrap = document.getElementById('coapp-idupload-' + serial);
+    if (uploadWrap) uploadWrap.style.display = value ? 'block' : 'none';
   }
 
-  // ─── TOGGLES ───
+  function removeCoApp(serial) {
+    const el = document.getElementById('coapp' + serial);
+    if (el) el.remove();
+    coApplicantCount = Math.max(0, coApplicantCount - 1);
+    if (coApplicantCount < 3) document.getElementById('addCoApplicantBtn').style.display = 'inline-flex';
+  }
+
+  // ─── PETS TOGGLE ───
   document.getElementById('hasPets').addEventListener('change', function() {
-    document.getElementById('petDetailsWrap').style.display = (this.value && this.value !== 'none') ? 'block' : 'none';
+    const hasPet = this.value && this.value !== 'none';
+    document.getElementById('petDetailsWrap').style.display = hasPet ? 'block' : 'none';
+    if (!hasPet) document.getElementById('petDetails').value = '';
   });
+
+  // ─── VEHICLES TOGGLE — render exact number of vehicle row blocks ───
+  function buildVehicleRows(count) {
+    const wrap = document.getElementById('vehicleDetailsWrap');
+    wrap.innerHTML = '';
+    if (count === 0) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    for (let i = 1; i <= count; i++) {
+      const block = document.createElement('div');
+      block.style.cssText = 'border:1px solid rgba(196,168,130,0.22);border-radius:6px;padding:20px 20px 4px;margin-bottom:16px;background:rgba(196,168,130,0.02);';
+      block.innerHTML =
+        '<p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:16px;">Vehicle ' + i + '</p>' +
+        '<div class="grid-2">' +
+          '<div class="field-wrap"><label>Make</label><input class="field-input" type="text" name="Vehicle ' + i + ' Make" placeholder="e.g. Honda" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Model</label><input class="field-input" type="text" name="Vehicle ' + i + ' Model" placeholder="e.g. Civic" autocomplete="off"></div>' +
+        '</div>' +
+        '<div class="grid-2">' +
+          '<div class="field-wrap"><label>Year</label><input class="field-input" type="text" name="Vehicle ' + i + ' Year" placeholder="e.g. 2019" maxlength="4" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Licence Plate</label><input class="field-input" type="text" name="Vehicle ' + i + ' Plate" placeholder="e.g. ABCD 123" autocomplete="off"></div>' +
+        '</div>';
+      wrap.appendChild(block);
+    }
+  }
+
   document.getElementById('numVehicles').addEventListener('change', function() {
-    document.getElementById('vehicleDetailsWrap').style.display = (this.value && this.value !== '0') ? 'block' : 'none';
+    const n = parseInt(this.value) || 0;
+    buildVehicleRows(n);
   });
+
+  // ─── EMPLOYMENT STATUS TOGGLE ───
   document.getElementById('employmentStatus').addEventListener('change', function() {
-    const self = this.value === 'Self-Employed';
-    document.getElementById('employedSection').style.display = self ? 'none' : 'block';
-    document.getElementById('selfEmployedSection').style.display = self ? 'block' : 'none';
+    const val = this.value;
+    const isEmployee   = val === 'Employed — Full-Time' || val === 'Employed — Part-Time';
+    const isContract   = val === 'Contract / Freelance';
+    const isSelf       = val === 'Self-Employed';
+    const isOther      = val === 'Retired' || val === 'Student' || val === 'Other';
+
+    document.getElementById('employedSection').style.display     = isEmployee ? 'block' : 'none';
+    document.getElementById('contractSection').style.display     = isContract ? 'block' : 'none';
+    document.getElementById('selfEmployedSection').style.display = isSelf     ? 'block' : 'none';
+    document.getElementById('retiredStudentSection').style.display = isOther  ? 'block' : 'none';
   });
 
   // ─── FILE UPLOADS ───
+  const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB total across all uploads
+
+  function getTotalUploadedSize() {
+    return [...uploadedFiles.financial, ...uploadedFiles.id]
+      .reduce((sum, f) => sum + f.size, 0);
+  }
+
   function handleFiles(e, listId) {
+    const bucket = listId === 'financialFileList' ? 'financial' : 'id';
     const files = Array.from(e.target.files);
     const container = document.getElementById(listId);
     files.forEach(file => {
+      if (getTotalUploadedSize() + file.size > FILE_SIZE_LIMIT) {
+        alert('Total upload limit is 5MB. "' + file.name + '" was not added because it would exceed this limit.');
+        return;
+      }
+      // Store the File object for submission
+      uploadedFiles[bucket].push(file);
+
       const pill = document.createElement('div');
       pill.className = 'file-pill';
       const isPdf = file.type === 'application/pdf';
@@ -1371,22 +1571,46 @@
         ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>'
         : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>';
       const name = file.name.length > 26 ? file.name.substring(0,23)+'…' : file.name;
-      pill.innerHTML = icon + '<span>' + name + '</span><button type="button" onclick="this.parentNode.remove()" aria-label="Remove file">×</button>';
+      pill.innerHTML = icon + '<span>' + name + '</span><button type="button" aria-label="Remove file">×</button>';
+      // Remove from store when pill is dismissed
+      pill.querySelector('button').addEventListener('click', () => {
+        uploadedFiles[bucket] = uploadedFiles[bucket].filter(f => f !== file);
+        pill.remove();
+      });
       container.appendChild(pill);
     });
+    // Reset input so same file can be re-added after removal
+    e.target.value = '';
   }
 
-  // drag highlight
+  // Drag highlight
   ['financialDocsZone','idDocsZone'].forEach(id => {
     const z = document.getElementById(id);
     if (!z) return;
     z.addEventListener('dragover', e => { e.preventDefault(); z.classList.add('drag-over'); });
     z.addEventListener('dragleave', () => z.classList.remove('drag-over'));
-    z.addEventListener('drop', e => { e.preventDefault(); z.classList.remove('drag-over'); });
+    z.addEventListener('drop', e => {
+      e.preventDefault();
+      z.classList.remove('drag-over');
+      const input = z.querySelector('input[type="file"]');
+      const listId = z.id === 'idDocsZone' ? 'idFileList' : 'financialFileList';
+      if (input && e.dataTransfer.files.length) {
+        // Manually dispatch with dropped files
+        const dt = new DataTransfer();
+        Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+        input.files = dt.files;
+        handleFiles({ target: input }, listId);
+      }
+    });
   });
 
-  // ─── SIGNATURE DATE ───
-  document.getElementById('signatureDate').value = new Date().toISOString().split('T')[0];
+  // ─── INIT ───
+  // Set move-in date min to today
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('moveInDate').min = today;
+
+  // Set signature date to today (read-only)
+  document.getElementById('signatureDate').value = today;
 </script>
 
 </body>
