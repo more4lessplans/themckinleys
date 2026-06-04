@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Privacy Policy — 12 Dugdale Avenue, Beeton</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #F7F4EF;
+    color: #1A1A18;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ─── HEADER ─── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(247,244,239,0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(26,26,24,0.08);
+  }
+  .header-inner {
+    max-width: 100%;
+    padding: 16px 24px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .header-logo { flex-shrink: 0; }
+  .header-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: #1A1A18;
+    white-space: nowrap;
+  }
+  .header-logo-sub {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8C8578;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+
+  .header-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #8C8578;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+  }
+  .header-back:hover { color: #1A1A18; }
+
+  /* ─── MAIN LAYOUT ─── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  @media (min-width: 640px) { main { padding: 52px 32px 96px; } }
+
+  /* ─── INTRO HERO ─── */
+  .intro-hero { margin-bottom: 40px; }
+  .intro-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #C4A882;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .intro-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .intro-headline em { font-style: italic; color: #8C8578; }
+  .intro-body {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #4A4840;
+    max-width: 540px;
+  }
+
+  /* ─── POLICY CARD ─── */
+  .policy-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(26,26,24,0.04), 0 8px 32px rgba(26,26,24,0.07);
+    padding: 36px 24px;
+  }
+  @media (min-width: 600px) { .policy-card { padding: 52px 52px; } }
+
+  /* ─── NOTICE BANNER ─── */
+  .notice-banner {
+    background: rgba(196,168,130,0.08);
+    border: 1px solid rgba(196,168,130,0.25);
+    border-radius: 6px;
+    padding: 13px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    font-size: 12px;
+    color: #8C8578;
+    line-height: 1.6;
+    margin-bottom: 44px;
+  }
+  .notice-banner svg { flex-shrink: 0; margin-top: 1px; }
+
+  /* ─── TOC ─── */
+  .toc {
+    background: rgba(26,26,24,0.025);
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin-bottom: 44px;
+  }
+  .toc-label {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #C4A882;
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .toc-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 12px;
+    color: #4A4840;
+  }
+  .toc-num {
+    font-size: 9px;
+    letter-spacing: 0.10em;
+    color: #C4A882;
+    font-weight: 500;
+    flex-shrink: 0;
+    width: 16px;
+  }
+  .toc-list a {
+    color: #4A4840;
+    text-decoration: none;
+    transition: color 0.2s;
+    line-height: 1.5;
+  }
+  .toc-list a:hover { color: #C4A882; }
+
+  /* ─── SECTION ─── */
+  .policy-section { margin-bottom: 44px; }
+  .policy-section:last-of-type { margin-bottom: 0; }
+
+  .section-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #C4A882;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 3.5vw, 26px);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: #1A1A18;
+    margin-bottom: 18px;
+    line-height: 1.2;
+  }
+  .section-title em { font-style: italic; color: #8C8578; }
+  .section-body {
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: #4A4840;
+  }
+  .section-body p + p { margin-top: 12px; }
+  .section-body strong { font-weight: 500; color: #1A1A18; }
+  .section-body a { color: #C4A882; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ─── ITEM LIST ─── */
+  .item-list {
+    list-style: none;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .item-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13.5px;
+    color: #4A4840;
+    line-height: 1.75;
+  }
+  .item-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #C4A882;
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    height: 1px;
+    background: rgba(26,26,24,0.07);
+    margin: 44px 0;
+  }
+
+  /* ─── RIGHTS TABLE ─── */
+  .rights-grid {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(26,26,24,0.08);
+  }
+  .rights-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    background: #fff;
+  }
+  @media (max-width: 540px) {
+    .rights-row { grid-template-columns: 1fr; }
+  }
+  .rights-row + .rights-row { border-top: 1px solid rgba(26,26,24,0.07); }
+  .rights-row-head {
+    background: rgba(196,168,130,0.07);
+    grid-column: 1 / -1;
+    display: none;
+  }
+  .rights-cell {
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #4A4840;
+  }
+  .rights-cell.label {
+    font-weight: 500;
+    color: #1A1A18;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    border-right: 1px solid rgba(26,26,24,0.07);
+  }
+  @media (max-width: 540px) {
+    .rights-cell.label { border-right: none; border-bottom: 1px solid rgba(26,26,24,0.07); padding-bottom: 8px; }
+    .rights-cell { padding: 10px 18px; }
+    .rights-cell.label { padding-top: 14px; }
+  }
+
+  /* ─── CONTACT CARD ─── */
+  .contact-card {
+    background: rgba(26,26,24,0.025);
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .contact-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 13px;
+    color: #4A4840;
+    line-height: 1.6;
+  }
+  .contact-label {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #8C8578;
+    flex-shrink: 0;
+    width: 64px;
+  }
+
+  /* ─── EFFECTIVE DATE CHIP ─── */
+  .effective-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(196,168,130,0.10);
+    border-radius: 100px;
+    padding: 5px 12px;
+    font-size: 11px;
+    color: #8C8578;
+    letter-spacing: 0.06em;
+    margin-bottom: 36px;
+  }
+  .effective-chip span { color: #C4A882; font-weight: 500; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 32px 24px 40px;
+    border-top: 1px solid rgba(26,26,24,0.07);
+    margin-top: 0;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: #8C8578;
+    margin-bottom: 8px;
+  }
+  .footer-note {
+    font-size: 11px;
+    color: rgba(26,26,24,0.30);
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+  }
+  .footer-note a { color: #C4A882; text-decoration: none; }
+  .footer-note a:hover { text-decoration: underline; }
+
+  /* ─── RESPONSIVE ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .policy-card { animation: fadeUp 0.4s ease; }
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <div class="header-logo">
+      <div class="header-logo-name">12 Dugdale Avenue</div>
+      <div class="header-logo-sub">Beeton, Ontario · For Lease</div>
+    </div>
+    <a href="rental-application.html" class="header-back" aria-label="Return to rental application">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15,18 9,12 15,6"/></svg>
+      <span>Application</span>
+    </a>
+  </div>
+  <div style="height:2px;background:rgba(26,26,24,0.08);"><div style="height:100%;width:100%;background:rgba(196,168,130,0.35);"></div></div>
+</header>
+
+<!-- ─── MAIN ─── -->
+<main>
+
+  <div class="intro-hero">
+    <p class="intro-eyebrow">Legal &amp; Privacy</p>
+    <h1 class="intro-headline">Privacy <em>Policy</em></h1>
+    <p class="intro-body">This policy explains how personal information collected through the rental application for 12 Dugdale Avenue, Beeton is handled, stored, and protected.</p>
+  </div>
+
+  <div class="effective-chip" aria-label="Effective date">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Effective date: <span>June 2025</span> &nbsp;·&nbsp; Jurisdiction: <span>Ontario, Canada</span>
+  </div>
+
+  <div class="policy-card" role="main">
+
+    <div class="notice-banner" role="note" aria-label="Regulatory compliance notice">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>This policy is governed by the <strong>Personal Information Protection and Electronic Documents Act (PIPEDA)</strong>, the <strong>Ontario Human Rights Code (OHRC)</strong>, and the <strong>Residential Tenancies Act, 2006 (RTA)</strong>. By submitting a rental application, you acknowledge and consent to the practices described herein.</span>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-label">Contents</p>
+      <ol class="toc-list">
+        <li><span class="toc-num">01</span><a href="#s1">Who We Are &amp; Scope of This Policy</a></li>
+        <li><span class="toc-num">02</span><a href="#s2">Information We Collect</a></li>
+        <li><span class="toc-num">03</span><a href="#s3">Purpose of Collection</a></li>
+        <li><span class="toc-num">04</span><a href="#s4">Legal Basis &amp; Consent</a></li>
+        <li><span class="toc-num">05</span><a href="#s5">How We Use Your Information</a></li>
+        <li><span class="toc-num">06</span><a href="#s6">Disclosure to Third Parties</a></li>
+        <li><span class="toc-num">07</span><a href="#s7">Credit &amp; Background Checks</a></li>
+        <li><span class="toc-num">08</span><a href="#s8">Retention &amp; Destruction</a></li>
+        <li><span class="toc-num">09</span><a href="#s9">Security Safeguards</a></li>
+        <li><span class="toc-num">10</span><a href="#s10">Your Rights Under PIPEDA</a></li>
+        <li><span class="toc-num">11</span><a href="#s11">Ontario Human Rights Protections</a></li>
+        <li><span class="toc-num">12</span><a href="#s12">Cookies &amp; Form Processors</a></li>
+        <li><span class="toc-num">13</span><a href="#s13">Contact &amp; Complaints</a></li>
+      </ol>
+    </nav>
+
+    <!-- ─── SECTION 1 ─── -->
+    <section class="policy-section" id="s1" aria-labelledby="s1-title">
+      <p class="section-eyebrow">01</p>
+      <h2 class="section-title" id="s1-title">Who We Are &amp; <em>Scope</em></h2>
+      <div class="section-body">
+        <p>The landlord or property manager of <strong>12 Dugdale Avenue, Beeton, Ontario</strong> (referred to throughout as <strong>"we," "us,"</strong> or <strong>"the Landlord"</strong>) is responsible for the personal information collected through this rental application.</p>
+        <p>This policy applies solely to information collected via the online rental application form associated with this property. It does not apply to any third-party websites or services that may be linked from this application.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 2 ─── -->
+    <section class="policy-section" id="s2" aria-labelledby="s2-title">
+      <p class="section-eyebrow">02</p>
+      <h2 class="section-title" id="s2-title">Information <em>We Collect</em></h2>
+      <div class="section-body">
+        <p>We collect only the personal information that is reasonably necessary to evaluate your tenancy application. This may include:</p>
+        <ul class="item-list" aria-label="Types of information collected">
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Identity information</strong> — full legal name, date of birth, government-issued identification type (e.g. driver's licence, passport)</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Contact information</strong> — email address, phone number</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Residential history</strong> — current and previous addresses, length of stay, landlord references</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Employment &amp; income information</strong> — employer name, job title, employment status, gross annual income, supporting documents such as pay stubs or T4s</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Financial documents</strong> — recent bank statements or proof of income, uploaded voluntarily by the applicant</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Occupancy information</strong> — number of occupants, pets, vehicles</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Co-applicant information</strong> — the same categories listed above, for any co-applicant added to the form</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>References</strong> — names and phone numbers of personal or professional references</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Electronic signature</strong> — typed name and date, constituting acknowledgement of consents on the application</span></li>
+        </ul>
+        <p style="margin-top:16px;">We do <strong>not</strong> collect Social Insurance Numbers (SIN), full credit card numbers, or any biometric information through this form.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 3 ─── -->
+    <section class="policy-section" id="s3" aria-labelledby="s3-title">
+      <p class="section-eyebrow">03</p>
+      <h2 class="section-title" id="s3-title">Purpose of <em>Collection</em></h2>
+      <div class="section-body">
+        <p>Under PIPEDA Principle 3 (Identifying Purposes), we are required to identify the purpose for which we collect personal information before or at the time of collection. Information collected through this application is used exclusively for the following purposes:</p>
+        <ul class="item-list" aria-label="Purposes for data collection">
+          <li><span class="item-dot" aria-hidden="true"></span><span>To assess your suitability as a tenant for the residential unit</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>To verify your identity, employment, and income</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>To conduct credit checks via Equifax or TransUnion, with your explicit consent</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>To contact your references to verify your tenancy history and character</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>To communicate with you regarding the outcome of your application</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>To prepare a lease agreement should your application be accepted</span></li>
+        </ul>
+        <p style="margin-top:16px;">We will not use your information for any purpose beyond these without obtaining your additional consent.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 4 ─── -->
+    <section class="policy-section" id="s4" aria-labelledby="s4-title">
+      <p class="section-eyebrow">04</p>
+      <h2 class="section-title" id="s4-title">Legal Basis &amp; <em>Consent</em></h2>
+      <div class="section-body">
+        <p>The legal basis for collecting and processing your personal information is your <strong>express, informed consent</strong>, given at the time of application submission via the consent checkboxes on the application form.</p>
+        <p>Under PIPEDA, consent must be meaningful. You have the right to withdraw consent at any time, subject to legal or contractual restrictions and reasonable notice. Withdrawal of consent may mean we are unable to process or continue reviewing your application.</p>
+        <p>To withdraw consent, please contact us using the information in Section 13 of this policy.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 5 ─── -->
+    <section class="policy-section" id="s5" aria-labelledby="s5-title">
+      <p class="section-eyebrow">05</p>
+      <h2 class="section-title" id="s5-title">How We Use Your <em>Information</em></h2>
+      <div class="section-body">
+        <p>Your information will be used only for the purposes stated in Section 3. Specifically:</p>
+        <ul class="item-list" aria-label="How information is used">
+          <li><span class="item-dot" aria-hidden="true"></span><span>Application submissions are received and stored through <strong>FormBold</strong>, a third-party secure form-processing service (see Section 12)</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Information is reviewed only by the Landlord or their authorized property manager</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Uploaded documents are used solely to verify the information provided in the form</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Reference contacts will be called or emailed to verify the information you have provided</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>If your application is successful, relevant information will be incorporated into a written lease agreement under the <em>Residential Tenancies Act, 2006</em></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 6 ─── -->
+    <section class="policy-section" id="s6" aria-labelledby="s6-title">
+      <p class="section-eyebrow">06</p>
+      <h2 class="section-title" id="s6-title">Disclosure to <em>Third Parties</em></h2>
+      <div class="section-body">
+        <p>We do <strong>not sell, rent, or trade</strong> your personal information to any third party. Disclosure is limited strictly to the following circumstances:</p>
+        <ul class="item-list" aria-label="Third party disclosures">
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Credit bureaus</strong> (Equifax Canada and/or TransUnion Canada) — solely to conduct a credit check, with your prior written consent</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>FormBold</strong> — our form processing service, which transmits and stores your submission data on our behalf (see Section 12)</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Legal obligation</strong> — if required by law, court order, or a lawful request from a government authority</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Property management</strong> — if a licensed property manager acts on behalf of the Landlord in evaluating applications, they are bound by equivalent privacy obligations</span></li>
+        </ul>
+        <p style="margin-top:16px;">In all cases of disclosure, we take steps to ensure that third parties provide a comparable level of protection for your personal information.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 7 ─── -->
+    <section class="policy-section" id="s7" aria-labelledby="s7-title">
+      <p class="section-eyebrow">07</p>
+      <h2 class="section-title" id="s7-title">Credit &amp; Background <em>Checks</em></h2>
+      <div class="section-body">
+        <p>With your explicit consent (obtained via the consent checkbox on the application), we may obtain a consumer credit report from <strong>Equifax Canada</strong> or <strong>TransUnion Canada</strong>. This is a <em>soft inquiry</em> for the purpose of tenant screening and does not affect your credit score.</p>
+        <p>We do <strong>not</strong> conduct criminal background checks as part of this application process. Under the <strong>Ontario Human Rights Code</strong>, making tenancy decisions based on a criminal record unrelated to the tenancy would constitute prohibited discrimination.</p>
+        <p>Credit information obtained will be used solely to assess financial suitability and will not be retained beyond the period necessary for the application decision.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 8 ─── -->
+    <section class="policy-section" id="s8" aria-labelledby="s8-title">
+      <p class="section-eyebrow">08</p>
+      <h2 class="section-title" id="s8-title">Retention &amp; <em>Destruction</em></h2>
+      <div class="section-body">
+        <p>Under PIPEDA Principle 5 (Limiting Use, Disclosure, and Retention), personal information must only be retained as long as necessary to fulfil the identified purposes.</p>
+        <ul class="item-list" aria-label="Retention periods">
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Unsuccessful applications</strong> — information is securely and permanently deleted within <strong>90 days</strong> of the application decision being communicated to you</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Successful applications</strong> — information necessary for the lease and tenancy management will be retained for the duration of the tenancy and for a reasonable period thereafter (up to 7 years), as required by applicable law and accounting obligations</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Uploaded documents</strong> — income and ID documents are deleted as soon as the application decision is made, unless required for lease execution</span></li>
+        </ul>
+        <p style="margin-top:16px;">Destruction is carried out by permanent deletion from all systems and secure shredding of any printed copies.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 9 ─── -->
+    <section class="policy-section" id="s9" aria-labelledby="s9-title">
+      <p class="section-eyebrow">09</p>
+      <h2 class="section-title" id="s9-title">Security <em>Safeguards</em></h2>
+      <div class="section-body">
+        <p>We implement security measures appropriate to the sensitivity of the information, consistent with PIPEDA Principle 7 (Safeguards). These include:</p>
+        <ul class="item-list" aria-label="Security measures">
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>TLS encryption in transit</strong> — all data submitted through the form is transmitted over HTTPS/TLS</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Access controls</strong> — only the Landlord and authorized property manager have access to submitted application data</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>Third-party security</strong> — FormBold maintains its own security practices, including encrypted storage and access controls (see Section 12)</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span><strong>No physical distribution</strong> — applications are not printed or shared outside of the digital review process unless strictly necessary</span></li>
+        </ul>
+        <p style="margin-top:16px;">In the event of a breach of security safeguards that creates a real risk of significant harm to you, we will notify you and the <strong>Office of the Privacy Commissioner of Canada (OPC)</strong> as required under PIPEDA's breach reporting obligations.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 10 ─── -->
+    <section class="policy-section" id="s10" aria-labelledby="s10-title">
+      <p class="section-eyebrow">10</p>
+      <h2 class="section-title" id="s10-title">Your Rights Under <em>PIPEDA</em></h2>
+      <div class="section-body">
+        <p>As an individual whose personal information we hold, you have the following rights under PIPEDA. To exercise any of these rights, please contact us (see Section 13).</p>
+        <div class="rights-grid" role="table" aria-label="Your rights under PIPEDA">
+          <div class="rights-row" role="row">
+            <div class="rights-cell label" role="rowheader">Right of Access</div>
+            <div class="rights-cell" role="cell">You may request access to the personal information we hold about you and receive an account of how it has been used and disclosed. We will respond within 30 days of receiving your request.</div>
+          </div>
+          <div class="rights-row" role="row">
+            <div class="rights-cell label" role="rowheader">Right to Correction</div>
+            <div class="rights-cell" role="cell">If the personal information we hold is inaccurate or incomplete, you may request that we amend it. We will take reasonable steps to correct the information and, where appropriate, notify third parties to whom it was disclosed.</div>
+          </div>
+          <div class="rights-row" role="row">
+            <div class="rights-cell label" role="rowheader">Right to Withdraw Consent</div>
+            <div class="rights-cell" role="cell">You may withdraw your consent to the collection, use, or disclosure of your information at any time, subject to legal or contractual restrictions and reasonable notice. Withdrawal may limit our ability to process your application.</div>
+          </div>
+          <div class="rights-row" role="row">
+            <div class="rights-cell label" role="rowheader">Right to Complain</div>
+            <div class="rights-cell" role="cell">You have the right to challenge our compliance with PIPEDA and file a complaint with the Office of the Privacy Commissioner of Canada (OPC) at <a href="https://www.priv.gc.ca" target="_blank" rel="noopener noreferrer">priv.gc.ca</a> or 1-800-282-1376.</div>
+          </div>
+          <div class="rights-row" role="row">
+            <div class="rights-cell label" role="rowheader">Right to Explanation</div>
+            <div class="rights-cell" role="cell">If your application is declined, you may request an explanation of the general factors that led to the decision, to the extent we are able to provide one consistent with the privacy interests of others.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 11 ─── -->
+    <section class="policy-section" id="s11" aria-labelledby="s11-title">
+      <p class="section-eyebrow">11</p>
+      <h2 class="section-title" id="s11-title">Ontario Human Rights <em>Protections</em></h2>
+      <div class="section-body">
+        <p>The <strong>Ontario Human Rights Code</strong> prohibits landlords from discriminating against applicants on the basis of any of the following protected grounds:</p>
+        <ul class="item-list" aria-label="Protected grounds under Ontario Human Rights Code">
+          <li><span class="item-dot" aria-hidden="true"></span><span>Race, colour, ancestry, place of origin, or ethnic origin</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Citizenship or immigration status</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Creed (religion)</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Sex, gender identity, or gender expression</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Sexual orientation</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Age (18 years or older)</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Marital or family status</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Disability</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Receipt of public assistance (source of income)</span></li>
+          <li><span class="item-dot" aria-hidden="true"></span><span>Record of offences for which a pardon has been granted</span></li>
+        </ul>
+        <p style="margin-top:16px;">Tenancy decisions are made solely on the basis of <strong>financial qualification, rental history, and reference verification</strong>. No information collected through this form is used, and no questions are asked, for purposes that would discriminate on any of the above grounds.</p>
+        <p>If you believe you have been discriminated against in connection with this application, you may file a complaint with the <strong>Human Rights Tribunal of Ontario</strong> at <a href="https://www.hrto.ca" target="_blank" rel="noopener noreferrer">hrto.ca</a> or contact the <strong>Human Rights Legal Support Centre</strong> at 1-866-625-5179.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 12 ─── -->
+    <section class="policy-section" id="s12" aria-labelledby="s12-title">
+      <p class="section-eyebrow">12</p>
+      <h2 class="section-title" id="s12-title">Cookies &amp; <em>Form Processors</em></h2>
+      <div class="section-body">
+        <p>This application form uses <strong>FormBold</strong> (<a href="https://formbold.com" target="_blank" rel="noopener noreferrer">formbold.com</a>) to securely receive and transmit form submissions. FormBold processes data on our behalf and is required to maintain appropriate safeguards for the personal information it handles.</p>
+        <p>The application page does not use advertising cookies, tracking pixels, or analytics scripts. The only external resource loaded is the <strong>Google Fonts</strong> API, which retrieves font files. Google may log this request in accordance with its own privacy policy, which does not include personal data from your application.</p>
+        <p>FormBold's own privacy policy applies to the handling of data on their servers and can be reviewed at <a href="https://formbold.com/privacy" target="_blank" rel="noopener noreferrer">formbold.com/privacy</a>.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- ─── SECTION 13 ─── -->
+    <section class="policy-section" id="s13" aria-labelledby="s13-title">
+      <p class="section-eyebrow">13</p>
+      <h2 class="section-title" id="s13-title">Contact &amp; <em>Complaints</em></h2>
+      <div class="section-body">
+        <p>For any questions, access requests, corrections, or concerns regarding this Privacy Policy or the handling of your personal information, please contact the designated privacy contact for this property:</p>
+        <div class="contact-card" role="contentinfo" aria-label="Contact information">
+          <div class="contact-row">
+            <span class="contact-label">Property</span>
+            <span>12 Dugdale Avenue, Beeton, Ontario</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Contact</span>
+            <span>Landlord / Property Manager</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Method</span>
+            <span>Via the email address provided in your application acknowledgement</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Response</span>
+            <span>Within 30 days of receiving your request, as required under PIPEDA</span>
+          </div>
+        </div>
+        <p style="margin-top:20px;">If you are not satisfied with our response, you have the right to escalate your complaint to the <strong>Office of the Privacy Commissioner of Canada</strong>:</p>
+        <div class="contact-card" style="margin-top:12px;" role="contentinfo" aria-label="Privacy Commissioner contact">
+          <div class="contact-row">
+            <span class="contact-label">OPC Website</span>
+            <span><a href="https://www.priv.gc.ca" target="_blank" rel="noopener noreferrer">priv.gc.ca</a></span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Phone</span>
+            <span>1-800-282-1376 (toll-free)</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Mail</span>
+            <span>30 Victoria Street, Gatineau, QC  K1A 1H3</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" role="separator"></div>
+
+    <!-- AMENDMENTS NOTE -->
+    <section class="policy-section" style="margin-bottom:0;" aria-labelledby="amend-title">
+      <p class="section-eyebrow">Amendments</p>
+      <h2 class="section-title" id="amend-title">Changes to This <em>Policy</em></h2>
+      <div class="section-body">
+        <p>We reserve the right to update this Privacy Policy at any time. Changes will be reflected on this page with an updated effective date. If material changes are made that affect how your information is used, we will make reasonable efforts to notify applicants whose information we hold. Continued use of the rental application following any changes constitutes your acceptance of the updated policy.</p>
+      </div>
+    </section>
+
+  </div><!-- /policy-card -->
+
+  <p style="font-size:11px;color:rgba(26,26,24,0.32);text-align:center;margin-top:28px;line-height:1.7;letter-spacing:0.03em;">
+    This policy is provided for informational purposes. For legal advice specific to your situation, consult a qualified Ontario lawyer or paralegal. This document does not constitute legal advice.
+  </p>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p class="footer-name">12 Dugdale Avenue · Beeton, Ontario · For Lease</p>
+  <p class="footer-note">
+    Governed by <a href="https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/" target="_blank" rel="noopener noreferrer">PIPEDA</a> &nbsp;·&nbsp;
+    <a href="https://www.ohrc.on.ca/en/ontario-human-rights-code" target="_blank" rel="noopener noreferrer">Ontario Human Rights Code</a> &nbsp;·&nbsp;
+    <a href="https://www.ontario.ca/laws/statute/06r17" target="_blank" rel="noopener noreferrer">Residential Tenancies Act, 2006</a>
+  </p>
+</footer>
+
+</body>
+</html>
