@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Rental Application — 12 Dugdale Avenue, Beeton</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #F7F4EF;
+    color: #1A1A18;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ─── HEADER ─── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(247,244,239,0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(26,26,24,0.08);
+  }
+  .header-inner {
+    max-width: 100%;
+    padding: 16px 24px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .header-logo { flex-shrink: 0; }
+  .header-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: #1A1A18;
+    white-space: nowrap;
+  }
+  .header-logo-sub {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8C8578;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+
+  /* ─── STEP PILLS (single row, compact) ─── */
+  .step-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+  .step-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 100px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: default;
+    white-space: nowrap;
+  }
+  .step-pill .pill-label { display: inline; }
+  @media (max-width: 520px) {
+    .step-pill .pill-label { display: none; }
+    .step-pill { padding: 5px 8px; }
+  }
+  .step-pill.active { background: #1A1A18; color: #F7F4EF; }
+  .step-pill.completed { background: rgba(196,168,130,0.15); color: #C4A882; }
+  .step-pill.inactive { color: rgba(26,26,24,0.28); }
+  .step-num {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .step-pill.active .step-num { background: rgba(247,244,239,0.18); }
+  .step-pill.completed .step-num { background: #C4A882; color: #fff; }
+  .step-pill.inactive .step-num { background: rgba(26,26,24,0.08); color: rgba(26,26,24,0.28); }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-track {
+    height: 2px;
+    background: rgba(26,26,24,0.08);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: #C4A882;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 25%;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  @media (min-width: 640px) { main { padding: 52px 32px 96px; } }
+
+  /* ─── INTRO HERO ─── */
+  .intro-hero { margin-bottom: 40px; }
+  .intro-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #C4A882;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .intro-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .intro-headline em { font-style: italic; color: #8C8578; }
+  .intro-body {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #4A4840;
+    max-width: 540px;
+  }
+
+  /* ─── FORM CARD ─── */
+  .form-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(26,26,24,0.04), 0 8px 32px rgba(26,26,24,0.07);
+    padding: 36px 24px;
+  }
+  @media (min-width: 600px) { .form-card { padding: 52px 52px; } }
+
+  /* ─── SECURITY NOTICE ─── */
+  .security-notice {
+    background: rgba(196,168,130,0.08);
+    border: 1px solid rgba(196,168,130,0.25);
+    border-radius: 6px;
+    padding: 13px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    font-size: 12px;
+    color: #8C8578;
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+  .security-notice svg { flex-shrink: 0; margin-top: 1px; }
+
+  /* ─── STEP PANELS ─── */
+  .step-panel { display: none; }
+  .step-panel.active { display: block; animation: fadeUp 0.35s ease; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION LABELS / TITLES ─── */
+  .form-section-label {
+    font-size: 10px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: #C4A882;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .form-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 4vw, 28px);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: #1A1A18;
+    margin-bottom: 32px;
+    line-height: 1.2;
+  }
+  .form-section-title em { font-style: italic; color: #8C8578; }
+
+  .sub-section-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #C4A882;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  /* ─── DIVIDERS ─── */
+  .section-divider {
+    height: 1px;
+    background: rgba(26,26,24,0.07);
+    margin: 36px 0;
+  }
+
+  /* ─── GRIDS ─── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 28px;
+  }
+  @media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 24px;
+  }
+  @media (max-width: 680px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 420px) { .grid-3 { grid-template-columns: 1fr; } }
+
+  /* ─── FIELD WRAP ─── */
+  .field-wrap {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .field-wrap label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #8C8578;
+    font-weight: 500;
+    margin-bottom: 8px;
+    transition: color 0.2s ease;
+  }
+  .field-wrap:focus-within label { color: #1A1A18; }
+  .field-wrap.has-error label { color: #C0392B; }
+
+  /* CRITICAL: font-size 16px prevents iOS zoom on focus */
+  .field-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid rgba(26,26,24,0.15);
+    padding: 10px 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px; /* prevents iOS auto-zoom */
+    font-weight: 300;
+    color: #1A1A18;
+    outline: none;
+    transition: border-color 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0; /* prevents iOS rounding */
+    text-align: left;
+  }
+  .field-input::placeholder { color: rgba(26,26,24,0.22); font-weight: 300; }
+  .field-input:focus { border-bottom-color: #1A1A18; }
+  .field-wrap.has-error .field-input { border-bottom-color: #C0392B; }
+
+  /* Date & month inputs: force left-align text on iOS */
+  input[type="date"],
+  input[type="month"] {
+    text-align: left;
+    -webkit-text-align: left;
+    display: block;
+  }
+  input[type="date"]::-webkit-date-and-time-value,
+  input[type="month"]::-webkit-date-and-time-value {
+    text-align: left;
+  }
+
+  /* Select arrow */
+  select.field-input {
+    cursor: pointer;
+    padding-right: 26px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238C8578' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 2px center;
+    background-size: 10px;
+  }
+
+  textarea.field-input {
+    resize: vertical;
+    min-height: 80px;
+    padding: 10px 12px;
+    border: 1.5px solid rgba(26,26,24,0.15);
+    border-radius: 4px;
+  }
+  textarea.field-input:focus { border-color: #1A1A18; }
+
+  .error-msg {
+    font-size: 11px;
+    color: #C0392B;
+    margin-top: 6px;
+    display: none;
+    letter-spacing: 0.02em;
+  }
+  .field-wrap.has-error .error-msg { display: block; }
+
+  .legal-note {
+    font-size: 11px;
+    color: rgba(26,26,24,0.38);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    font-style: italic;
+    margin-top: 6px;
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn-primary {
+    background: #1A1A18;
+    color: #F7F4EF;
+    border: none;
+    padding: 15px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-primary:hover { background: #2C2C2A; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,26,24,0.16); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-secondary {
+    background: transparent;
+    color: #1A1A18;
+    border: 1.5px solid rgba(26,26,24,0.18);
+    padding: 13px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-secondary:hover { border-color: #1A1A18; background: rgba(26,26,24,0.04); }
+
+  .btn-ghost {
+    background: transparent;
+    color: #C4A882;
+    border: 1.5px dashed rgba(196,168,130,0.4);
+    padding: 11px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-ghost:hover { border-color: #C4A882; background: rgba(196,168,130,0.06); }
+
+  /* Nav row */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 44px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .nav-row-end { justify-content: flex-end; }
+
+  /* ─── NO PRIOR RENTAL CHECKBOX ─── */
+  .no-prior-rental-label {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #8C8578;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+  }
+  .no-prior-rental-label input[type="checkbox"] {
+    width: 13px;
+    height: 13px;
+    min-width: 13px;
+    margin-top: 2px;
+    accent-color: #8C8578;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  .no-prior-rental-label:hover { color: #4A4840; }
+
+
+  .upload-zone {
+    border: 1.5px dashed rgba(26,26,24,0.18);
+    border-radius: 6px;
+    padding: 36px 24px;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+  }
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: #C4A882;
+    background: rgba(196,168,130,0.04);
+  }
+  .upload-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    font-size: 16px; /* prevent iOS zoom */
+  }
+  .upload-zone p { pointer-events: none; }
+
+  .file-list { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .file-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(26,26,24,0.05);
+    border-radius: 100px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: #4A4840;
+    animation: fadeUp 0.2s ease;
+  }
+  .file-pill button {
+    background: none; border: none; cursor: pointer; color: #8C8578;
+    padding: 0; font-size: 15px; line-height: 1;
+    transition: color 0.2s ease;
+  }
+  .file-pill button:hover { color: #C0392B; }
+
+  /* ─── CHECKBOX ─── */
+  .check-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    cursor: pointer;
+    padding: 2px 0;
+  }
+  .check-wrap input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid rgba(26,26,24,0.25);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    background: transparent;
+  }
+  .check-wrap input[type="checkbox"]:checked {
+    background: #1A1A18;
+    border-color: #1A1A18;
+  }
+  .check-wrap input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 5px;
+    width: 5px; height: 9px;
+    border: 1.5px solid #F7F4EF;
+    border-top: none; border-left: none;
+    transform: rotate(45deg);
+  }
+  .check-label { font-size: 13px; line-height: 1.65; color: #1A1A18; font-weight: 300; }
+  .check-label strong { font-weight: 500; }
+  .check-label a { color: #C4A882; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ─── CO-APPLICANT ─── */
+  .coapplicant-block {
+    border: 1.5px solid rgba(196,168,130,0.22);
+    border-radius: 6px;
+    padding: 28px 24px;
+    margin-top: 20px;
+    background: rgba(196,168,130,0.03);
+    animation: fadeUp 0.3s ease;
+  }
+  .coapplicant-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  /* ─── REFERENCE BLOCK ─── */
+  .reference-block { padding-top: 0; }
+  .reference-block + .reference-block {
+    border-top: 1px solid rgba(26,26,24,0.07);
+    padding-top: 32px;
+    margin-top: 32px;
+  }
+
+  /* ─── CONSENT BOXES ─── */
+  .consent-box {
+    border: 1.5px solid rgba(196,168,130,0.28);
+    border-radius: 6px;
+    padding: 28px 24px;
+    margin-bottom: 28px;
+    background: rgba(196,168,130,0.03);
+  }
+  .privacy-box {
+    background: rgba(26,26,24,0.03);
+    border-radius: 6px;
+    padding: 24px;
+    margin-bottom: 28px;
+  }
+  .public-records-box {
+    background: rgba(196,168,130,0.04);
+    border: 1px solid rgba(196,168,130,0.18);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+
+  /* ─── SUCCESS ─── */
+  .success-screen { display: none; }
+  .success-screen.active { display: block; animation: fadeUp 0.5s ease; }
+  .success-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(196,168,130,0.10);
+    border: 1.5px solid rgba(196,168,130,0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+  .what-next-step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .what-next-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #C4A882;
+    color: #fff;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ─── FOOTER NOTE (below card) ─── */
+  .below-card-note {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 11px;
+    color: #8C8578;
+    letter-spacing: 0.03em;
+  }
+  .below-card-note a { color: #C4A882; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid rgba(26,26,24,0.07);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: #8C8578;
+    margin-bottom: 8px;
+  }
+  .footer-privacy {
+    font-size: 11px;
+    color: rgba(26,26,24,0.28);
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+  }
+  .footer-privacy a { color: #C4A882; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(26,26,24,0.12); border-radius: 2px; }
+
+  /* ─── SPIN KEYFRAME ─── */
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <div class="header-logo-name">12 Dugdale Avenue</div>
+      <div class="header-logo-sub">Rental Application · Beeton, ON</div>
+    </div>
+    <nav class="step-nav" aria-label="Application steps">
+      <div class="step-pill active" data-step="1">
+        <span class="step-num">1</span><span class="pill-label">Personal</span>
+      </div>
+      <div class="step-pill inactive" data-step="2">
+        <span class="step-num">2</span><span class="pill-label">Financial</span>
+      </div>
+      <div class="step-pill inactive" data-step="3">
+        <span class="step-num">3</span><span class="pill-label">References</span>
+      </div>
+      <div class="step-pill inactive" data-step="4">
+        <span class="step-num">4</span><span class="pill-label">Consent</span>
+      </div>
+    </nav>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</header>
+
+<!-- ─── MAIN ─── -->
+<main>
+
+  <div class="intro-hero" id="introHero">
+    <p class="intro-eyebrow">Rental Application</p>
+    <h1 class="intro-headline">Apply for<br><em>your new home.</em></h1>
+    <p class="intro-body">Complete each section thoroughly to support a smooth review. All information is handled in accordance with Ontario privacy law and processed only to evaluate your tenancy application.</p>
+  </div>
+
+  <!-- ─── FORM CARD ─── -->
+  <form class="form-card" id="mainCard" novalidate>
+
+    <div class="security-notice">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.5" aria-hidden="true">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <span>Your information is collected solely to evaluate this tenancy application, in compliance with <strong>PIPEDA</strong> and the <strong>Ontario Human Rights Code</strong>. We will not collect or use prohibited grounds (race, religion, sex, disability, family status, etc.). Information is never sold or shared with third parties.</span>
+    </div>
+
+    <!-- ═══════════ STEP 1: PERSONAL ═══════════ -->
+    <div class="step-panel active" id="step1">
+      <p class="form-section-label">Step 1 of 4</p>
+      <h2 class="form-section-title">Personal<br><em>Information</em></h2>
+
+      <p class="sub-section-label">Primary Applicant</p>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="firstName">First Name *</label>
+          <input class="field-input" type="text" id="firstName" name="first_name" placeholder="Given name" aria-label="First name" aria-required="true" autocomplete="given-name">
+          <div class="error-msg" role="alert">Please enter your first name.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="lastName">Last Name *</label>
+          <input class="field-input" type="text" id="lastName" name="last_name" placeholder="Family name" aria-label="Last name" aria-required="true" autocomplete="family-name">
+          <div class="error-msg" role="alert">Please enter your last name.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="email">Email Address *</label>
+          <input class="field-input" type="email" id="email" name="email" placeholder="you@example.com" aria-label="Email address" aria-required="true" autocomplete="email">
+          <div class="error-msg" role="alert">Please enter a valid email address.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="phone">Phone Number *</label>
+          <input class="field-input" type="tel" id="phone" name="phone" placeholder="(416) 555-0100" aria-label="Phone number" aria-required="true" autocomplete="tel">
+          <div class="error-msg" role="alert">Please enter your phone number.</div>
+        </div>
+      </div>
+
+      <div class="field-wrap" style="max-width:320px;">
+        <label for="moveInDate">Desired Move-In Date *</label>
+        <input class="field-input" type="date" id="moveInDate" name="move_in_date" aria-label="Desired move-in date" aria-required="true">
+        <div class="error-msg" role="alert">Please select a move-in date.</div>
+        <p class="legal-note">Property is available from mid-June 2025.</p>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">About This Application</p>
+
+      <div class="field-wrap" style="max-width:320px;">
+        <label for="intendedStay">How long do you intend to stay? *</label>
+        <select class="field-input" id="intendedStay" name="intended_stay" aria-label="Intended length of stay" aria-required="true">
+          <option value="">Select…</option>
+          <option value="Under 1 year">Less than 1 year</option>
+          <option value="1 year">1 year (standard lease)</option>
+          <option value="2 years">2 years</option>
+          <option value="3+ years">3 or more years</option>
+          <option value="Long-term">Long-term — as long as possible</option>
+        </select>
+        <div class="error-msg" role="alert">Please indicate your intended length of stay.</div>
+      </div>
+
+      <div class="field-wrap">
+        <label for="propertyAttraction">What attracted you to this property? *</label>
+        <textarea class="field-input" id="propertyAttraction" name="property_attraction" placeholder="e.g. Location, space, neighbourhood, schools nearby…" rows="3" aria-label="What attracted you to this property" aria-required="true"></textarea>
+        <div class="error-msg" role="alert">Please share what attracted you to this property.</div>
+      </div>
+
+      <div class="field-wrap">
+        <label for="householdNote">Tell us about your household <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></label>
+        <textarea class="field-input" id="householdNote" name="household_note" placeholder="Please tell us a little about your household and what you're looking for in your next home." rows="3" aria-label="About your household"></textarea>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Occupants</p>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="numOccupants">Number of Occupants *</label>
+          <select class="field-input" id="numOccupants" name="num_occupants" aria-label="Number of occupants" aria-required="true" onchange="buildOccupantRows(parseInt(this.value)||0)">
+            <option value="">Select…</option>
+            <option value="1">1 — Just me</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 or more</option>
+          </select>
+          <div class="error-msg" role="alert">Please select number of occupants.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="hasPets">Do you have pets?</label>
+          <select class="field-input" id="hasPets" name="has_pets" aria-label="Pets">
+            <option value="">Select…</option>
+            <option value="none">No pets</option>
+            <option value="dog">Dog(s)</option>
+            <option value="cat">Cat(s)</option>
+            <option value="other">Other</option>
+            <option value="multiple">Multiple pets</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="occupantDetailsWrap" style="display:none;margin-bottom:28px;">
+        <!-- Occupant rows injected by JS -->
+      </div>
+
+      <div class="field-wrap" id="petDetailsWrap" style="display:none;">
+        <label for="petDetails">Pet Description</label>
+        <input class="field-input" type="text" id="petDetails" name="pet_details" placeholder="Breed, size, age…" aria-label="Pet description">
+      </div>
+
+      <div class="field-wrap" style="max-width:260px;">
+        <label for="numVehicles">Number of Vehicles</label>
+        <select class="field-input" id="numVehicles" name="num_vehicles" aria-label="Number of vehicles">
+          <option value="0">None</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3 or more</option>
+        </select>
+      </div>
+
+      <div id="vehicleDetailsWrap" style="display:none;">
+        <!-- Vehicle rows injected here by JS -->
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Care for Home</p>
+
+      <!-- Smoking & Vaping -->
+      <div style="border:1.5px solid rgba(196,168,130,0.22);border-radius:6px;padding:24px;margin-bottom:28px;background:rgba(196,168,130,0.02);">
+        <p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:18px;">Smoking &amp; Vaping</p>
+        <div class="field-wrap" style="margin-bottom:18px;">
+          <label for="smokingVaping">Does anyone in your household smoke or vape? *</label>
+          <select class="field-input" id="smokingVaping" name="smoking_vaping" aria-label="Smoking or vaping" aria-required="true" onchange="toggleSmokingDetails(this.value)">
+            <option value="">Select…</option>
+            <option value="No">No — nobody smokes or vapes</option>
+            <option value="Yes">Yes</option>
+          </select>
+          <div class="error-msg" role="alert">Please answer the smoking / vaping question.</div>
+        </div>
+        <div id="smokingDetailsWrap" style="display:none;">
+          <div class="grid-2">
+            <div class="field-wrap">
+              <label for="smokingSubstance">What is smoked or vaped?</label>
+              <select class="field-input" id="smokingSubstance" name="smoking_substance" aria-label="Smoking substance">
+                <option value="">Select…</option>
+                <option value="Tobacco only">Tobacco only</option>
+                <option value="Cannabis only">Cannabis only</option>
+                <option value="Both tobacco and cannabis">Both tobacco and cannabis</option>
+                <option value="Vaping / e-cigarette only">Vaping / e-cigarette only</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field-wrap">
+              <label for="smokingLocation">Where does smoking / vaping occur?</label>
+              <select class="field-input" id="smokingLocation" name="smoking_location" aria-label="Smoking location">
+                <option value="">Select…</option>
+                <option value="Outside only">Outside only</option>
+                <option value="Inside">Inside the home</option>
+                <option value="Both inside and outside">Both inside and outside</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vehicle & Property Use -->
+      <div style="border:1.5px solid rgba(196,168,130,0.22);border-radius:6px;padding:24px;margin-bottom:28px;background:rgba(196,168,130,0.02);">
+        <p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:18px;">Vehicle &amp; Property Use</p>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="commercialVehicles">Will any commercial vehicles be kept at the property? *</label>
+            <select class="field-input" id="commercialVehicles" name="commercial_vehicles" aria-label="Commercial vehicles" aria-required="true">
+              <option value="">Select…</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+            <div class="error-msg" role="alert">Please answer this question.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="recreationalVehicles">Will trailers, boats, RVs, or recreational vehicles be stored on-site? *</label>
+            <select class="field-input" id="recreationalVehicles" name="recreational_vehicles_onsite" aria-label="Recreational vehicles on-site" aria-required="true">
+              <option value="">Select…</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+            <div class="error-msg" role="alert">Please answer this question.</div>
+          </div>
+        </div>
+        <div class="field-wrap">
+          <label for="businessActivities">Will the property be used for any business activities? *</label>
+          <select class="field-input" id="businessActivities" name="business_activities" aria-label="Business activities at property" aria-required="true">
+            <option value="">Select…</option>
+            <option value="No">No</option>
+            <option value="Yes — remote / work from home (no clients on-site)">Yes — remote / work from home only (no clients on-site)</option>
+            <option value="Yes — clients or deliveries on-site">Yes — clients or deliveries on-site</option>
+          </select>
+          <div class="error-msg" role="alert">Please answer this question.</div>
+        </div>
+      </div>
+
+      <!-- Maintenance & Responsibility -->
+      <div style="border:1.5px solid rgba(196,168,130,0.22);border-radius:6px;padding:24px;margin-bottom:0;background:rgba(196,168,130,0.02);">
+        <p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:18px;">Maintenance &amp; Responsibility</p>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="maintenanceNotify">Are you willing to promptly notify the landlord of maintenance issues? *</label>
+            <select class="field-input" id="maintenanceNotify" name="maintenance_notify" aria-label="Maintenance notification" aria-required="true">
+              <option value="">Select…</option>
+              <option value="Yes">Yes, I agree</option>
+              <option value="No">No</option>
+            </select>
+            <div class="error-msg" role="alert">Please answer this question.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="minorConsumables">Are you comfortable replacing minor consumables (furnace filters, light bulbs, smoke detector batteries)? *</label>
+            <select class="field-input" id="minorConsumables" name="minor_consumables" aria-label="Minor consumables responsibility" aria-required="true">
+              <option value="">Select…</option>
+              <option value="Yes">Yes, I agree</option>
+              <option value="No">No</option>
+            </select>
+            <div class="error-msg" role="alert">Please answer this question.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Proof of Identity</p>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="idType">Government ID Type *</label>
+          <select class="field-input" id="idType" name="id_type" aria-label="Government ID type" aria-required="true">
+            <option value="">Select…</option>
+            <option value="drivers_license">Driver's Licence</option>
+            <option value="passport">Passport</option>
+            <option value="pr_card">Permanent Resident Card</option>
+            <option value="other">Other Government ID</option>
+          </select>
+          <div class="error-msg" role="alert">Please select an ID type.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="idNumber">ID Number</label>
+          <input class="field-input" type="text" id="idNumber" name="id_number" placeholder="Document number" aria-label="ID number">
+        </div>
+      </div>
+
+      <div class="field-wrap" id="idUploadWrap" style="margin-top:4px;">
+        <label>Upload Government ID <span style="color:#C0392B;">*</span></label>
+        <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents" style="margin-top:0;">
+          <input type="file" id="idDocsInput" name="id_documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+          </svg>
+          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop your ID, or tap to browse</p>
+          <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver's Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>
+        </div>
+        <div class="file-list" id="idFileList"></div>
+        <div class="error-msg" id="idUploadError" role="alert">Please upload a government-issued photo ID.</div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Current Address</p>
+
+      <div class="field-wrap">
+        <label for="currentAddress">Street Address *</label>
+        <input class="field-input" type="text" id="currentAddress" name="current_address" placeholder="123 Main Street" aria-label="Current street address" aria-required="true" autocomplete="street-address">
+        <div class="error-msg" role="alert">Please enter your current address.</div>
+      </div>
+
+      <div class="grid-3">
+        <div class="field-wrap">
+          <label for="currentCity">City *</label>
+          <input class="field-input" type="text" id="currentCity" name="current_city" placeholder="City" aria-label="City" aria-required="true" autocomplete="address-level2">
+          <div class="error-msg" role="alert">Required.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="currentProvince">Province *</label>
+          <select class="field-input" id="currentProvince" name="current_province" aria-label="Province" aria-required="true">
+            <option value="">Select…</option>
+            <option value="ON">Ontario</option>
+            <option value="AB">Alberta</option>
+            <option value="BC">British Columbia</option>
+            <option value="MB">Manitoba</option>
+            <option value="NB">New Brunswick</option>
+            <option value="NL">Newfoundland & Labrador</option>
+            <option value="NS">Nova Scotia</option>
+            <option value="NT">Northwest Territories</option>
+            <option value="NU">Nunavut</option>
+            <option value="PE">Prince Edward Island</option>
+            <option value="QC">Quebec</option>
+            <option value="SK">Saskatchewan</option>
+            <option value="YT">Yukon</option>
+          </select>
+          <div class="error-msg" role="alert">Required.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="currentPostal">Postal Code *</label>
+          <input class="field-input" type="text" id="currentPostal" name="current_postal" placeholder="L0L 1B0" aria-label="Postal code" aria-required="true" autocomplete="postal-code" maxlength="7">
+          <div class="error-msg" role="alert">Required.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="currentLengthOfStay">Length at Current Address *</label>
+          <select class="field-input" id="currentLengthOfStay" name="length_at_address" aria-label="Length at current address" aria-required="true">
+            <option value="">Select…</option>
+            <option value="under6">Less than 6 months</option>
+            <option value="6to12">6–12 months</option>
+            <option value="1to2">1–2 years</option>
+            <option value="2to5">2–5 years</option>
+            <option value="5plus">5+ years</option>
+          </select>
+          <div class="error-msg" role="alert">Required.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="reasonForLeaving">Reason for Leaving *</label>
+          <input class="field-input" type="text" id="reasonForLeaving" name="reason_for_leaving" placeholder="e.g. Relocation, end of lease…" aria-label="Reason for leaving" aria-required="true">
+          <div class="error-msg" role="alert">Please enter your reason for leaving.</div>
+        </div>
+      </div>
+
+      <div class="nav-row nav-row-end">
+        <button type="button" class="btn-primary" onclick="goToStep(2)">
+          Continue to Financials
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 2: FINANCIAL ═══════════ -->
+    <div class="step-panel" id="step2">
+      <p class="form-section-label">Step 2 of 4</p>
+      <h2 class="form-section-title">Financial<br><em>Qualification</em></h2>
+
+      <p class="sub-section-label">Employment Status</p>
+
+      <div class="field-wrap">
+        <label for="employmentStatus">Employment Type *</label>
+        <select class="field-input" id="employmentStatus" name="employment_status" aria-label="Employment type" aria-required="true">
+          <option value="">Select…</option>
+          <option value="Employed — Full-Time">Employed — Full-Time</option>
+          <option value="Employed — Part-Time">Employed — Part-Time</option>
+          <option value="Self-Employed">Self-Employed / Business Owner</option>
+          <option value="Contract / Freelance">Contract / Freelance</option>
+          <option value="Retired">Retired</option>
+          <option value="Student">Student</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="error-msg" role="alert">Please select employment type.</div>
+      </div>
+
+      <div id="employedSection" style="display:none;">
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="employerName">Employer Name *</label>
+            <input class="field-input" type="text" id="employerName" name="employer_name" placeholder="Company or organization" aria-label="Employer name">
+            <div class="error-msg" role="alert">Please enter your employer's name.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="jobTitle">Job Title / Position *</label>
+            <input class="field-input" type="text" id="jobTitle" name="job_title" placeholder="Your role" aria-label="Job title">
+            <div class="error-msg" role="alert">Please enter your job title.</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="employerPhone">Employer Phone *</label>
+            <input class="field-input" type="tel" id="employerPhone" name="employer_phone" placeholder="HR or manager number" aria-label="Employer phone" aria-required="true">
+            <div class="error-msg" role="alert">Please enter an employer phone number.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="employmentLength">Time with Employer *</label>
+            <select class="field-input" id="employmentLength" name="employment_length" aria-label="Time with employer" aria-required="true">
+              <option value="">Select…</option>
+              <option value="Under 6 months">Less than 6 months</option>
+              <option value="6–12 months">6–12 months</option>
+              <option value="1–3 years">1–3 years</option>
+              <option value="3–5 years">3–5 years</option>
+              <option value="5+ years">5+ years</option>
+            </select>
+            <div class="error-msg" role="alert">Please select your time with this employer.</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="grossIncome">Annual Gross Income *</label>
+            <input class="field-input" type="text" id="grossIncome" name="gross_income" placeholder="$0,000" aria-label="Annual gross income" aria-required="true">
+            <div class="error-msg" role="alert">Please enter your income.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="payFrequency">Pay Frequency</label>
+            <select class="field-input" id="payFrequency" name="pay_frequency" aria-label="Pay frequency">
+              <option value="">Select…</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Bi-weekly">Bi-weekly</option>
+              <option value="Semi-monthly">Semi-monthly</option>
+              <option value="Monthly">Monthly</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="contractSection" style="display:none;">
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="contractClient">Primary Client / Company</label>
+            <input class="field-input" type="text" id="contractClient" name="contract_client" placeholder="Main client or company" aria-label="Contract client">
+          </div>
+          <div class="field-wrap">
+            <label for="contractIncome">Annual Gross Income *</label>
+            <input class="field-input" type="text" id="contractIncome" name="contract_income" placeholder="$0,000" aria-label="Contract income" aria-required="true">
+            <div class="error-msg" role="alert">Please enter your income.</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="selfEmployedSection" style="display:none;">
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="businessName">Business Name</label>
+            <input class="field-input" type="text" id="businessName" name="business_name" placeholder="Registered business name" aria-label="Business name">
+          </div>
+          <div class="field-wrap">
+            <label for="businessType">Type of Business</label>
+            <input class="field-input" type="text" id="businessType" name="business_type" placeholder="Industry / nature of work" aria-label="Business type">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="selfIncome">Average Annual Income *</label>
+            <input class="field-input" type="text" id="selfIncome" name="self_employed_income" placeholder="$0,000 (past 2 years avg)" aria-label="Self-employed income" aria-required="true">
+            <div class="error-msg" role="alert">Please enter your income.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="yearsInBusiness">Years in Business</label>
+            <select class="field-input" id="yearsInBusiness" name="years_in_business" aria-label="Years in business">
+              <option value="">Select…</option>
+              <option value="Under 1 year">Less than 1 year</option>
+              <option value="1–3 years">1–3 years</option>
+              <option value="3–5 years">3–5 years</option>
+              <option value="5+ years">5+ years</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="retiredStudentSection" style="display:none;">
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="retiredIncome">Annual Income *</label>
+            <input class="field-input" type="text" id="retiredIncome" name="retired_student_income" placeholder="$0,000" aria-label="Retired or student income">
+            <div class="error-msg" role="alert">Please enter your income or primary source of funds.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="retiredIncomeSource">Primary Income Source</label>
+            <input class="field-input" type="text" id="retiredIncomeSource" name="income_source" placeholder="e.g. CPP, RRSP, student loan, family support…" aria-label="Income source">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Additional Income <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></p>
+
+      <div class="field-wrap">
+        <label for="additionalIncome">Other Income Sources</label>
+        <input class="field-input" type="text" id="additionalIncome" name="additional_income_sources" placeholder="e.g. rental income, investments, pension…" aria-label="Additional income sources">
+      </div>
+      <div class="field-wrap" style="max-width:260px;">
+        <label for="additionalIncomeAmount">Annual Amount</label>
+        <input class="field-input" type="text" id="additionalIncomeAmount" name="additional_income_amount" placeholder="$0,000" aria-label="Additional income amount">
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Debt &amp; Rental Payment History</p>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="monthlyDebt">Total Monthly Debt Obligations <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></label>
+          <input class="field-input" type="text" id="monthlyDebt" name="monthly_debt_obligations" placeholder="$0,000/mo — car, loans, credit cards…" aria-label="Total monthly debt obligations">
+        </div>
+        <div class="field-wrap">
+          <label for="lateRent24">Have you ever been late on rent in the last 24 months? *</label>
+          <select class="field-input" id="lateRent24" name="late_rent_24mo" aria-label="Late rent in last 24 months" aria-required="true" onchange="toggleLateRentCount(this.value)">
+            <option value="">Select…</option>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+          <div class="error-msg" role="alert">Please answer this question.</div>
+        </div>
+      </div>
+
+      <div id="lateRentCountWrap" style="display:none;max-width:260px;">
+        <div class="field-wrap">
+          <label for="lateRentCount">Number of late rent payments in the last 24 months</label>
+          <select class="field-input" id="lateRentCount" name="late_rent_count" aria-label="Number of late rent payments">
+            <option value="">Select…</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4+">4 or more</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Supporting Documents <span style="color:#C0392B;">*</span></p>
+      <p style="font-size:13px;color:#8C8578;font-weight:300;margin-bottom:22px;line-height:1.65;">Upload recent pay stubs, your employment letter, or NOA/T1 for self-employed applicants. Accepted: PDF, JPG, PNG. Max 5MB total across all uploads.</p>
+
+      <div class="field-wrap" id="financialUploadWrap">
+        <div class="upload-zone" id="financialDocsZone" role="button" aria-label="Upload financial documents">
+          <input type="file" id="financialDocsInput" name="financial_documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload financial documents" onchange="handleFiles(event,'financialFileList')">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 10px;display:block;" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag & drop files here, or tap to browse</p>
+          <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Pay stubs · Employment letter · NOA / T1 General</p>
+        </div>
+        <div class="file-list" id="financialFileList"></div>
+        <div class="error-msg" id="financialUploadError" role="alert">Please upload at least one supporting financial document.</div>
+      </div>
+
+      <div class="nav-row">
+        <button type="button" class="btn-secondary" onclick="goToStep(1)">← Back</button>
+        <button type="button" class="btn-primary" onclick="goToStep(3)">
+          Continue to References
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 3: REFERENCES ═══════════ -->
+    <div class="step-panel" id="step3">
+      <p class="form-section-label">Step 3 of 4</p>
+      <h2 class="form-section-title">Rental<br><em>References</em></h2>
+      <p style="font-size:13px;color:#8C8578;font-weight:300;line-height:1.75;margin-bottom:20px;max-width:560px;">Please provide contact information for at least two previous landlords. References will be contacted and verified. Accurate information significantly strengthens your application.</p>
+
+      <div style="margin-bottom:28px;">
+        <label class="no-prior-rental-label" for="noPriorRental">
+          <input type="checkbox" id="noPriorRental" name="no_prior_rental" onchange="toggleAllRefs(this.checked)">
+          <span>I have not previously rented and am unable to provide landlord references</span>
+        </label>
+      </div>
+
+      <div id="ref1Block">
+      <div class="reference-block">
+        <p class="sub-section-label">Current / Most Recent Landlord <span style="color:#C0392B;">*</span></p>
+
+        <!-- Property address first -->
+        <div class="field-wrap">
+          <label for="ref1Address">Rental Property Address *</label>
+          <input class="field-input" type="text" id="ref1Address" name="ref1_property_address" placeholder="Full address of the rental you occupied" aria-label="Reference 1 property address" aria-required="true">
+          <div class="error-msg" role="alert">Please enter the rental property address.</div>
+        </div>
+
+        <!-- Landlord contact -->
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="ref1Name">Current Landlord Name *</label>
+            <input class="field-input" type="text" id="ref1Name" name="ref1_landlord_name" placeholder="Full name" aria-label="Reference 1 name" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the landlord's name.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="ref1Phone">Current Landlord Phone *</label>
+            <input class="field-input" type="tel" id="ref1Phone" name="ref1_landlord_phone" placeholder="(416) 555-0100" aria-label="Reference 1 phone" aria-required="true">
+            <div class="error-msg" role="alert">Please enter a phone number.</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="ref1Email">Current Landlord Email</label>
+            <input class="field-input" type="email" id="ref1Email" name="ref1_landlord_email" placeholder="landlord@example.com" aria-label="Reference 1 email">
+          </div>
+          <div class="field-wrap">
+            <label for="ref1LandlordAddress">Current Landlord Address</label>
+            <input class="field-input" type="text" id="ref1LandlordAddress" name="ref1_landlord_address" placeholder="Landlord's mailing address" aria-label="Reference 1 landlord address">
+          </div>
+        </div>
+
+        <!-- Permission to contact -->
+        <div style="margin-bottom:24px;">
+          <label class="check-wrap" style="cursor:pointer;">
+            <input type="checkbox" id="ref1ContactPermission" name="ref1_contact_permission">
+            <span class="check-label">I give permission to contact my current landlord as part of this application review.</span>
+          </label>
+        </div>
+
+        <!-- Tenancy dates & rent -->
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="ref1From">Tenancy From *</label>
+            <input class="field-input" type="month" id="ref1From" name="ref1_tenancy_from" aria-label="Tenancy start date" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the tenancy start date.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="ref1To">Tenancy To *</label>
+            <input class="field-input" type="month" id="ref1To" name="ref1_tenancy_to" aria-label="Tenancy end date" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the tenancy end date.</div>
+          </div>
+        </div>
+        <div class="field-wrap" style="max-width:200px;">
+          <label for="ref1MonthlyRent">Monthly Rent Currently Paid *</label>
+          <input class="field-input" type="text" id="ref1MonthlyRent" name="ref1_monthly_rent" placeholder="$0,000/mo" aria-label="Reference 1 monthly rent" aria-required="true">
+          <div class="error-msg" role="alert">Please enter the monthly rent paid.</div>
+        </div>
+      </div>
+      </div><!-- /ref1Block -->
+
+      <div class="reference-block" id="ref2Block">
+        <p class="sub-section-label" id="ref2Heading">Previous Landlord Reference #2 <span style="color:#C0392B;">*</span></p>
+
+        <!-- Property address first -->
+        <div class="field-wrap">
+          <label for="ref2Address">Rental Property Address *</label>
+          <input class="field-input" type="text" id="ref2Address" name="ref2_property_address" placeholder="Full address of the rental you occupied" aria-label="Reference 2 property address" aria-required="true">
+          <div class="error-msg" role="alert">Please enter the rental property address.</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="ref2Name">Landlord Full Name *</label>
+            <input class="field-input" type="text" id="ref2Name" name="ref2_landlord_name" placeholder="Full name" aria-label="Reference 2 name" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the landlord's name.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="ref2Phone">Phone Number *</label>
+            <input class="field-input" type="tel" id="ref2Phone" name="ref2_landlord_phone" placeholder="(416) 555-0100" aria-label="Reference 2 phone" aria-required="true">
+            <div class="error-msg" role="alert">Please enter a phone number.</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="ref2Email">Email Address</label>
+            <input class="field-input" type="email" id="ref2Email" name="ref2_landlord_email" placeholder="landlord@example.com" aria-label="Reference 2 email">
+          </div>
+          <div class="field-wrap">
+            <label for="ref2Relationship">Relationship</label>
+            <select class="field-input" id="ref2Relationship" name="ref2_relationship" aria-label="Reference 2 relationship">
+              <option value="Previous Landlord" selected>Previous Landlord</option>
+              <option value="Property Manager">Property Manager</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="ref2From">Tenancy From *</label>
+            <input class="field-input" type="month" id="ref2From" name="ref2_tenancy_from" aria-label="Tenancy 2 start date" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the tenancy start date.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="ref2To">Tenancy To *</label>
+            <input class="field-input" type="month" id="ref2To" name="ref2_tenancy_to" aria-label="Tenancy 2 end date" aria-required="true">
+            <div class="error-msg" role="alert">Please enter the tenancy end date.</div>
+          </div>
+        </div>
+      </div><!-- /ref2Block -->
+
+      <div class="nav-row">
+        <button type="button" class="btn-secondary" onclick="goToStep(2)">← Back</button>
+        <button type="button" class="btn-primary" onclick="goToStep(4)">
+          Continue to Consent
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 4: CONSENT ═══════════ -->
+    <div class="step-panel" id="step4">
+      <p class="form-section-label">Step 4 of 4</p>
+      <h2 class="form-section-title">Declarations<br><em>& Consent</em></h2>
+
+      <div class="consent-box">
+        <p class="sub-section-label" style="margin-bottom:14px;">Credit Check Authorization</p>
+        <p style="font-size:13px;color:#4A4840;line-height:1.8;margin-bottom:22px;">By checking the box below, I authorize the Landlord or their authorized agent to obtain a consumer credit report from a credit reporting agency (such as <strong>Equifax</strong> or <strong>TransUnion</strong>) for the purpose of evaluating this rental application. I understand this inquiry may appear on my credit file.</p>
+        <div class="check-wrap">
+          <input type="checkbox" id="consentCredit" name="consent_credit_check" aria-label="Authorize credit check" aria-required="true">
+          <label class="check-label" for="consentCredit"><strong>I authorize a credit check</strong> to be conducted as part of this rental application. <span style="color:#C0392B;">*</span></label>
+        </div>
+        <div id="consentCreditError" style="font-size:11px;color:#C0392B;margin-top:8px;margin-left:31px;display:none;" role="alert">You must authorize the credit check to proceed.</div>
+      </div>
+
+      <p class="sub-section-label">Declarations</p>
+      <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:32px;">
+        <div class="check-wrap">
+          <input type="checkbox" id="declareEviction" name="declare_no_eviction" aria-label="Eviction declaration" aria-required="true">
+          <label class="check-label" for="declareEviction">I have <strong>not</strong> been evicted from a rental property in the past 5 years, nor have I been subject to an eviction order through the Ontario Landlord and Tenant Board. <span style="color:#C0392B;">*</span></label>
+        </div>
+        <div id="declareEvictionError" style="font-size:11px;color:#C0392B;margin-left:31px;display:none;" role="alert">You must complete this declaration.</div>
+        <div class="check-wrap">
+          <input type="checkbox" id="declareBankruptcy" name="declare_no_bankruptcy" aria-label="Bankruptcy declaration" aria-required="true">
+          <label class="check-label" for="declareBankruptcy">I have <strong>not</strong> filed for bankruptcy in the past 7 years, or if I have, I have been discharged and can provide documentation upon request. <span style="color:#C0392B;">*</span></label>
+        </div>
+        <div id="declareBankruptcyError" style="font-size:11px;color:#C0392B;margin-left:31px;display:none;" role="alert">You must complete this declaration.</div>
+        <div class="check-wrap">
+          <input type="checkbox" id="declareAccurate" name="declare_accuracy" aria-label="Accuracy declaration" aria-required="true">
+          <label class="check-label" for="declareAccurate"><strong>I declare that all information provided is true, complete, and accurate.</strong> I understand that providing false information may result in rejection of this application or lease termination. <span style="color:#C0392B;">*</span></label>
+        </div>
+        <div id="declareAccurateError" style="font-size:11px;color:#C0392B;margin-left:31px;display:none;" role="alert">You must declare the accuracy of your information.</div>
+      </div>
+
+      <div class="privacy-box">
+        <p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#8C8578;font-weight:500;margin-bottom:10px;">Privacy & PIPEDA Notice</p>
+        <p style="font-size:12px;color:#8C8578;line-height:1.8;">The personal information collected on this form is used solely for evaluating your tenancy application under the <em>Residential Tenancies Act, 2006 (Ontario)</em> and the <em>Personal Information Protection and Electronic Documents Act (PIPEDA)</em>. Under the <strong>Ontario Human Rights Code</strong>, landlords are prohibited from collecting or using information based on race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex, sexual orientation, gender identity, age, marital or family status, disability, or the receipt of public assistance. Your information will be retained only as long as necessary to complete the screening assessment. Unsuccessful applications will be securely and permanently destroyed. You have the right to request access to or correction of your personal information at any time.</p>
+      </div>
+
+      <div class="public-records-box">
+        <p style="font-size:12px;color:#8C8578;line-height:1.8;"><strong style="color:#4A4840;">Public Records Notice:</strong> The Landlord may conduct a public records search using <a href="https://www.canlii.org" target="_blank" rel="noopener">CanLII</a> or <a href="https://openroom.ca" target="_blank" rel="noopener">OpenRoom</a> to identify any Ontario Landlord and Tenant Board orders or dispute records. This is standard screening practice.</p>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Electronic Signature</p>
+      <p style="font-size:13px;color:#8C8578;font-weight:300;line-height:1.65;margin-bottom:22px;">By typing your full name below and submitting this form, you are electronically signing this application and confirming all declarations above.</p>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="signatureName">Full Legal Name *</label>
+          <input class="field-input" type="text" id="signatureName" name="signature_name" placeholder="Type your full name" aria-label="Electronic signature — full legal name" aria-required="true">
+          <div class="error-msg" role="alert">Please type your full name as your electronic signature.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="signatureDate">Date</label>
+          <input class="field-input" type="date" id="signatureDate" name="signature_date" aria-label="Signature date" readonly style="color:#8C8578;">
+        </div>
+      </div>
+
+      <div class="nav-row">
+        <button type="button" class="btn-secondary" onclick="goToStep(3)">← Back</button>
+        <button type="submit" class="btn-primary" id="submitBtn" style="padding:16px 44px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
+          Submit Application
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════ SUCCESS ═══════════ -->
+    <div class="success-screen" id="successScreen">
+      <div style="text-align:center;padding:40px 16px;">
+        <div class="success-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>
+        </div>
+        <p class="intro-eyebrow" style="text-align:center;">Application Received</p>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,42px);font-weight:300;line-height:1.15;margin-bottom:16px;margin-top:10px;">
+          Thank you for<br><em style="font-style:italic;color:#8C8578;">your application.</em>
+        </h2>
+        <p style="font-size:14px;color:#4A4840;line-height:1.8;max-width:460px;margin:0 auto 32px;">Your application for <strong>12 Dugdale Avenue</strong> has been submitted. We will be in touch within 2–3 business days.</p>
+        <div style="background:rgba(26,26,24,0.03);border-radius:6px;padding:20px 24px;max-width:400px;margin:0 auto;text-align:left;">
+          <p style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#8C8578;font-weight:500;margin-bottom:14px;">What happens next</p>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="what-next-step"><span class="what-next-num">1</span><p style="font-size:13px;color:#4A4840;font-weight:300;">Reference verification with previous landlords</p></div>
+            <div class="what-next-step"><span class="what-next-num">2</span><p style="font-size:13px;color:#4A4840;font-weight:300;">Employment and income confirmation</p></div>
+            <div class="what-next-step"><span class="what-next-num">3</span><p style="font-size:13px;color:#4A4840;font-weight:300;">Credit report review (Equifax / TransUnion)</p></div>
+            <div class="what-next-step"><span class="what-next-num">4</span><p style="font-size:13px;color:#4A4840;font-weight:300;">Decision communicated within 2–3 business days</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form><!-- /form-card -->
+
+  <p class="below-card-note">
+    Encrypted in transit · PIPEDA compliant
+  </p>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p class="footer-name">12 Dugdale Avenue · Beeton, Ontario · For Lease</p>
+  <p class="footer-privacy">
+    Data collected via this form is used solely for tenant screening and is stored securely in accordance with PIPEDA.
+    <a href="#privacy-policy" onclick="alert('Privacy Policy\n\nAll personal information collected through this rental application is used exclusively for tenant screening purposes under the Residential Tenancies Act, 2006 (Ontario).\n\nData is handled in strict compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA) and the Ontario Human Rights Code (OHRC).\n\nUnder the OHRC, landlords are prohibited from collecting or using information based on race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex, sexual orientation, gender identity or expression, age, marital or family status, disability, or receipt of public assistance.\n\nYour information is:\n\u2022 Used only to evaluate your tenancy application\n\u2022 Never sold or shared with third parties without express written consent\n\u2022 Retained only as long as necessary for the screening process\n\u2022 Securely and permanently destroyed once no longer needed\n\nYou have the right to request access to or correction of your personal information at any time by contacting the landlord.\n\nApplications from unsuccessful candidates are permanently and securely deleted.');return false;">Privacy Policy</a>
+  </p>
+</footer>
+
+<script>
+  'use strict';
+  let currentStep = 1;
+  const progressMap = {1:'25%',2:'50%',3:'75%',4:'100%'};
+
+  // ─── STEP NAVIGATION ───
+  function goToStep(step) {
+    if (step > currentStep && !validateStep(currentStep)) return;
+
+    document.getElementById('step' + currentStep).classList.remove('active');
+    document.getElementById('step' + step).classList.add('active');
+    currentStep = step;
+
+    document.getElementById('progressFill').style.width = progressMap[step];
+
+    document.querySelectorAll('.step-pill').forEach(pill => {
+      const s = parseInt(pill.dataset.step);
+      pill.classList.remove('active','completed','inactive');
+      if (s === step) pill.classList.add('active');
+      else if (s < step) pill.classList.add('completed');
+      else pill.classList.add('inactive');
+      const num = pill.querySelector('.step-num');
+      if (s < step) {
+        num.innerHTML = '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20,6 9,17 4,12"/></svg>';
+      } else {
+        num.textContent = s;
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ─── VALIDATION ───
+  function validateStep(step) {
+    let valid = true;
+    if (step === 1) {
+      valid = req('firstName') & valid;
+      valid = req('lastName') & valid;
+      valid = emailCheck('email') & valid;
+      valid = req('phone') & valid;
+      valid = req('moveInDate') & valid;
+      valid = req('intendedStay') & valid;
+      valid = req('propertyAttraction') & valid;
+      valid = req('numOccupants') & valid;
+      valid = req('smokingVaping') & valid;
+      valid = req('commercialVehicles') & valid;
+      valid = req('recreationalVehicles') & valid;
+      valid = req('businessActivities') & valid;
+      valid = req('maintenanceNotify') & valid;
+      valid = req('minorConsumables') & valid;
+      valid = req('idType') & valid;
+      // ID upload required
+      if (uploadedFiles.id.length === 0) {
+        document.getElementById('idUploadError').style.display = 'block';
+        document.getElementById('idDocsZone').style.borderColor = '#C0392B';
+        valid = false;
+      } else {
+        document.getElementById('idUploadError').style.display = 'none';
+        document.getElementById('idDocsZone').style.borderColor = '';
+      }
+      valid = req('currentAddress') & valid;
+      valid = req('currentCity') & valid;
+      valid = req('currentProvince') & valid;
+      valid = req('currentPostal') & valid;
+      valid = req('currentLengthOfStay') & valid;
+      valid = req('reasonForLeaving') & valid;
+    }
+    if (step === 2) {
+      valid = req('employmentStatus') & valid;
+      const emp = document.getElementById('employmentStatus').value;
+      if (emp === 'Employed — Full-Time' || emp === 'Employed — Part-Time') {
+        valid = req('employerName') & valid;
+        valid = req('jobTitle') & valid;
+        valid = req('employerPhone') & valid;
+        valid = req('employmentLength') & valid;
+        valid = req('grossIncome') & valid;
+      }
+      if (emp === 'Contract / Freelance') {
+        valid = req('contractIncome') & valid;
+      }
+      if (emp === 'Self-Employed') {
+        valid = req('selfIncome') & valid;
+      }
+      if (emp === 'Retired' || emp === 'Student' || emp === 'Other') {
+        valid = req('retiredIncome') & valid;
+      }
+      // Financial documents upload required
+      if (uploadedFiles.financial.length === 0) {
+        document.getElementById('financialUploadError').style.display = 'block';
+        document.getElementById('financialDocsZone').style.borderColor = '#C0392B';
+        valid = false;
+      } else {
+        document.getElementById('financialUploadError').style.display = 'none';
+        document.getElementById('financialDocsZone').style.borderColor = '';
+      }
+      valid = req('lateRent24') & valid;
+    }
+    if (step === 3) {
+      const noPrior = document.getElementById('noPriorRental').checked;
+      if (!noPrior) {
+        valid = req('ref1Name') & valid;
+        valid = req('ref1Phone') & valid;
+        valid = req('ref1Address') & valid;
+        valid = req('ref1From') & valid;
+        valid = req('ref1To') & valid;
+        valid = req('ref1MonthlyRent') & valid;
+        valid = req('ref2Name') & valid;
+        valid = req('ref2Phone') & valid;
+        valid = req('ref2Address') & valid;
+        valid = req('ref2From') & valid;
+        valid = req('ref2To') & valid;
+      }
+    }
+    if (!valid) {
+      const first = document.querySelector('.has-error');
+      if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+    return !!valid;
+  }
+
+  function req(id) {
+    const el = document.getElementById(id);
+    if (!el) return 1;
+    const wrap = el.closest('.field-wrap');
+    if (!el.value.trim()) { wrap && wrap.classList.add('has-error'); return 0; }
+    wrap && wrap.classList.remove('has-error');
+    return 1;
+  }
+
+  function emailCheck(id) {
+    const el = document.getElementById(id);
+    const wrap = el.closest('.field-wrap');
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+    if (!ok) { wrap.classList.add('has-error'); return 0; }
+    wrap.classList.remove('has-error');
+    return 1;
+  }
+
+  document.querySelectorAll('.field-input').forEach(inp => {
+    inp.addEventListener('input', () => {
+      const wrap = inp.closest('.field-wrap');
+      if (wrap && inp.value.trim()) wrap.classList.remove('has-error');
+    });
+    inp.addEventListener('change', () => {
+      const wrap = inp.closest('.field-wrap');
+      if (wrap && inp.value.trim()) wrap.classList.remove('has-error');
+    });
+  });
+
+  // ─── FILE STORE — tracks actual File objects for submission ───
+  const uploadedFiles = {
+    financial: [],
+    id: []
+  };
+
+  // ─── FORM SUBMIT ───
+  const MAKE_WEBHOOK = 'https://hook.us2.make.com/caa3phwd3dqhgaxx9iki8o7bvgmsr9wn';
+
+  // Convert a File to a base64 data string
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]); // strip data:...;base64,
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.getElementById('mainCard').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const creditOk  = document.getElementById('consentCredit').checked;
+    const evictionOk = document.getElementById('declareEviction').checked;
+    const bankruptcyOk = document.getElementById('declareBankruptcy').checked;
+    const accuracyOk = document.getElementById('declareAccurate').checked;
+    const sigOk     = !!document.getElementById('signatureName').value.trim();
+
+    document.getElementById('consentCreditError').style.display  = creditOk  ? 'none' : 'block';
+    document.getElementById('declareEvictionError').style.display = evictionOk ? 'none' : 'block';
+    document.getElementById('declareBankruptcyError').style.display = bankruptcyOk ? 'none' : 'block';
+    document.getElementById('declareAccurateError').style.display = accuracyOk ? 'none' : 'block';
+    if (!sigOk) req('signatureName');
+    if (!creditOk || !evictionOk || !bankruptcyOk || !accuracyOk || !sigOk) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Submitting…';
+
+    try {
+      // ── 1. Collect text fields ──────────────────────────────────────
+      const data = {};
+      const form = document.getElementById('mainCard');
+      form.querySelectorAll('input:not([type="file"]):not([type="checkbox"]), select, textarea').forEach(el => {
+        if (el.name && el.value.trim()) data[el.name] = el.value.trim();
+      });
+      data['consent_credit_check']    = document.getElementById('consentCredit').checked    ? 'yes' : 'no';
+      data['declare_no_eviction']     = document.getElementById('declareEviction').checked   ? 'yes' : 'no';
+      data['declare_no_bankruptcy']   = document.getElementById('declareBankruptcy').checked ? 'yes' : 'no';
+      data['declare_accuracy']        = document.getElementById('declareAccurate').checked   ? 'yes' : 'no';
+      data['ref1_contact_permission'] = document.getElementById('ref1ContactPermission') && document.getElementById('ref1ContactPermission').checked ? 'yes' : 'no';
+      data['submission_date']         = new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' });
+
+      // ── Collect all occupant co-applicant checkboxes ──
+      document.querySelectorAll('input[type="checkbox"][id^="occupant_"]').forEach(cb => {
+        data[cb.name] = cb.checked ? 'yes' : 'no';
+      });
+
+      // ── 2. Encode uploaded files as base64 ─────────────────────────
+      const encodeGroup = async (files, label) => {
+        const out = [];
+        for (const f of files) {
+          const b64 = await fileToBase64(f);
+          out.push({ name: f.name, type: f.type, size: f.size, data: b64 });
+        }
+        return out;
+      };
+
+      data['financial_documents'] = await encodeGroup(uploadedFiles.financial, 'financial');
+      data['id_documents']        = await encodeGroup(uploadedFiles.id, 'id');
+
+      // ── 3. POST as JSON — works with Make.com webhook CORS policy ──
+      const res = await fetch(MAKE_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (!res.ok) throw new Error('Webhook returned status ' + res.status);
+
+      // ── 4. Success ─────────────────────────────────────────────────
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('successScreen').classList.add('active');
+      document.getElementById('progressFill').style.width = '100%';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg> Submit Application';
+      alert('Submission failed — please check your connection and try again.\n\n(' + err.message + ')');
+    }
+  });
+
+  // ─── OCCUPANT DETAILS ROWS ───
+  function buildOccupantRows(count) {
+    const wrap = document.getElementById('occupantDetailsWrap');
+    wrap.innerHTML = '';
+    if (count <= 1) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    for (let i = 2; i <= count; i++) {
+      const block = document.createElement('div');
+      block.style.cssText = 'border:1px solid rgba(196,168,130,0.22);border-radius:6px;padding:20px 20px 16px;margin-bottom:12px;background:rgba(196,168,130,0.02);';
+      const serial = i;
+      block.innerHTML =
+        '<p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:16px;">Occupant ' + serial + '</p>' +
+        '<div class="grid-3">' +
+          '<div class="field-wrap"><label>Full Name</label><input class="field-input" type="text" id="occupant_' + serial + '_name" name="occupant_' + serial + '_name" placeholder="Full name" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Age</label><input class="field-input" type="number" id="occupant_' + serial + '_age" name="occupant_' + serial + '_age" placeholder="Age" min="0" max="120" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Relationship to Applicant</label>' +
+            '<select class="field-input" id="occupant_' + serial + '_relationship" name="occupant_' + serial + '_relationship">' +
+              '<option value="">Select…</option>' +
+              '<option value="spouse_partner">Spouse / Partner</option>' +
+              '<option value="child">Child</option>' +
+              '<option value="parent">Parent</option>' +
+              '<option value="sibling">Sibling</option>' +
+              '<option value="roommate">Roommate</option>' +
+              '<option value="other">Other</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<label style="display:inline-flex;align-items:center;gap:10px;cursor:pointer;margin-top:4px;">' +
+          '<input type="checkbox" id="occupant_' + serial + '_co_applicant" name="occupant_' + serial + '_co_applicant" value="yes" style="-webkit-appearance:none;appearance:none;width:16px;height:16px;border:1.5px solid rgba(26,26,24,0.25);border-radius:3px;flex-shrink:0;cursor:pointer;transition:all 0.2s ease;position:relative;background:transparent;" ' +
+            'onchange="this.style.background=this.checked?\'#1A1A18\':\'transparent\';this.style.borderColor=this.checked?\'#1A1A18\':\'rgba(26,26,24,0.25)\';if(this.checked){var c=this;setTimeout(function(){if(c.checked)c.insertAdjacentHTML(\'afterend\',\'\');},0);}">' +
+          '<span style="font-size:13px;color:#1A1A18;font-weight:300;line-height:1.5;">Include as <strong>co-applicant</strong> on this application</span>' +
+        '</label>';
+      wrap.appendChild(block);
+      // Apply custom checkbox checked style after DOM insertion
+      const cb = block.querySelector('input[type="checkbox"]');
+      cb.addEventListener('change', function() {
+        this.style.background = this.checked ? '#1A1A18' : 'transparent';
+        this.style.borderColor = this.checked ? '#1A1A18' : 'rgba(26,26,24,0.25)';
+        if (this.checked) {
+          this.style.setProperty('--check', '1');
+          // Inject checkmark pseudo-element via inline after-element trick
+          this.setAttribute('data-checked', 'true');
+        } else {
+          this.removeAttribute('data-checked');
+        }
+      });
+    }
+  }
+
+  // ─── SMOKING TOGGLE ───
+  function toggleSmokingDetails(value) {
+    document.getElementById('smokingDetailsWrap').style.display = value === 'Yes' ? 'block' : 'none';
+  }
+
+  // ─── LATE RENT COUNT TOGGLE ───
+  function toggleLateRentCount(value) {
+    document.getElementById('lateRentCountWrap').style.display = value === 'Yes' ? 'block' : 'none';
+    if (value !== 'Yes') document.getElementById('lateRentCount').value = '';
+  }
+
+  // ─── PETS TOGGLE ───
+  document.getElementById('hasPets').addEventListener('change', function() {
+    const hasPet = this.value && this.value !== 'none';
+    document.getElementById('petDetailsWrap').style.display = hasPet ? 'block' : 'none';
+    if (!hasPet) document.getElementById('petDetails').value = '';
+  });
+
+  // ─── VEHICLES TOGGLE — render exact number of vehicle row blocks ───
+  function buildVehicleRows(count) {
+    const wrap = document.getElementById('vehicleDetailsWrap');
+    wrap.innerHTML = '';
+    if (count === 0) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    for (let i = 1; i <= count; i++) {
+      const block = document.createElement('div');
+      block.style.cssText = 'border:1px solid rgba(196,168,130,0.22);border-radius:6px;padding:20px 20px 4px;margin-bottom:16px;background:rgba(196,168,130,0.02);';
+      block.innerHTML =
+        '<p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:16px;">Vehicle ' + i + '</p>' +
+        '<div class="grid-2">' +
+          '<div class="field-wrap"><label>Make</label><input class="field-input" type="text" name="vehicle_' + i + '_make" placeholder="e.g. Honda" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Model</label><input class="field-input" type="text" name="vehicle_' + i + '_model" placeholder="e.g. Civic" autocomplete="off"></div>' +
+        '</div>' +
+        '<div class="grid-2">' +
+          '<div class="field-wrap"><label>Year</label><input class="field-input" type="text" name="vehicle_' + i + '_year" placeholder="e.g. 2019" maxlength="4" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Licence Plate <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></label><input class="field-input" type="text" name="vehicle_' + i + '_plate" placeholder="e.g. ABCD 123" autocomplete="off"></div>' +
+        '</div>';
+      wrap.appendChild(block);
+    }
+  }
+
+  document.getElementById('numVehicles').addEventListener('change', function() {
+    const n = parseInt(this.value) || 0;
+    buildVehicleRows(n);
+  });
+
+  // ─── EMPLOYMENT STATUS TOGGLE ───
+  document.getElementById('employmentStatus').addEventListener('change', function() {
+    const val = this.value;
+    const isEmployee   = val === 'Employed — Full-Time' || val === 'Employed — Part-Time';
+    const isContract   = val === 'Contract / Freelance';
+    const isSelf       = val === 'Self-Employed';
+    const isOther      = val === 'Retired' || val === 'Student' || val === 'Other';
+
+    document.getElementById('employedSection').style.display     = isEmployee ? 'block' : 'none';
+    document.getElementById('contractSection').style.display     = isContract ? 'block' : 'none';
+    document.getElementById('selfEmployedSection').style.display = isSelf     ? 'block' : 'none';
+    document.getElementById('retiredStudentSection').style.display = isOther  ? 'block' : 'none';
+  });
+
+  // ─── FILE UPLOADS ───
+  const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB total across all uploads
+
+  function getTotalUploadedSize() {
+    return [...uploadedFiles.financial, ...uploadedFiles.id]
+      .reduce((sum, f) => sum + f.size, 0);
+  }
+
+  function handleFiles(e, listId) {
+    const bucket = listId === 'financialFileList' ? 'financial' : 'id';
+    const files = Array.from(e.target.files);
+    const container = document.getElementById(listId);
+    files.forEach(file => {
+      if (getTotalUploadedSize() + file.size > FILE_SIZE_LIMIT) {
+        alert('Total upload limit is 5MB. "' + file.name + '" was not added because it would exceed this limit.');
+        return;
+      }
+      // Store the File object for submission
+      uploadedFiles[bucket].push(file);
+
+      const pill = document.createElement('div');
+      pill.className = 'file-pill';
+      const isPdf = file.type === 'application/pdf';
+      const icon = isPdf
+        ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>'
+        : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>';
+      const name = file.name.length > 26 ? file.name.substring(0,23)+'…' : file.name;
+      pill.innerHTML = icon + '<span>' + name + '</span><button type="button" aria-label="Remove file">×</button>';
+      // Remove from store when pill is dismissed
+      pill.querySelector('button').addEventListener('click', () => {
+        uploadedFiles[bucket] = uploadedFiles[bucket].filter(f => f !== file);
+        pill.remove();
+        updateUploadIndicator(listId);
+      });
+      container.appendChild(pill);
+    });
+    // Reset input so same file can be re-added after removal
+    e.target.value = '';
+    updateUploadIndicator(listId);
+  }
+
+  function updateUploadIndicator(listId) {
+    // Find the indicator element that lives alongside this file list
+    const indicatorId = listId + '-indicator';
+    let indicator = document.getElementById(indicatorId);
+    const container = document.getElementById(listId);
+    if (!container) return;
+
+    const count = container.querySelectorAll('.file-pill').length;
+
+    if (count > 0) {
+      if (!indicator) {
+        indicator = document.createElement('div');
+        indicator.id = indicatorId;
+        indicator.style.cssText = 'display:flex;align-items:center;gap:8px;margin-top:12px;padding:10px 14px;background:rgba(58,122,92,0.07);border:1px solid rgba(58,122,92,0.22);border-radius:6px;animation:fadeUp 0.25s ease;';
+        indicator.innerHTML =
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3A7A5C" stroke-width="2.5" style="flex-shrink:0;" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>' +
+          '<span id="' + indicatorId + '-text" style="font-size:12px;color:#3A7A5C;font-weight:500;letter-spacing:0.02em;"></span>';
+        container.parentNode.insertBefore(indicator, container.nextSibling);
+      }
+      const label = count === 1 ? '1 document uploaded successfully' : count + ' documents uploaded successfully';
+      document.getElementById(indicatorId + '-text').textContent = label;
+    } else if (indicator) {
+      indicator.remove();
+    }
+  }
+
+  // Drag highlight
+  ['financialDocsZone','idDocsZone'].forEach(id => {
+    const z = document.getElementById(id);
+    if (!z) return;
+    z.addEventListener('dragover', e => { e.preventDefault(); z.classList.add('drag-over'); });
+    z.addEventListener('dragleave', () => z.classList.remove('drag-over'));
+    z.addEventListener('drop', e => {
+      e.preventDefault();
+      z.classList.remove('drag-over');
+      const input = z.querySelector('input[type="file"]');
+      const listId = z.id === 'idDocsZone' ? 'idFileList' : 'financialFileList';
+      if (input && e.dataTransfer.files.length) {
+        // Manually dispatch with dropped files
+        const dt = new DataTransfer();
+        Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+        input.files = dt.files;
+        handleFiles({ target: input }, listId);
+      }
+    });
+  });
+
+  // ─── NO PRIOR RENTAL TOGGLE ───
+  function toggleAllRefs(checked) {
+    ['ref1Block','ref2Block'].forEach(id => {
+      const block = document.getElementById(id);
+      if (!block) return;
+      block.style.opacity = checked ? '0.35' : '1';
+      block.style.pointerEvents = checked ? 'none' : '';
+    });
+    if (checked) {
+      ['ref1Name','ref1Phone','ref1Address','ref1LandlordAddress','ref1From','ref1To','ref1MonthlyRent',
+       'ref2Name','ref2Phone','ref2Address','ref2From','ref2To'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { const w = el.closest('.field-wrap'); if (w) w.classList.remove('has-error'); }
+      });
+    }
+  }
+
+  // ─── INIT ───
+  // Set move-in date min to today
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('moveInDate').min = today;
+
+  // Set signature date to today (read-only)
+  document.getElementById('signatureDate').value = today;
+</script>
+
+</body>
+</html>
