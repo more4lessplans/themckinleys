@@ -674,12 +674,12 @@
       <div class="grid-2">
         <div class="field-wrap">
           <label for="firstName">First Name *</label>
-          <input class="field-input" type="text" id="firstName" name="First Name" placeholder="Given name" aria-label="First name" aria-required="true" autocomplete="given-name">
+          <input class="field-input" type="text" id="firstName" name="first_name" placeholder="Given name" aria-label="First name" aria-required="true" autocomplete="given-name">
           <div class="error-msg" role="alert">Please enter your first name.</div>
         </div>
         <div class="field-wrap">
           <label for="lastName">Last Name *</label>
-          <input class="field-input" type="text" id="lastName" name="Last Name" placeholder="Family name" aria-label="Last name" aria-required="true" autocomplete="family-name">
+          <input class="field-input" type="text" id="lastName" name="last_name" placeholder="Family name" aria-label="Last name" aria-required="true" autocomplete="family-name">
           <div class="error-msg" role="alert">Please enter your last name.</div>
         </div>
       </div>
@@ -692,34 +692,64 @@
         </div>
         <div class="field-wrap">
           <label for="phone">Phone Number *</label>
-          <input class="field-input" type="tel" id="phone" name="Phone" placeholder="(416) 555-0100" aria-label="Phone number" aria-required="true" autocomplete="tel">
+          <input class="field-input" type="tel" id="phone" name="phone" placeholder="(416) 555-0100" aria-label="Phone number" aria-required="true" autocomplete="tel">
           <div class="error-msg" role="alert">Please enter your phone number.</div>
         </div>
       </div>
 
       <div class="field-wrap" style="max-width:320px;">
         <label for="moveInDate">Desired Move-In Date *</label>
-        <input class="field-input" type="date" id="moveInDate" name="Move-In Date" aria-label="Desired move-in date" aria-required="true">
+        <input class="field-input" type="date" id="moveInDate" name="move_in_date" aria-label="Desired move-in date" aria-required="true">
         <div class="error-msg" role="alert">Please select a move-in date.</div>
         <p class="legal-note">Property is available from mid-June 2025.</p>
       </div>
 
+      <div class="section-divider"></div>
+      <p class="sub-section-label">About This Application</p>
+
+      <div class="field-wrap" style="max-width:320px;">
+        <label for="intendedStay">How long do you intend to stay? *</label>
+        <select class="field-input" id="intendedStay" name="intended_stay" aria-label="Intended length of stay" aria-required="true">
+          <option value="">Select…</option>
+          <option value="Under 1 year">Less than 1 year</option>
+          <option value="1 year">1 year (standard lease)</option>
+          <option value="2 years">2 years</option>
+          <option value="3+ years">3 or more years</option>
+          <option value="Long-term">Long-term — as long as possible</option>
+        </select>
+        <div class="error-msg" role="alert">Please indicate your intended length of stay.</div>
+      </div>
+
+      <div class="field-wrap">
+        <label for="propertyAttraction">What attracted you to this property? *</label>
+        <textarea class="field-input" id="propertyAttraction" name="property_attraction" placeholder="e.g. Location, space, neighbourhood, schools nearby…" rows="3" aria-label="What attracted you to this property" aria-required="true"></textarea>
+        <div class="error-msg" role="alert">Please share what attracted you to this property.</div>
+      </div>
+
+      <div class="field-wrap">
+        <label for="householdNote">Tell us about your household <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></label>
+        <textarea class="field-input" id="householdNote" name="household_note" placeholder="Please tell us a little about your household and what you're looking for in your next home." rows="3" aria-label="About your household"></textarea>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Occupants</p>
+
       <div class="grid-2">
         <div class="field-wrap">
           <label for="numOccupants">Number of Occupants *</label>
-          <select class="field-input" id="numOccupants" name="Occupants" aria-label="Number of occupants" aria-required="true">
+          <select class="field-input" id="numOccupants" name="num_occupants" aria-label="Number of occupants" aria-required="true" onchange="buildOccupantRows(parseInt(this.value)||0)">
             <option value="">Select…</option>
             <option value="1">1 — Just me</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
-            <option value="5+">5 or more</option>
+            <option value="5">5 or more</option>
           </select>
           <div class="error-msg" role="alert">Please select number of occupants.</div>
         </div>
         <div class="field-wrap">
           <label for="hasPets">Do you have pets?</label>
-          <select class="field-input" id="hasPets" name="Pets" aria-label="Pets">
+          <select class="field-input" id="hasPets" name="has_pets" aria-label="Pets">
             <option value="">Select…</option>
             <option value="none">No pets</option>
             <option value="dog">Dog(s)</option>
@@ -730,14 +760,18 @@
         </div>
       </div>
 
+      <div id="occupantDetailsWrap" style="display:none;margin-bottom:28px;">
+        <!-- Occupant rows injected by JS -->
+      </div>
+
       <div class="field-wrap" id="petDetailsWrap" style="display:none;">
         <label for="petDetails">Pet Description</label>
-        <input class="field-input" type="text" id="petDetails" name="Pet Details" placeholder="Breed, size, age…" aria-label="Pet description">
+        <input class="field-input" type="text" id="petDetails" name="pet_details" placeholder="Breed, size, age…" aria-label="Pet description">
       </div>
 
       <div class="field-wrap" style="max-width:260px;">
         <label for="numVehicles">Number of Vehicles</label>
-        <select class="field-input" id="numVehicles" name="Number of Vehicles" aria-label="Number of vehicles">
+        <select class="field-input" id="numVehicles" name="num_vehicles" aria-label="Number of vehicles">
           <option value="0">None</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -750,12 +784,113 @@
       </div>
 
       <div class="section-divider"></div>
+      <p class="sub-section-label">Care for Home</p>
+
+      <!-- Smoking & Vaping -->
+      <div style="border:1.5px solid rgba(196,168,130,0.22);border-radius:6px;padding:24px;margin-bottom:28px;background:rgba(196,168,130,0.02);">
+        <p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:18px;">Smoking &amp; Vaping</p>
+        <div class="field-wrap" style="margin-bottom:18px;">
+          <label for="smokingVaping">Does anyone in your household smoke or vape? *</label>
+          <select class="field-input" id="smokingVaping" name="smoking_vaping" aria-label="Smoking or vaping" aria-required="true" onchange="toggleSmokingDetails(this.value)">
+            <option value="">Select…</option>
+            <option value="No">No — nobody smokes or vapes</option>
+            <option value="Yes">Yes</option>
+          </select>
+          <div class="error-msg" role="alert">Please answer the smoking / vaping question.</div>
+        </div>
+        <div id="smokingDetailsWrap" style="display:none;">
+          <div class="grid-2">
+            <div class="field-wrap">
+              <label for="smokingSubstance">What is smoked or vaped?</label>
+              <select class="field-input" id="smokingSubstance" name="smoking_substance" aria-label="Smoking substance">
+                <option value="">Select…</option>
+                <option value="Tobacco only">Tobacco only</option>
+                <option value="Cannabis only">Cannabis only</option>
+                <option value="Both tobacco and cannabis">Both tobacco and cannabis</option>
+                <option value="Vaping / e-cigarette only">Vaping / e-cigarette only</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field-wrap">
+              <label for="smokingLocation">Where does smoking / vaping occur?</label>
+              <select class="field-input" id="smokingLocation" name="smoking_location" aria-label="Smoking location">
+                <option value="">Select…</option>
+                <option value="Outside only">Outside only</option>
+                <option value="Inside">Inside the home</option>
+                <option value="Both inside and outside">Both inside and outside</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vehicle & Property Use -->
+      <div style="border:1.5px solid rgba(196,168,130,0.22);border-radius:6px;padding:24px;margin-bottom:28px;background:rgba(196,168,130,0.02);">
+        <p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:18px;">Vehicle &amp; Property Use</p>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="commercialVehicles">Will any commercial vehicles be kept at the property? *</label>
+            <select class="field-input" id="commercialVehicles" name="commercial_vehicles" aria-label="Commercial vehicles" aria-required="true">
+              <option value="">Select…</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+            <div class="error-msg" role="alert">Please answer this question.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="recreationalVehicles">Will trailers, boats, RVs, or recreational vehicles be stored on-site? *</label>
+            <select class="field-input" id="recreationalVehicles" name="recreational_vehicles_onsite" aria-label="Recreational vehicles on-site" aria-required="true">
+              <option value="">Select…</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+            <div class="error-msg" role="alert">Please answer this question.</div>
+          </div>
+        </div>
+        <div class="field-wrap">
+          <label for="businessActivities">Will the property be used for any business activities? *</label>
+          <select class="field-input" id="businessActivities" name="business_activities" aria-label="Business activities at property" aria-required="true">
+            <option value="">Select…</option>
+            <option value="No">No</option>
+            <option value="Yes — remote / work from home (no clients on-site)">Yes — remote / work from home only (no clients on-site)</option>
+            <option value="Yes — clients or deliveries on-site">Yes — clients or deliveries on-site</option>
+          </select>
+          <div class="error-msg" role="alert">Please answer this question.</div>
+        </div>
+      </div>
+
+      <!-- Maintenance & Responsibility -->
+      <div style="border:1.5px solid rgba(196,168,130,0.22);border-radius:6px;padding:24px;margin-bottom:0;background:rgba(196,168,130,0.02);">
+        <p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:18px;">Maintenance &amp; Responsibility</p>
+        <div class="grid-2">
+          <div class="field-wrap">
+            <label for="maintenanceNotify">Are you willing to promptly notify the landlord of maintenance issues? *</label>
+            <select class="field-input" id="maintenanceNotify" name="maintenance_notify" aria-label="Maintenance notification" aria-required="true">
+              <option value="">Select…</option>
+              <option value="Yes">Yes, I agree</option>
+              <option value="No">No</option>
+            </select>
+            <div class="error-msg" role="alert">Please answer this question.</div>
+          </div>
+          <div class="field-wrap">
+            <label for="minorConsumables">Are you comfortable replacing minor consumables (furnace filters, light bulbs, smoke detector batteries)? *</label>
+            <select class="field-input" id="minorConsumables" name="minor_consumables" aria-label="Minor consumables responsibility" aria-required="true">
+              <option value="">Select…</option>
+              <option value="Yes">Yes, I agree</option>
+              <option value="No">No</option>
+            </select>
+            <div class="error-msg" role="alert">Please answer this question.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
       <p class="sub-section-label">Proof of Identity</p>
 
       <div class="grid-2">
         <div class="field-wrap">
           <label for="idType">Government ID Type *</label>
-          <select class="field-input" id="idType" name="ID Type" aria-label="Government ID type" aria-required="true">
+          <select class="field-input" id="idType" name="id_type" aria-label="Government ID type" aria-required="true">
             <option value="">Select…</option>
             <option value="drivers_license">Driver's Licence</option>
             <option value="passport">Passport</option>
@@ -766,19 +901,18 @@
         </div>
         <div class="field-wrap">
           <label for="idNumber">ID Number</label>
-          <input class="field-input" type="text" id="idNumber" name="ID Number" placeholder="Document number" aria-label="ID number">
-         
+          <input class="field-input" type="text" id="idNumber" name="id_number" placeholder="Document number" aria-label="ID number">
         </div>
       </div>
 
       <div class="field-wrap" id="idUploadWrap" style="margin-top:4px;">
         <label>Upload Government ID <span style="color:#C0392B;">*</span></label>
         <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents" style="margin-top:0;">
-          <input type="file" id="idDocsInput" name="ID Documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
+          <input type="file" id="idDocsInput" name="id_documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true">
             <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
           </svg>
-          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag & drop your ID, or tap to browse</p>
+          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop your ID, or tap to browse</p>
           <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver's Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>
         </div>
         <div class="file-list" id="idFileList"></div>
@@ -790,19 +924,19 @@
 
       <div class="field-wrap">
         <label for="currentAddress">Street Address *</label>
-        <input class="field-input" type="text" id="currentAddress" name="Current Address" placeholder="123 Main Street" aria-label="Current street address" aria-required="true" autocomplete="street-address">
+        <input class="field-input" type="text" id="currentAddress" name="current_address" placeholder="123 Main Street" aria-label="Current street address" aria-required="true" autocomplete="street-address">
         <div class="error-msg" role="alert">Please enter your current address.</div>
       </div>
 
       <div class="grid-3">
         <div class="field-wrap">
           <label for="currentCity">City *</label>
-          <input class="field-input" type="text" id="currentCity" name="City" placeholder="City" aria-label="City" aria-required="true" autocomplete="address-level2">
+          <input class="field-input" type="text" id="currentCity" name="current_city" placeholder="City" aria-label="City" aria-required="true" autocomplete="address-level2">
           <div class="error-msg" role="alert">Required.</div>
         </div>
         <div class="field-wrap">
           <label for="currentProvince">Province *</label>
-          <select class="field-input" id="currentProvince" name="Province" aria-label="Province" aria-required="true">
+          <select class="field-input" id="currentProvince" name="current_province" aria-label="Province" aria-required="true">
             <option value="">Select…</option>
             <option value="ON">Ontario</option>
             <option value="AB">Alberta</option>
@@ -822,7 +956,7 @@
         </div>
         <div class="field-wrap">
           <label for="currentPostal">Postal Code *</label>
-          <input class="field-input" type="text" id="currentPostal" name="Postal Code" placeholder="L0L 1B0" aria-label="Postal code" aria-required="true" autocomplete="postal-code" maxlength="7">
+          <input class="field-input" type="text" id="currentPostal" name="current_postal" placeholder="L0L 1B0" aria-label="Postal code" aria-required="true" autocomplete="postal-code" maxlength="7">
           <div class="error-msg" role="alert">Required.</div>
         </div>
       </div>
@@ -830,7 +964,7 @@
       <div class="grid-2">
         <div class="field-wrap">
           <label for="currentLengthOfStay">Length at Current Address *</label>
-          <select class="field-input" id="currentLengthOfStay" name="Length at Address" aria-label="Length at current address" aria-required="true">
+          <select class="field-input" id="currentLengthOfStay" name="length_at_address" aria-label="Length at current address" aria-required="true">
             <option value="">Select…</option>
             <option value="under6">Less than 6 months</option>
             <option value="6to12">6–12 months</option>
@@ -842,23 +976,10 @@
         </div>
         <div class="field-wrap">
           <label for="reasonForLeaving">Reason for Leaving *</label>
-          <input class="field-input" type="text" id="reasonForLeaving" name="Reason for Leaving" placeholder="e.g. Relocation, end of lease…" aria-label="Reason for leaving" aria-required="true">
+          <input class="field-input" type="text" id="reasonForLeaving" name="reason_for_leaving" placeholder="e.g. Relocation, end of lease…" aria-label="Reason for leaving" aria-required="true">
           <div class="error-msg" role="alert">Please enter your reason for leaving.</div>
         </div>
       </div>
-
-      <div class="section-divider"></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-        <div>
-          <p class="sub-section-label" style="margin-bottom:4px;">Co-Applicant</p>
-          <p style="font-size:13px;color:#8C8578;font-weight:300;">Adding a co-applicant strengthens your application.</p>
-        </div>
-        <button type="button" class="btn-ghost" id="addCoApplicantBtn" aria-label="Add co-applicant">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Co-Applicant
-        </button>
-      </div>
-      <div id="coApplicantContainer"></div>
 
       <div class="nav-row nav-row-end">
         <button type="button" class="btn-primary" onclick="goToStep(2)">
@@ -877,7 +998,7 @@
 
       <div class="field-wrap">
         <label for="employmentStatus">Employment Type *</label>
-        <select class="field-input" id="employmentStatus" name="Employment Status" aria-label="Employment type" aria-required="true">
+        <select class="field-input" id="employmentStatus" name="employment_status" aria-label="Employment type" aria-required="true">
           <option value="">Select…</option>
           <option value="Employed — Full-Time">Employed — Full-Time</option>
           <option value="Employed — Part-Time">Employed — Part-Time</option>
@@ -894,24 +1015,24 @@
         <div class="grid-2">
           <div class="field-wrap">
             <label for="employerName">Employer Name *</label>
-            <input class="field-input" type="text" id="employerName" name="Employer" placeholder="Company or organization" aria-label="Employer name">
+            <input class="field-input" type="text" id="employerName" name="employer_name" placeholder="Company or organization" aria-label="Employer name">
             <div class="error-msg" role="alert">Please enter your employer's name.</div>
           </div>
           <div class="field-wrap">
             <label for="jobTitle">Job Title / Position *</label>
-            <input class="field-input" type="text" id="jobTitle" name="Job Title" placeholder="Your role" aria-label="Job title">
+            <input class="field-input" type="text" id="jobTitle" name="job_title" placeholder="Your role" aria-label="Job title">
             <div class="error-msg" role="alert">Please enter your job title.</div>
           </div>
         </div>
         <div class="grid-2">
           <div class="field-wrap">
             <label for="employerPhone">Employer Phone *</label>
-            <input class="field-input" type="tel" id="employerPhone" name="Employer Phone" placeholder="HR or manager number" aria-label="Employer phone" aria-required="true">
+            <input class="field-input" type="tel" id="employerPhone" name="employer_phone" placeholder="HR or manager number" aria-label="Employer phone" aria-required="true">
             <div class="error-msg" role="alert">Please enter an employer phone number.</div>
           </div>
           <div class="field-wrap">
             <label for="employmentLength">Time with Employer *</label>
-            <select class="field-input" id="employmentLength" name="Employment Length" aria-label="Time with employer" aria-required="true">
+            <select class="field-input" id="employmentLength" name="employment_length" aria-label="Time with employer" aria-required="true">
               <option value="">Select…</option>
               <option value="Under 6 months">Less than 6 months</option>
               <option value="6–12 months">6–12 months</option>
@@ -925,12 +1046,12 @@
         <div class="grid-2">
           <div class="field-wrap">
             <label for="grossIncome">Annual Gross Income *</label>
-            <input class="field-input" type="text" id="grossIncome" name="Gross Income" placeholder="$0,000" aria-label="Annual gross income" aria-required="true">
+            <input class="field-input" type="text" id="grossIncome" name="gross_income" placeholder="$0,000" aria-label="Annual gross income" aria-required="true">
             <div class="error-msg" role="alert">Please enter your income.</div>
           </div>
           <div class="field-wrap">
             <label for="payFrequency">Pay Frequency</label>
-            <select class="field-input" id="payFrequency" name="Pay Frequency" aria-label="Pay frequency">
+            <select class="field-input" id="payFrequency" name="pay_frequency" aria-label="Pay frequency">
               <option value="">Select…</option>
               <option value="Weekly">Weekly</option>
               <option value="Bi-weekly">Bi-weekly</option>
@@ -945,11 +1066,11 @@
         <div class="grid-2">
           <div class="field-wrap">
             <label for="contractClient">Primary Client / Company</label>
-            <input class="field-input" type="text" id="contractClient" name="Contract Client" placeholder="Main client or company" aria-label="Contract client">
+            <input class="field-input" type="text" id="contractClient" name="contract_client" placeholder="Main client or company" aria-label="Contract client">
           </div>
           <div class="field-wrap">
             <label for="contractIncome">Annual Gross Income *</label>
-            <input class="field-input" type="text" id="contractIncome" name="Contract Income" placeholder="$0,000" aria-label="Contract income" aria-required="true">
+            <input class="field-input" type="text" id="contractIncome" name="contract_income" placeholder="$0,000" aria-label="Contract income" aria-required="true">
             <div class="error-msg" role="alert">Please enter your income.</div>
           </div>
         </div>
@@ -959,22 +1080,22 @@
         <div class="grid-2">
           <div class="field-wrap">
             <label for="businessName">Business Name</label>
-            <input class="field-input" type="text" id="businessName" name="Business Name" placeholder="Registered business name" aria-label="Business name">
+            <input class="field-input" type="text" id="businessName" name="business_name" placeholder="Registered business name" aria-label="Business name">
           </div>
           <div class="field-wrap">
             <label for="businessType">Type of Business</label>
-            <input class="field-input" type="text" id="businessType" name="Business Type" placeholder="Industry / nature of work" aria-label="Business type">
+            <input class="field-input" type="text" id="businessType" name="business_type" placeholder="Industry / nature of work" aria-label="Business type">
           </div>
         </div>
         <div class="grid-2">
           <div class="field-wrap">
             <label for="selfIncome">Average Annual Income *</label>
-            <input class="field-input" type="text" id="selfIncome" name="Self-Employed Income" placeholder="$0,000 (past 2 years avg)" aria-label="Self-employed income" aria-required="true">
+            <input class="field-input" type="text" id="selfIncome" name="self_employed_income" placeholder="$0,000 (past 2 years avg)" aria-label="Self-employed income" aria-required="true">
             <div class="error-msg" role="alert">Please enter your income.</div>
           </div>
           <div class="field-wrap">
             <label for="yearsInBusiness">Years in Business</label>
-            <select class="field-input" id="yearsInBusiness" name="Years in Business" aria-label="Years in business">
+            <select class="field-input" id="yearsInBusiness" name="years_in_business" aria-label="Years in business">
               <option value="">Select…</option>
               <option value="Under 1 year">Less than 1 year</option>
               <option value="1–3 years">1–3 years</option>
@@ -989,12 +1110,12 @@
         <div class="grid-2">
           <div class="field-wrap">
             <label for="retiredIncome">Annual Income *</label>
-            <input class="field-input" type="text" id="retiredIncome" name="Retired/Student Income" placeholder="$0,000" aria-label="Retired or student income">
+            <input class="field-input" type="text" id="retiredIncome" name="retired_student_income" placeholder="$0,000" aria-label="Retired or student income">
             <div class="error-msg" role="alert">Please enter your income or primary source of funds.</div>
           </div>
           <div class="field-wrap">
             <label for="retiredIncomeSource">Primary Income Source</label>
-            <input class="field-input" type="text" id="retiredIncomeSource" name="Income Source" placeholder="e.g. CPP, RRSP, student loan, family support…" aria-label="Income source">
+            <input class="field-input" type="text" id="retiredIncomeSource" name="income_source" placeholder="e.g. CPP, RRSP, student loan, family support…" aria-label="Income source">
           </div>
         </div>
       </div>
@@ -1004,11 +1125,43 @@
 
       <div class="field-wrap">
         <label for="additionalIncome">Other Income Sources</label>
-        <input class="field-input" type="text" id="additionalIncome" name="Additional Income Sources" placeholder="e.g. rental income, investments, pension…" aria-label="Additional income sources">
+        <input class="field-input" type="text" id="additionalIncome" name="additional_income_sources" placeholder="e.g. rental income, investments, pension…" aria-label="Additional income sources">
       </div>
       <div class="field-wrap" style="max-width:260px;">
         <label for="additionalIncomeAmount">Annual Amount</label>
-        <input class="field-input" type="text" id="additionalIncomeAmount" name="Additional Income Amount" placeholder="$0,000" aria-label="Additional income amount">
+        <input class="field-input" type="text" id="additionalIncomeAmount" name="additional_income_amount" placeholder="$0,000" aria-label="Additional income amount">
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="sub-section-label">Debt &amp; Rental Payment History</p>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="monthlyDebt">Total Monthly Debt Obligations <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></label>
+          <input class="field-input" type="text" id="monthlyDebt" name="monthly_debt_obligations" placeholder="$0,000/mo — car, loans, credit cards…" aria-label="Total monthly debt obligations">
+        </div>
+        <div class="field-wrap">
+          <label for="lateRent24">Have you ever been late on rent in the last 24 months? *</label>
+          <select class="field-input" id="lateRent24" name="late_rent_24mo" aria-label="Late rent in last 24 months" aria-required="true" onchange="toggleLateRentCount(this.value)">
+            <option value="">Select…</option>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+          <div class="error-msg" role="alert">Please answer this question.</div>
+        </div>
+      </div>
+
+      <div id="lateRentCountWrap" style="display:none;max-width:260px;">
+        <div class="field-wrap">
+          <label for="lateRentCount">Number of late rent payments in the last 24 months</label>
+          <select class="field-input" id="lateRentCount" name="late_rent_count" aria-label="Number of late rent payments">
+            <option value="">Select…</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4+">4 or more</option>
+          </select>
+        </div>
       </div>
 
       <div class="section-divider"></div>
@@ -1017,7 +1170,7 @@
 
       <div class="field-wrap" id="financialUploadWrap">
         <div class="upload-zone" id="financialDocsZone" role="button" aria-label="Upload financial documents">
-          <input type="file" id="financialDocsInput" name="Financial Documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload financial documents" onchange="handleFiles(event,'financialFileList')">
+          <input type="file" id="financialDocsInput" name="financial_documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload financial documents" onchange="handleFiles(event,'financialFileList')">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 10px;display:block;" aria-hidden="true">
             <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
@@ -1045,107 +1198,119 @@
 
       <div style="margin-bottom:28px;">
         <label class="no-prior-rental-label" for="noPriorRental">
-          <input type="checkbox" id="noPriorRental" name="No Prior Rental History" onchange="toggleAllRefs(this.checked)">
+          <input type="checkbox" id="noPriorRental" name="no_prior_rental" onchange="toggleAllRefs(this.checked)">
           <span>I have not previously rented and am unable to provide landlord references</span>
         </label>
       </div>
 
       <div id="ref1Block">
       <div class="reference-block">
-        <p class="sub-section-label">Landlord Reference #1 <span style="color:#C0392B;">*</span></p>
+        <p class="sub-section-label">Current / Most Recent Landlord <span style="color:#C0392B;">*</span></p>
+
+        <!-- Property address first -->
+        <div class="field-wrap">
+          <label for="ref1Address">Rental Property Address *</label>
+          <input class="field-input" type="text" id="ref1Address" name="ref1_property_address" placeholder="Full address of the rental you occupied" aria-label="Reference 1 property address" aria-required="true">
+          <div class="error-msg" role="alert">Please enter the rental property address.</div>
+        </div>
+
+        <!-- Landlord contact -->
         <div class="grid-2">
           <div class="field-wrap">
-            <label for="ref1Name">Landlord Full Name *</label>
-            <input class="field-input" type="text" id="ref1Name" name="Ref 1 Name" placeholder="Full name" aria-label="Reference 1 name" aria-required="true">
+            <label for="ref1Name">Current Landlord Name *</label>
+            <input class="field-input" type="text" id="ref1Name" name="ref1_landlord_name" placeholder="Full name" aria-label="Reference 1 name" aria-required="true">
             <div class="error-msg" role="alert">Please enter the landlord's name.</div>
           </div>
           <div class="field-wrap">
-            <label for="ref1Phone">Phone Number *</label>
-            <input class="field-input" type="tel" id="ref1Phone" name="Ref 1 Phone" placeholder="(416) 555-0100" aria-label="Reference 1 phone" aria-required="true">
+            <label for="ref1Phone">Current Landlord Phone *</label>
+            <input class="field-input" type="tel" id="ref1Phone" name="ref1_landlord_phone" placeholder="(416) 555-0100" aria-label="Reference 1 phone" aria-required="true">
             <div class="error-msg" role="alert">Please enter a phone number.</div>
           </div>
         </div>
         <div class="grid-2">
           <div class="field-wrap">
-            <label for="ref1Email">Email Address</label>
-            <input class="field-input" type="email" id="ref1Email" name="Ref 1 Email" placeholder="landlord@example.com" aria-label="Reference 1 email">
+            <label for="ref1Email">Current Landlord Email</label>
+            <input class="field-input" type="email" id="ref1Email" name="ref1_landlord_email" placeholder="landlord@example.com" aria-label="Reference 1 email">
           </div>
           <div class="field-wrap">
-            <label for="ref1Relationship">Relationship</label>
-            <select class="field-input" id="ref1Relationship" name="Ref 1 Relationship" aria-label="Reference 1 relationship">
-              <option value="Previous Landlord" selected>Previous Landlord</option>
-              <option value="Current Landlord">Current Landlord</option>
-              <option value="Property Manager">Property Manager</option>
-            </select>
+            <label for="ref1LandlordAddress">Current Landlord Address</label>
+            <input class="field-input" type="text" id="ref1LandlordAddress" name="ref1_landlord_address" placeholder="Landlord's mailing address" aria-label="Reference 1 landlord address">
           </div>
         </div>
-        <div class="field-wrap">
-          <label for="ref1Address">Rental Property Address *</label>
-          <input class="field-input" type="text" id="ref1Address" name="Ref 1 Address" placeholder="Address of the rental you occupied" aria-label="Reference 1 property address" aria-required="true">
-          <div class="error-msg" role="alert">Please enter the rental property address.</div>
+
+        <!-- Permission to contact -->
+        <div style="margin-bottom:24px;">
+          <label class="check-wrap" style="cursor:pointer;">
+            <input type="checkbox" id="ref1ContactPermission" name="ref1_contact_permission">
+            <span class="check-label">I give permission to contact my current landlord as part of this application review.</span>
+          </label>
         </div>
+
+        <!-- Tenancy dates & rent -->
         <div class="grid-2">
           <div class="field-wrap">
             <label for="ref1From">Tenancy From *</label>
-            <input class="field-input" type="month" id="ref1From" name="Ref 1 Tenancy From" aria-label="Tenancy start date" aria-required="true">
+            <input class="field-input" type="month" id="ref1From" name="ref1_tenancy_from" aria-label="Tenancy start date" aria-required="true">
             <div class="error-msg" role="alert">Please enter the tenancy start date.</div>
           </div>
           <div class="field-wrap">
             <label for="ref1To">Tenancy To *</label>
-            <input class="field-input" type="month" id="ref1To" name="Ref 1 Tenancy To" aria-label="Tenancy end date" aria-required="true">
+            <input class="field-input" type="month" id="ref1To" name="ref1_tenancy_to" aria-label="Tenancy end date" aria-required="true">
             <div class="error-msg" role="alert">Please enter the tenancy end date.</div>
           </div>
         </div>
         <div class="field-wrap" style="max-width:200px;">
-          <label for="ref1MonthlyRent">Monthly Rent Paid *</label>
-          <input class="field-input" type="text" id="ref1MonthlyRent" name="Ref 1 Monthly Rent" placeholder="$0,000/mo" aria-label="Reference 1 monthly rent" aria-required="true">
+          <label for="ref1MonthlyRent">Monthly Rent Currently Paid *</label>
+          <input class="field-input" type="text" id="ref1MonthlyRent" name="ref1_monthly_rent" placeholder="$0,000/mo" aria-label="Reference 1 monthly rent" aria-required="true">
           <div class="error-msg" role="alert">Please enter the monthly rent paid.</div>
         </div>
       </div>
       </div><!-- /ref1Block -->
 
       <div class="reference-block" id="ref2Block">
-        <p class="sub-section-label" id="ref2Heading">Landlord Reference #2 <span style="color:#C0392B;">*</span></p>
+        <p class="sub-section-label" id="ref2Heading">Previous Landlord Reference #2 <span style="color:#C0392B;">*</span></p>
+
+        <!-- Property address first -->
+        <div class="field-wrap">
+          <label for="ref2Address">Rental Property Address *</label>
+          <input class="field-input" type="text" id="ref2Address" name="ref2_property_address" placeholder="Full address of the rental you occupied" aria-label="Reference 2 property address" aria-required="true">
+          <div class="error-msg" role="alert">Please enter the rental property address.</div>
+        </div>
+
         <div class="grid-2">
           <div class="field-wrap">
             <label for="ref2Name">Landlord Full Name *</label>
-            <input class="field-input" type="text" id="ref2Name" name="Ref 2 Name" placeholder="Full name" aria-label="Reference 2 name" aria-required="true">
+            <input class="field-input" type="text" id="ref2Name" name="ref2_landlord_name" placeholder="Full name" aria-label="Reference 2 name" aria-required="true">
             <div class="error-msg" role="alert">Please enter the landlord's name.</div>
           </div>
           <div class="field-wrap">
             <label for="ref2Phone">Phone Number *</label>
-            <input class="field-input" type="tel" id="ref2Phone" name="Ref 2 Phone" placeholder="(416) 555-0100" aria-label="Reference 2 phone" aria-required="true">
+            <input class="field-input" type="tel" id="ref2Phone" name="ref2_landlord_phone" placeholder="(416) 555-0100" aria-label="Reference 2 phone" aria-required="true">
             <div class="error-msg" role="alert">Please enter a phone number.</div>
           </div>
         </div>
         <div class="grid-2">
           <div class="field-wrap">
             <label for="ref2Email">Email Address</label>
-            <input class="field-input" type="email" id="ref2Email" name="Ref 2 Email" placeholder="landlord@example.com" aria-label="Reference 2 email">
+            <input class="field-input" type="email" id="ref2Email" name="ref2_landlord_email" placeholder="landlord@example.com" aria-label="Reference 2 email">
           </div>
           <div class="field-wrap">
             <label for="ref2Relationship">Relationship</label>
-            <select class="field-input" id="ref2Relationship" name="Ref 2 Relationship" aria-label="Reference 2 relationship">
+            <select class="field-input" id="ref2Relationship" name="ref2_relationship" aria-label="Reference 2 relationship">
               <option value="Previous Landlord" selected>Previous Landlord</option>
-              <option value="Current Landlord">Current Landlord</option>
               <option value="Property Manager">Property Manager</option>
             </select>
           </div>
         </div>
-        <div class="field-wrap">
-          <label for="ref2Address">Rental Property Address *</label>
-          <input class="field-input" type="text" id="ref2Address" name="Ref 2 Address" placeholder="Address of the rental you occupied" aria-label="Reference 2 property address" aria-required="true">
-          <div class="error-msg" role="alert">Please enter the rental property address.</div>
-        </div>
         <div class="grid-2">
           <div class="field-wrap">
             <label for="ref2From">Tenancy From *</label>
-            <input class="field-input" type="month" id="ref2From" name="Ref 2 Tenancy From" aria-label="Tenancy 2 start date" aria-required="true">
+            <input class="field-input" type="month" id="ref2From" name="ref2_tenancy_from" aria-label="Tenancy 2 start date" aria-required="true">
             <div class="error-msg" role="alert">Please enter the tenancy start date.</div>
           </div>
           <div class="field-wrap">
             <label for="ref2To">Tenancy To *</label>
-            <input class="field-input" type="month" id="ref2To" name="Ref 2 Tenancy To" aria-label="Tenancy 2 end date" aria-required="true">
+            <input class="field-input" type="month" id="ref2To" name="ref2_tenancy_to" aria-label="Tenancy 2 end date" aria-required="true">
             <div class="error-msg" role="alert">Please enter the tenancy end date.</div>
           </div>
         </div>
@@ -1169,7 +1334,7 @@
         <p class="sub-section-label" style="margin-bottom:14px;">Credit Check Authorization</p>
         <p style="font-size:13px;color:#4A4840;line-height:1.8;margin-bottom:22px;">By checking the box below, I authorize the Landlord or their authorized agent to obtain a consumer credit report from a credit reporting agency (such as <strong>Equifax</strong> or <strong>TransUnion</strong>) for the purpose of evaluating this rental application. I understand this inquiry may appear on my credit file.</p>
         <div class="check-wrap">
-          <input type="checkbox" id="consentCredit" name="Credit Check Consent" aria-label="Authorize credit check" aria-required="true">
+          <input type="checkbox" id="consentCredit" name="consent_credit_check" aria-label="Authorize credit check" aria-required="true">
           <label class="check-label" for="consentCredit"><strong>I authorize a credit check</strong> to be conducted as part of this rental application. <span style="color:#C0392B;">*</span></label>
         </div>
         <div id="consentCreditError" style="font-size:11px;color:#C0392B;margin-top:8px;margin-left:31px;display:none;" role="alert">You must authorize the credit check to proceed.</div>
@@ -1178,17 +1343,17 @@
       <p class="sub-section-label">Declarations</p>
       <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:32px;">
         <div class="check-wrap">
-          <input type="checkbox" id="declareEviction" name="No Eviction Declaration" aria-label="Eviction declaration" aria-required="true">
+          <input type="checkbox" id="declareEviction" name="declare_no_eviction" aria-label="Eviction declaration" aria-required="true">
           <label class="check-label" for="declareEviction">I have <strong>not</strong> been evicted from a rental property in the past 5 years, nor have I been subject to an eviction order through the Ontario Landlord and Tenant Board. <span style="color:#C0392B;">*</span></label>
         </div>
         <div id="declareEvictionError" style="font-size:11px;color:#C0392B;margin-left:31px;display:none;" role="alert">You must complete this declaration.</div>
         <div class="check-wrap">
-          <input type="checkbox" id="declareBankruptcy" name="No Bankruptcy Declaration" aria-label="Bankruptcy declaration" aria-required="true">
+          <input type="checkbox" id="declareBankruptcy" name="declare_no_bankruptcy" aria-label="Bankruptcy declaration" aria-required="true">
           <label class="check-label" for="declareBankruptcy">I have <strong>not</strong> filed for bankruptcy in the past 7 years, or if I have, I have been discharged and can provide documentation upon request. <span style="color:#C0392B;">*</span></label>
         </div>
         <div id="declareBankruptcyError" style="font-size:11px;color:#C0392B;margin-left:31px;display:none;" role="alert">You must complete this declaration.</div>
         <div class="check-wrap">
-          <input type="checkbox" id="declareAccurate" name="Accuracy Declaration" aria-label="Accuracy declaration" aria-required="true">
+          <input type="checkbox" id="declareAccurate" name="declare_accuracy" aria-label="Accuracy declaration" aria-required="true">
           <label class="check-label" for="declareAccurate"><strong>I declare that all information provided is true, complete, and accurate.</strong> I understand that providing false information may result in rejection of this application or lease termination. <span style="color:#C0392B;">*</span></label>
         </div>
         <div id="declareAccurateError" style="font-size:11px;color:#C0392B;margin-left:31px;display:none;" role="alert">You must declare the accuracy of your information.</div>
@@ -1210,12 +1375,12 @@
       <div class="grid-2">
         <div class="field-wrap">
           <label for="signatureName">Full Legal Name *</label>
-          <input class="field-input" type="text" id="signatureName" name="Electronic Signature" placeholder="Type your full name" aria-label="Electronic signature — full legal name" aria-required="true">
+          <input class="field-input" type="text" id="signatureName" name="signature_name" placeholder="Type your full name" aria-label="Electronic signature — full legal name" aria-required="true">
           <div class="error-msg" role="alert">Please type your full name as your electronic signature.</div>
         </div>
         <div class="field-wrap">
           <label for="signatureDate">Date</label>
-          <input class="field-input" type="date" id="signatureDate" name="Signature Date" aria-label="Signature date" readonly style="color:#8C8578;">
+          <input class="field-input" type="date" id="signatureDate" name="signature_date" aria-label="Signature date" readonly style="color:#8C8578;">
         </div>
       </div>
 
@@ -1271,8 +1436,6 @@
 <script>
   'use strict';
   let currentStep = 1;
-  let coApplicantCount = 0;
-  let coApplicantSerial = 0; // ever-incrementing ID so removed blocks don't conflict
   const progressMap = {1:'25%',2:'50%',3:'75%',4:'100%'};
 
   // ─── STEP NAVIGATION ───
@@ -1311,7 +1474,15 @@
       valid = emailCheck('email') & valid;
       valid = req('phone') & valid;
       valid = req('moveInDate') & valid;
+      valid = req('intendedStay') & valid;
+      valid = req('propertyAttraction') & valid;
       valid = req('numOccupants') & valid;
+      valid = req('smokingVaping') & valid;
+      valid = req('commercialVehicles') & valid;
+      valid = req('recreationalVehicles') & valid;
+      valid = req('businessActivities') & valid;
+      valid = req('maintenanceNotify') & valid;
+      valid = req('minorConsumables') & valid;
       valid = req('idType') & valid;
       // ID upload required
       if (uploadedFiles.id.length === 0) {
@@ -1357,6 +1528,7 @@
         document.getElementById('financialUploadError').style.display = 'none';
         document.getElementById('financialDocsZone').style.borderColor = '';
       }
+      valid = req('lateRent24') & valid;
     }
     if (step === 3) {
       const noPrior = document.getElementById('noPriorRental').checked;
@@ -1417,7 +1589,7 @@
   };
 
   // ─── FORM SUBMIT ───
-  const MAKE_WEBHOOK = 'https://hook.us2.make.com/caa3phwd3dqhgaxx9iki8o7bvgmsr9wn';
+  const MAKE_WEBHOOK = 'https://hook.us2.make.com/ueppfqtdi9je7uadso8u1wrvy0e7p6bi';
 
   // Convert a File to a base64 data string
   function fileToBase64(file) {
@@ -1456,11 +1628,17 @@
       form.querySelectorAll('input:not([type="file"]):not([type="checkbox"]), select, textarea').forEach(el => {
         if (el.name && el.value.trim()) data[el.name] = el.value.trim();
       });
-      data['Consent to Credit Check']    = document.getElementById('consentCredit').checked    ? 'Yes' : 'No';
-      data['No Eviction Declaration']    = document.getElementById('declareEviction').checked   ? 'Yes' : 'No';
-      data['No Bankruptcy Declaration']  = document.getElementById('declareBankruptcy').checked ? 'Yes' : 'No';
-      data['Declaration of Accuracy']    = document.getElementById('declareAccurate').checked   ? 'Yes' : 'No';
-      data['Submission Date']            = new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' });
+      data['consent_credit_check']    = document.getElementById('consentCredit').checked    ? 'yes' : 'no';
+      data['declare_no_eviction']     = document.getElementById('declareEviction').checked   ? 'yes' : 'no';
+      data['declare_no_bankruptcy']   = document.getElementById('declareBankruptcy').checked ? 'yes' : 'no';
+      data['declare_accuracy']        = document.getElementById('declareAccurate').checked   ? 'yes' : 'no';
+      data['ref1_contact_permission'] = document.getElementById('ref1ContactPermission') && document.getElementById('ref1ContactPermission').checked ? 'yes' : 'no';
+      data['submission_date']         = new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' });
+
+      // ── Collect all occupant co-applicant checkboxes ──
+      document.querySelectorAll('input[type="checkbox"][id^="occupant_"]').forEach(cb => {
+        data[cb.name] = cb.checked ? 'yes' : 'no';
+      });
 
       // ── 2. Encode uploaded files as base64 ─────────────────────────
       const encodeGroup = async (files, label) => {
@@ -1472,8 +1650,8 @@
         return out;
       };
 
-      data['Financial Documents'] = await encodeGroup(uploadedFiles.financial, 'financial');
-      data['ID Documents']        = await encodeGroup(uploadedFiles.id, 'id');
+      data['financial_documents'] = await encodeGroup(uploadedFiles.financial, 'financial');
+      data['id_documents']        = await encodeGroup(uploadedFiles.id, 'id');
 
       // ── 3. POST as JSON — works with Make.com webhook CORS policy ──
       const res = await fetch(MAKE_WEBHOOK, {
@@ -1497,85 +1675,64 @@
     }
   });
 
-  // ─── CO-APPLICANT ───
-  document.getElementById('addCoApplicantBtn').addEventListener('click', () => {
-    if (coApplicantCount >= 3) return;
-    coApplicantCount++;
-    coApplicantSerial++;
-    const serial = coApplicantSerial;
-    const num = coApplicantCount;
-    const c = document.getElementById('coApplicantContainer');
-    const b = document.createElement('div');
-    b.className = 'coapplicant-block';
-    b.id = 'coapp' + serial;
-    b.innerHTML =
-      '<div class="coapplicant-header">' +
-        '<p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;">Co-Applicant ' + num + '</p>' +
-        '<button type="button" onclick="removeCoApp(' + serial + ')" style="background:none;border:none;color:#8C8578;cursor:pointer;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-family:inherit;transition:color 0.2s;" onmouseover="this.style.color=\'#C0392B\'" onmouseout="this.style.color=\'#8C8578\'">Remove</button>' +
-      '</div>' +
-      '<div class="grid-2">' +
-        '<div class="field-wrap"><label>First Name</label><input class="field-input" type="text" name="Co-Applicant ' + num + ' First Name" placeholder="Given name" autocomplete="off"></div>' +
-        '<div class="field-wrap"><label>Last Name</label><input class="field-input" type="text" name="Co-Applicant ' + num + ' Last Name" placeholder="Family name" autocomplete="off"></div>' +
-      '</div>' +
-      '<div class="grid-2">' +
-        '<div class="field-wrap"><label>Email</label><input class="field-input" type="email" name="Co-Applicant ' + num + ' Email" placeholder="email@example.com" autocomplete="off"></div>' +
-        '<div class="field-wrap"><label>Phone</label><input class="field-input" type="tel" name="Co-Applicant ' + num + ' Phone" placeholder="(416) 555-0100" autocomplete="off"></div>' +
-      '</div>' +
-      '<div class="grid-2">' +
-        '<div class="field-wrap"><label>Employer</label><input class="field-input" type="text" name="Co-Applicant ' + num + ' Employer" placeholder="Employer name" autocomplete="off"></div>' +
-        '<div class="field-wrap"><label>Annual Income</label><input class="field-input" type="text" name="Co-Applicant ' + num + ' Income" placeholder="$0,000" autocomplete="off"></div>' +
-      '</div>' +
-      '<div class="field-wrap">' +
-        '<label>Government ID Type</label>' +
-        '<select class="field-input" name="Co-Applicant ' + num + ' ID Type" id="coapp-idtype-' + serial + '" onchange="toggleCoAppIdUpload(' + serial + ', this.value)">' +
-          '<option value="">Select…</option>' +
-          '<option>Driver\'s Licence</option>' +
-          '<option>Passport</option>' +
-          '<option>Permanent Resident Card</option>' +
-          '<option>Other Government ID</option>' +
-        '</select>' +
-      '</div>' +
-      '<div class="field-wrap" id="coapp-idupload-' + serial + '" style="display:none;margin-top:4px;">' +
-        '<label>Upload Government ID <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;"></span></label>' +
-        '<div class="upload-zone" id="coapp-idzone-' + serial + '" role="button" aria-label="Upload co-applicant identity document" style="margin-top:0;">' +
-          '<input type="file" name="Co-Applicant ' + num + ' ID Document" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant identity document" onchange="handleFiles(event,\'coapp-idfilelist-' + serial + '\')">' +
-          '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>' +
-          '<p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop your ID, or tap to browse</p>' +
-          '<p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver\'s Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>' +
+  // ─── OCCUPANT DETAILS ROWS ───
+  function buildOccupantRows(count) {
+    const wrap = document.getElementById('occupantDetailsWrap');
+    wrap.innerHTML = '';
+    if (count <= 1) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    for (let i = 2; i <= count; i++) {
+      const block = document.createElement('div');
+      block.style.cssText = 'border:1px solid rgba(196,168,130,0.22);border-radius:6px;padding:20px 20px 16px;margin-bottom:12px;background:rgba(196,168,130,0.02);';
+      const serial = i;
+      block.innerHTML =
+        '<p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:16px;">Occupant ' + serial + '</p>' +
+        '<div class="grid-3">' +
+          '<div class="field-wrap"><label>Full Name</label><input class="field-input" type="text" id="occupant_' + serial + '_name" name="occupant_' + serial + '_name" placeholder="Full name" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Age</label><input class="field-input" type="number" id="occupant_' + serial + '_age" name="occupant_' + serial + '_age" placeholder="Age" min="0" max="120" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Relationship to Applicant</label>' +
+            '<select class="field-input" id="occupant_' + serial + '_relationship" name="occupant_' + serial + '_relationship">' +
+              '<option value="">Select…</option>' +
+              '<option value="spouse_partner">Spouse / Partner</option>' +
+              '<option value="child">Child</option>' +
+              '<option value="parent">Parent</option>' +
+              '<option value="sibling">Sibling</option>' +
+              '<option value="roommate">Roommate</option>' +
+              '<option value="other">Other</option>' +
+            '</select>' +
+          '</div>' +
         '</div>' +
-        '<div class="file-list" id="coapp-idfilelist-' + serial + '"></div>' +
-      '</div>';
-    c.appendChild(b);
-
-    // Wire up drag-and-drop for the new upload zone
-    const zone = document.getElementById('coapp-idzone-' + serial);
-    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
-    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-    zone.addEventListener('drop', e => {
-      e.preventDefault();
-      zone.classList.remove('drag-over');
-      const input = zone.querySelector('input[type="file"]');
-      if (input && e.dataTransfer.files.length) {
-        const dt = new DataTransfer();
-        Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
-        input.files = dt.files;
-        handleFiles({ target: input }, 'coapp-idfilelist-' + serial);
-      }
-    });
-
-    if (coApplicantCount >= 3) document.getElementById('addCoApplicantBtn').style.display = 'none';
-  });
-
-  function toggleCoAppIdUpload(serial, value) {
-    const uploadWrap = document.getElementById('coapp-idupload-' + serial);
-    if (uploadWrap) uploadWrap.style.display = value ? 'block' : 'none';
+        '<label style="display:inline-flex;align-items:center;gap:10px;cursor:pointer;margin-top:4px;">' +
+          '<input type="checkbox" id="occupant_' + serial + '_co_applicant" name="occupant_' + serial + '_co_applicant" value="yes" style="-webkit-appearance:none;appearance:none;width:16px;height:16px;border:1.5px solid rgba(26,26,24,0.25);border-radius:3px;flex-shrink:0;cursor:pointer;transition:all 0.2s ease;position:relative;background:transparent;" ' +
+            'onchange="this.style.background=this.checked?\'#1A1A18\':\'transparent\';this.style.borderColor=this.checked?\'#1A1A18\':\'rgba(26,26,24,0.25)\';if(this.checked){var c=this;setTimeout(function(){if(c.checked)c.insertAdjacentHTML(\'afterend\',\'\');},0);}">' +
+          '<span style="font-size:13px;color:#1A1A18;font-weight:300;line-height:1.5;">Include as <strong>co-applicant</strong> on this application</span>' +
+        '</label>';
+      wrap.appendChild(block);
+      // Apply custom checkbox checked style after DOM insertion
+      const cb = block.querySelector('input[type="checkbox"]');
+      cb.addEventListener('change', function() {
+        this.style.background = this.checked ? '#1A1A18' : 'transparent';
+        this.style.borderColor = this.checked ? '#1A1A18' : 'rgba(26,26,24,0.25)';
+        if (this.checked) {
+          this.style.setProperty('--check', '1');
+          // Inject checkmark pseudo-element via inline after-element trick
+          this.setAttribute('data-checked', 'true');
+        } else {
+          this.removeAttribute('data-checked');
+        }
+      });
+    }
   }
 
-  function removeCoApp(serial) {
-    const el = document.getElementById('coapp' + serial);
-    if (el) el.remove();
-    coApplicantCount = Math.max(0, coApplicantCount - 1);
-    if (coApplicantCount < 3) document.getElementById('addCoApplicantBtn').style.display = 'inline-flex';
+  // ─── SMOKING TOGGLE ───
+  function toggleSmokingDetails(value) {
+    document.getElementById('smokingDetailsWrap').style.display = value === 'Yes' ? 'block' : 'none';
+  }
+
+  // ─── LATE RENT COUNT TOGGLE ───
+  function toggleLateRentCount(value) {
+    document.getElementById('lateRentCountWrap').style.display = value === 'Yes' ? 'block' : 'none';
+    if (value !== 'Yes') document.getElementById('lateRentCount').value = '';
   }
 
   // ─── PETS TOGGLE ───
@@ -1597,12 +1754,12 @@
       block.innerHTML =
         '<p style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C4A882;font-weight:500;margin-bottom:16px;">Vehicle ' + i + '</p>' +
         '<div class="grid-2">' +
-          '<div class="field-wrap"><label>Make</label><input class="field-input" type="text" name="Vehicle ' + i + ' Make" placeholder="e.g. Honda" autocomplete="off"></div>' +
-          '<div class="field-wrap"><label>Model</label><input class="field-input" type="text" name="Vehicle ' + i + ' Model" placeholder="e.g. Civic" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Make</label><input class="field-input" type="text" name="vehicle_' + i + '_make" placeholder="e.g. Honda" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Model</label><input class="field-input" type="text" name="vehicle_' + i + '_model" placeholder="e.g. Civic" autocomplete="off"></div>' +
         '</div>' +
         '<div class="grid-2">' +
-          '<div class="field-wrap"><label>Year</label><input class="field-input" type="text" name="Vehicle ' + i + ' Year" placeholder="e.g. 2019" maxlength="4" autocomplete="off"></div>' +
-          '<div class="field-wrap"><label>Licence Plate <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></label><input class="field-input" type="text" name="Vehicle ' + i + ' Plate" placeholder="e.g. ABCD 123" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Year</label><input class="field-input" type="text" name="vehicle_' + i + '_year" placeholder="e.g. 2019" maxlength="4" autocomplete="off"></div>' +
+          '<div class="field-wrap"><label>Licence Plate <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></label><input class="field-input" type="text" name="vehicle_' + i + '_plate" placeholder="e.g. ABCD 123" autocomplete="off"></div>' +
         '</div>';
       wrap.appendChild(block);
     }
@@ -1724,7 +1881,7 @@
       block.style.pointerEvents = checked ? 'none' : '';
     });
     if (checked) {
-      ['ref1Name','ref1Phone','ref1Address','ref1From','ref1To','ref1MonthlyRent',
+      ['ref1Name','ref1Phone','ref1Address','ref1LandlordAddress','ref1From','ref1To','ref1MonthlyRent',
        'ref2Name','ref2Phone','ref2Address','ref2From','ref2To'].forEach(id => {
         const el = document.getElementById(id);
         if (el) { const w = el.closest('.field-wrap'); if (w) w.classList.remove('has-error'); }
