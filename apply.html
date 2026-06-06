@@ -1651,6 +1651,16 @@
   // ─── FORM SUBMIT ───
   const MAKE_WEBHOOK = 'https://hook.us2.make.com/1ot0l3bkp1qee5pg13k1fbilik1rhgei';
 
+  // Convert a File to a base64 data string
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]); // strip data:...;base64,
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   document.getElementById('mainCard').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -1672,37 +1682,44 @@
     btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Submitting…';
 
     try {
-      // ── 1. Collect all text/select/textarea fields into FormData ────
-      // FormData sends as multipart/form-data — no CORS preflight, and
-      // Make.com maps each field name directly to a bundle key.
-      const fd   = new FormData();
+      // ── 1. Collect text fields ──────────────────────────────────────
+      const data = {};
       const form = document.getElementById('mainCard');
-
       form.querySelectorAll('input:not([type="file"]):not([type="checkbox"]), select, textarea').forEach(el => {
-        if (el.name && el.value.trim()) fd.append(el.name, el.value.trim());
+        if (el.name && el.value.trim()) data[el.name] = el.value.trim();
       });
+      data['consent_credit_check']    = document.getElementById('consentCredit').checked    ? 'yes' : 'no';
+      data['declare_no_eviction']     = document.getElementById('declareEviction').checked   ? 'yes' : 'no';
+      data['declare_no_bankruptcy']   = document.getElementById('declareBankruptcy').checked ? 'yes' : 'no';
+      data['declare_accuracy']        = document.getElementById('declareAccurate').checked   ? 'yes' : 'no';
+      data['ref1_contact_permission'] = document.getElementById('ref1ContactPermission') && document.getElementById('ref1ContactPermission').checked ? 'yes' : 'no';
+      data['submission_date']         = new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' });
 
-      // ── Checkboxes ──
-      fd.append('consent_credit_check',    document.getElementById('consentCredit').checked    ? 'yes' : 'no');
-      fd.append('declare_no_eviction',     document.getElementById('declareEviction').checked   ? 'yes' : 'no');
-      fd.append('declare_no_bankruptcy',   document.getElementById('declareBankruptcy').checked ? 'yes' : 'no');
-      fd.append('declare_accuracy',        document.getElementById('declareAccurate').checked   ? 'yes' : 'no');
-      const ref1perm = document.getElementById('ref1ContactPermission');
-      fd.append('ref1_contact_permission', ref1perm && ref1perm.checked ? 'yes' : 'no');
-      fd.append('submission_date',         new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto' }));
-
+      // ── Collect all occupant co-applicant checkboxes ──
       document.querySelectorAll('input[type="checkbox"][id^="occupant_"]').forEach(cb => {
-        if (cb.name) fd.append(cb.name, cb.checked ? 'yes' : 'no');
+        data[cb.name] = cb.checked ? 'yes' : 'no';
       });
 
-      // ── 2. Attach uploaded files directly (no base64 needed) ────────
-      uploadedFiles.financial.forEach(f => fd.append('financial_documents', f, f.name));
-      uploadedFiles.id.forEach(f        => fd.append('id_documents',        f, f.name));
+      // ── 2. Encode uploaded files as base64 ─────────────────────────
+      const encodeGroup = async (files, label) => {
+        const out = [];
+        for (const f of files) {
+          const b64 = await fileToBase64(f);
+          out.push({ name: f.name, type: f.type, size: f.size, data: b64 });
+        }
+        return out;
+      };
 
-      // ── 3. POST — multipart/form-data, no custom headers needed ─────
-      const res = await fetch(MAKE_WEBHOOK, { method: 'POST', body: fd });
+      data['financial_documents'] = await encodeGroup(uploadedFiles.financial, 'financial');
+      data['id_documents']        = await encodeGroup(uploadedFiles.id, 'id');
 
-      // Make.com returns 200 "Accepted" on success
+      // ── 3. POST as JSON — works with Make.com webhook CORS policy ──
+      const res = await fetch(MAKE_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
       if (!res.ok) throw new Error('Webhook returned status ' + res.status);
 
       // ── 4. Success ─────────────────────────────────────────────────
