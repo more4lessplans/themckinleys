@@ -885,41 +885,6 @@
       </div>
 
       <div class="section-divider"></div>
-      <p class="sub-section-label">Proof of Identity</p>
-
-      <div class="grid-2">
-        <div class="field-wrap">
-          <label for="idType">Government ID Type *</label>
-          <select class="field-input" id="idType" name="id_type" aria-label="Government ID type" aria-required="true">
-            <option value="">Select…</option>
-            <option value="drivers_license">Driver's Licence</option>
-            <option value="passport">Passport</option>
-            <option value="pr_card">Permanent Resident Card</option>
-            <option value="other">Other Government ID</option>
-          </select>
-          <div class="error-msg" role="alert">Please select an ID type.</div>
-        </div>
-        <div class="field-wrap">
-          <label for="idNumber">ID Number</label>
-          <input class="field-input" type="text" id="idNumber" name="id_number" placeholder="Document number" aria-label="ID number">
-        </div>
-      </div>
-
-      <div class="field-wrap" id="idUploadWrap" style="margin-top:4px;">
-        <label>Upload Government ID <span style="color:#C0392B;">*</span></label>
-        <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents" style="margin-top:0;">
-          <input type="file" id="idDocsInput" name="id_documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true">
-            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
-          </svg>
-          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop your ID, or tap to browse</p>
-          <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver's Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>
-        </div>
-        <div class="file-list" id="idFileList"></div>
-        <div class="error-msg" id="idUploadError" role="alert">Please upload a government-issued photo ID.</div>
-      </div>
-
-      <div class="section-divider"></div>
       <p class="sub-section-label">Current Address</p>
 
       <div class="field-wrap">
@@ -994,6 +959,41 @@
       <p class="form-section-label">Step 2 of 4</p>
       <h2 class="form-section-title">Financial<br><em>Qualification</em></h2>
 
+      <p class="sub-section-label">Proof of Identity</p>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="idType">Government ID Type *</label>
+          <select class="field-input" id="idType" name="id_type" aria-label="Government ID type" aria-required="true">
+            <option value="">Select…</option>
+            <option value="drivers_license">Driver's Licence</option>
+            <option value="passport">Passport</option>
+            <option value="pr_card">Permanent Resident Card</option>
+            <option value="other">Other Government ID</option>
+          </select>
+          <div class="error-msg" role="alert">Please select an ID type.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="idNumber">ID Number</label>
+          <input class="field-input" type="text" id="idNumber" name="id_number" placeholder="Document number" aria-label="ID number">
+        </div>
+      </div>
+
+      <div class="field-wrap" id="idUploadWrap" style="margin-top:4px;">
+        <label>Upload Government ID <span style="color:#C0392B;">*</span></label>
+        <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents" style="margin-top:0;">
+          <input type="file" id="idDocsInput" name="id_documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+          </svg>
+          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop your ID, or tap to browse</p>
+          <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver's Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>
+        </div>
+        <div class="file-list" id="idFileList"></div>
+        <div class="error-msg" id="idUploadError" role="alert">Please upload a government-issued photo ID.</div>
+      </div>
+
+      <div class="section-divider"></div>
       <p class="sub-section-label">Employment Status</p>
 
       <div class="field-wrap">
@@ -1164,6 +1164,14 @@
         </div>
       </div>
 
+      <!-- ─── CO-APPLICANT FINANCIAL SECTION (shown dynamically) ─── -->
+      <div id="coApplicantFinancialSection" style="display:none;">
+        <div class="section-divider"></div>
+        <div id="coApplicantFinancialBlocks">
+          <!-- Co-applicant financial blocks injected here by JS -->
+        </div>
+      </div>
+
       <div class="section-divider"></div>
       <p class="sub-section-label">Supporting Documents <span style="color:#C0392B;">*</span></p>
       <p style="font-size:13px;color:#8C8578;font-weight:300;margin-bottom:22px;line-height:1.65;">Upload recent pay stubs, your employment letter, or NOA/T1 for self-employed applicants. Accepted: PDF, JPG, PNG. Max 10MB total across all uploads.</p>
@@ -1179,14 +1187,6 @@
         </div>
         <div class="file-list" id="financialFileList"></div>
         <div class="error-msg" id="financialUploadError" role="alert">Please upload at least one supporting financial document.</div>
-      </div>
-
-      <!-- ─── CO-APPLICANT FINANCIAL SECTION (shown dynamically) ─── -->
-      <div id="coApplicantFinancialSection" style="display:none;">
-        <div class="section-divider"></div>
-        <div id="coApplicantFinancialBlocks">
-          <!-- Co-applicant financial blocks injected here by JS -->
-        </div>
       </div>
 
       <div class="nav-row">
@@ -1491,16 +1491,6 @@
       valid = req('businessActivities') & valid;
       valid = req('maintenanceNotify') & valid;
       valid = req('minorConsumables') & valid;
-      valid = req('idType') & valid;
-      // ID upload required
-      if (uploadedFiles.id.length === 0) {
-        document.getElementById('idUploadError').style.display = 'block';
-        document.getElementById('idDocsZone').style.borderColor = '#C0392B';
-        valid = false;
-      } else {
-        document.getElementById('idUploadError').style.display = 'none';
-        document.getElementById('idDocsZone').style.borderColor = '';
-      }
       valid = req('currentAddress') & valid;
       valid = req('currentCity') & valid;
       valid = req('currentProvince') & valid;
@@ -1509,6 +1499,16 @@
       valid = req('reasonForLeaving') & valid;
     }
     if (step === 2) {
+      // ID fields (now live in Step 2)
+      valid = req('idType') & valid;
+      if (uploadedFiles.id.length === 0) {
+        document.getElementById('idUploadError').style.display = 'block';
+        document.getElementById('idDocsZone').style.borderColor = '#C0392B';
+        valid = false;
+      } else {
+        document.getElementById('idUploadError').style.display = 'none';
+        document.getElementById('idDocsZone').style.borderColor = '';
+      }
       valid = req('employmentStatus') & valid;
       const emp = document.getElementById('employmentStatus').value;
       if (emp === 'Employed — Full-Time' || emp === 'Employed — Part-Time') {
@@ -1817,12 +1817,11 @@
     );
     const newSerials = new Set(coApplicants.map(c => c.serial));
 
-    // Remove blocks for de-checked occupants and clean up file store
+    // Remove blocks for de-checked occupants
     existingSerials.forEach(s => {
       if (!newSerials.has(s)) {
         const el = container.querySelector('[data-coa-serial="' + s + '"]');
         if (el) el.remove();
-        delete uploadedFiles.coApplicantId[parseInt(s)];
       }
     });
 
@@ -1834,8 +1833,6 @@
         if (heading) heading.textContent = label + ' — Co-Applicant';
         return;
       }
-
-      if (!uploadedFiles.coApplicantId[serial]) uploadedFiles.coApplicantId[serial] = [];
 
       const idZoneId   = 'coApplicantIdZone_'     + serial;
       const uploadErr  = 'coApplicantIdUploadErr_' + serial;
@@ -1849,7 +1846,38 @@
         '<p class="form-section-label" style="margin-bottom:6px;">Co-Applicant</p>' +
         '<h3 class="coa-heading" style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(18px,3vw,22px);font-weight:300;letter-spacing:-0.01em;color:#1A1A18;margin-bottom:28px;line-height:1.2;">' + label + ' — Co-Applicant</h3>' +
 
+        // ── Government ID (first) ──
+        '<p class="sub-section-label">Government ID <span style="color:#C0392B;">*</span></p>' +
+        '<div class="grid-2">' +
+          '<div class="field-wrap">' +
+            '<label for="coa_' + serial + '_idType">ID Type *</label>' +
+            '<select class="field-input" id="coa_' + serial + '_idType" name="coa_' + serial + '_id_type" aria-required="true">' +
+              '<option value="">Select…</option>' +
+              '<option value="drivers_license">Driver\'s Licence</option>' +
+              '<option value="passport">Passport</option>' +
+              '<option value="pr_card">Permanent Resident Card</option>' +
+              '<option value="other">Other Government ID</option>' +
+            '</select>' +
+            '<div class="error-msg" role="alert">Please select an ID type.</div>' +
+          '</div>' +
+          '<div class="field-wrap">' +
+            '<label>ID Number</label>' +
+            '<input class="field-input" type="text" name="coa_' + serial + '_id_number" placeholder="Document number">' +
+          '</div>' +
+        '</div>' +
+        '<div class="field-wrap">' +
+          '<label>Upload Government ID <span style="color:#C0392B;">*</span></label>' +
+          '<div class="upload-zone" id="' + idZoneId + '" role="button" aria-label="Upload co-applicant identity document">' +
+            '<input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant ID" onchange="handleFiles(event,\'idFileList\')">' +
+            '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>' +
+            '<p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop ID, or tap to browse</p>' +
+            '<p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver\'s Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>' +
+          '</div>' +
+          '<div class="error-msg" id="' + uploadErr + '" role="alert">Please upload a government-issued photo ID for this co-applicant.</div>' +
+        '</div>' +
+
         // ── Employment Status ──
+        '<div class="section-divider" style="margin:28px 0 24px;"></div>' +
         '<p class="sub-section-label">Employment Status</p>' +
         '<div class="field-wrap">' +
           '<label for="' + empId + '">Employment Type *</label>' +
@@ -1929,37 +1957,6 @@
         '<div class="grid-2">' +
           '<div class="field-wrap"><label>Other Income Sources</label><input class="field-input" type="text" name="coa_' + serial + '_additional_income_sources" placeholder="e.g. rental income, investments…"></div>' +
           '<div class="field-wrap"><label>Annual Amount</label><input class="field-input" type="text" name="coa_' + serial + '_additional_income_amount" placeholder="$0,000"></div>' +
-        '</div>' +
-
-        // ── Government ID — files feed into shared uploadedFiles.id / id_documents ──
-        '<div class="section-divider" style="margin:24px 0 20px;"></div>' +
-        '<p class="sub-section-label">Government ID <span style="color:#C0392B;">*</span></p>' +
-        '<div class="grid-2">' +
-          '<div class="field-wrap">' +
-            '<label for="coa_' + serial + '_idType">ID Type *</label>' +
-            '<select class="field-input" id="coa_' + serial + '_idType" name="coa_' + serial + '_id_type" aria-required="true">' +
-              '<option value="">Select…</option>' +
-              '<option value="drivers_license">Driver\'s Licence</option>' +
-              '<option value="passport">Passport</option>' +
-              '<option value="pr_card">Permanent Resident Card</option>' +
-              '<option value="other">Other Government ID</option>' +
-            '</select>' +
-            '<div class="error-msg" role="alert">Please select an ID type.</div>' +
-          '</div>' +
-          '<div class="field-wrap">' +
-            '<label>ID Number</label>' +
-            '<input class="field-input" type="text" name="coa_' + serial + '_id_number" placeholder="Document number">' +
-          '</div>' +
-        '</div>' +
-        '<div class="field-wrap">' +
-          '<label>Upload Government ID <span style="color:#C0392B;">*</span></label>' +
-          '<div class="upload-zone" id="' + idZoneId + '" role="button" aria-label="Upload co-applicant identity document">' +
-            '<input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant ID" onchange="handleFiles(event,\'idFileList\')">' +
-            '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>' +
-            '<p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop ID, or tap to browse</p>' +
-            '<p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver\'s Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>' +
-          '</div>' +
-          '<div class="error-msg" id="' + uploadErr + '" role="alert">Please upload a government-issued photo ID for this co-applicant.</div>' +
         '</div>';
 
       container.appendChild(block);
