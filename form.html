@@ -1868,14 +1868,10 @@
         '<div class="field-wrap">' +
           '<label>Upload Government ID <span style="color:#C0392B;">*</span></label>' +
           '<div class="upload-zone" id="' + idZoneId + '" role="button" aria-label="Upload co-applicant identity document">' +
-            '<input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant ID" onchange="handleFiles(event,\'idFileList\'); handleCoaIdIndicator(event, \'' + serial + '\')">' +
+            '<input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant ID" onchange="showCoaIdIndicator(this,\'' + serial + '\'); handleFiles(event,\'idFileList\')">' +
             '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>' +
             '<p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop ID, or tap to browse</p>' +
             '<p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver\'s Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>' +
-          '</div>' +
-          '<div id="coaIdIndicator_' + serial + '" style="display:none;align-items:center;gap:8px;margin-top:12px;padding:10px 14px;background:rgba(58,122,92,0.07);border:1px solid rgba(58,122,92,0.22);border-radius:6px;">' +
-            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3A7A5C" stroke-width="2.5" style="flex-shrink:0;" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>' +
-            '<span id="coaIdIndicatorText_' + serial + '" style="font-size:12px;color:#3A7A5C;font-weight:500;letter-spacing:0.02em;"></span>' +
           '</div>' +
           '<div class="error-msg" id="' + uploadErr + '" role="alert">Please upload a government-issued photo ID for this co-applicant.</div>' +
         '</div>' +
@@ -1966,7 +1962,24 @@
       container.appendChild(block);
 
       // Hook up drag-and-drop for the newly created zone — files go into shared idFileList
-      attachDragHandlers(idZoneId, 'idFileList');
+      const coaSerial = serial;
+      const zone = document.getElementById(idZoneId);
+      if (zone) {
+        zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+        zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+        zone.addEventListener('drop', e => {
+          e.preventDefault();
+          zone.classList.remove('drag-over');
+          const input = zone.querySelector('input[type="file"]');
+          if (input && e.dataTransfer.files.length) {
+            const dt = new DataTransfer();
+            Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+            input.files = dt.files;
+            showCoaIdIndicator(input, coaSerial);
+            handleFiles({ target: input }, 'idFileList');
+          }
+        });
+      }
 
       // Hook up input listeners for real-time error clearing on newly injected fields
       block.querySelectorAll('.field-input').forEach(inp => {
@@ -2091,6 +2104,30 @@
     updateUploadIndicator(listId);
   }
 
+  // Co-applicant ID indicator — called BEFORE handleFiles clears e.target.value
+  const coaIdCounts = {};
+  function showCoaIdIndicator(input, serial) {
+    const added = input.files ? input.files.length : 0;
+    coaIdCounts[serial] = (coaIdCounts[serial] || 0) + added;
+    const count = coaIdCounts[serial];
+    const indicatorId = 'coaIdIndicator_' + serial;
+    let indicator = document.getElementById(indicatorId);
+    const zone = document.getElementById('coApplicantIdZone_' + serial);
+    if (!zone) return;
+    if (!indicator) {
+      indicator = document.createElement('div');
+      indicator.id = indicatorId;
+      indicator.style.cssText = 'display:flex;align-items:center;gap:8px;margin-top:12px;padding:10px 14px;background:rgba(58,122,92,0.07);border:1px solid rgba(58,122,92,0.22);border-radius:6px;animation:fadeUp 0.25s ease;';
+      indicator.innerHTML =
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3A7A5C" stroke-width="2.5" style="flex-shrink:0;"><polyline points="20,6 9,17 4,12"/></svg>' +
+        '<span id="coaIdIndicatorText_' + serial + '" style="font-size:12px;color:#3A7A5C;font-weight:500;letter-spacing:0.02em;"></span>';
+      zone.parentNode.insertBefore(indicator, zone.nextSibling);
+    }
+    const totalIdCount = document.getElementById('idFileList') ? document.getElementById('idFileList').querySelectorAll('.file-pill').length + added : added;
+    const text = document.getElementById('coaIdIndicatorText_' + serial);
+    if (text) text.textContent = count === 1 ? '1 ID document uploaded — ' + totalIdCount + ' uploaded in total' : count + ' ID documents uploaded — ' + totalIdCount + ' uploaded in total';
+  }
+
   function updateUploadIndicator(listId) {
     // Find the indicator element that lives alongside this file list
     const indicatorId = listId + '-indicator';
@@ -2110,27 +2147,13 @@
           '<span id="' + indicatorId + '-text" style="font-size:12px;color:#3A7A5C;font-weight:500;letter-spacing:0.02em;"></span>';
         container.parentNode.insertBefore(indicator, container.nextSibling);
       }
-      const label = count === 1 ? '1 document uploaded successfully' : count + ' documents uploaded successfully';
+      const totalIdCount = document.getElementById('idFileList') ? document.getElementById('idFileList').querySelectorAll('.file-pill').length : count;
+      const label = listId === 'idFileList'
+        ? (totalIdCount === 1 ? '1 ID document uploaded in total' : totalIdCount + ' ID documents uploaded in total')
+        : (count === 1 ? '1 ID document uploaded — ' + totalIdCount + ' uploaded in total' : count + ' ID documents uploaded — ' + totalIdCount + ' uploaded in total');
       document.getElementById(indicatorId + '-text').textContent = label;
     } else if (indicator) {
       indicator.remove();
-    }
-  }
-
-  // Co-applicant ID upload indicator — tracks files per co-applicant serial
-  const coaIdFileCounts = {};
-  function handleCoaIdIndicator(e, serial) {
-    const added = Array.from(e.target.files).length;
-    coaIdFileCounts[serial] = (coaIdFileCounts[serial] || 0) + added;
-    const count = coaIdFileCounts[serial];
-    const indicator = document.getElementById('coaIdIndicator_' + serial);
-    const text      = document.getElementById('coaIdIndicatorText_' + serial);
-    if (!indicator || !text) return;
-    if (count > 0) {
-      text.textContent = count === 1 ? '1 document uploaded successfully' : count + ' documents uploaded successfully';
-      indicator.style.display = 'flex';
-    } else {
-      indicator.style.display = 'none';
     }
   }
 
