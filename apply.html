@@ -1713,13 +1713,16 @@
       data['financial_documents'] = await encodeGroup(uploadedFiles.financial, 'financial');
       data['id_documents']        = await encodeGroup(uploadedFiles.id, 'id');
 
-      // ── 3. POST as JSON — works with Make.com webhook CORS policy ──
+      // ── 3. POST as text/plain to avoid CORS preflight (Make.com webhooks
+      //        reject application/json preflight requests from browser pages).
+      //        Make.com still receives and parses the JSON body correctly.
       const res = await fetch(MAKE_WEBHOOK, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(data)
       });
 
+      // Make.com returns 200 "Accepted" on success; treat any non-2xx as failure
       if (!res.ok) throw new Error('Webhook returned status ' + res.status);
 
       // ── 4. Success ─────────────────────────────────────────────────
