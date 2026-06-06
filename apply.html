@@ -885,41 +885,6 @@
       </div>
 
       <div class="section-divider"></div>
-      <p class="sub-section-label">Proof of Identity</p>
-
-      <div class="grid-2">
-        <div class="field-wrap">
-          <label for="idType">Government ID Type *</label>
-          <select class="field-input" id="idType" name="id_type" aria-label="Government ID type" aria-required="true">
-            <option value="">Select…</option>
-            <option value="drivers_license">Driver's Licence</option>
-            <option value="passport">Passport</option>
-            <option value="pr_card">Permanent Resident Card</option>
-            <option value="other">Other Government ID</option>
-          </select>
-          <div class="error-msg" role="alert">Please select an ID type.</div>
-        </div>
-        <div class="field-wrap">
-          <label for="idNumber">ID Number</label>
-          <input class="field-input" type="text" id="idNumber" name="id_number" placeholder="Document number" aria-label="ID number">
-        </div>
-      </div>
-
-      <div class="field-wrap" id="idUploadWrap" style="margin-top:4px;">
-        <label>Upload Government ID <span style="color:#C0392B;">*</span></label>
-        <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents" style="margin-top:0;">
-          <input type="file" id="idDocsInput" name="id_documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true">
-            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
-          </svg>
-          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop your ID, or tap to browse</p>
-          <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver's Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>
-        </div>
-        <div class="file-list" id="idFileList"></div>
-        <div class="error-msg" id="idUploadError" role="alert">Please upload a government-issued photo ID.</div>
-      </div>
-
-      <div class="section-divider"></div>
       <p class="sub-section-label">Current Address</p>
 
       <div class="field-wrap">
@@ -994,6 +959,41 @@
       <p class="form-section-label">Step 2 of 4</p>
       <h2 class="form-section-title">Financial<br><em>Qualification</em></h2>
 
+      <p class="sub-section-label">Proof of Identity</p>
+
+      <div class="grid-2">
+        <div class="field-wrap">
+          <label for="idType">Government ID Type *</label>
+          <select class="field-input" id="idType" name="id_type" aria-label="Government ID type" aria-required="true">
+            <option value="">Select…</option>
+            <option value="drivers_license">Driver's Licence</option>
+            <option value="passport">Passport</option>
+            <option value="pr_card">Permanent Resident Card</option>
+            <option value="other">Other Government ID</option>
+          </select>
+          <div class="error-msg" role="alert">Please select an ID type.</div>
+        </div>
+        <div class="field-wrap">
+          <label for="idNumber">ID Number</label>
+          <input class="field-input" type="text" id="idNumber" name="id_number" placeholder="Document number" aria-label="ID number">
+        </div>
+      </div>
+
+      <div class="field-wrap" id="idUploadWrap" style="margin-top:4px;">
+        <label>Upload Government ID <span style="color:#C0392B;">*</span></label>
+        <div class="upload-zone" id="idDocsZone" role="button" aria-label="Upload identity documents" style="margin-top:0;">
+          <input type="file" id="idDocsInput" name="id_documents" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload identity documents" onchange="handleFiles(event,'idFileList')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+          </svg>
+          <p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop your ID, or tap to browse</p>
+          <p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver's Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>
+        </div>
+        <div class="file-list" id="idFileList"></div>
+        <div class="error-msg" id="idUploadError" role="alert">Please upload a government-issued photo ID.</div>
+      </div>
+
+      <div class="section-divider"></div>
       <p class="sub-section-label">Employment Status</p>
 
       <div class="field-wrap">
@@ -1164,9 +1164,17 @@
         </div>
       </div>
 
+      <!-- ─── CO-APPLICANT FINANCIAL SECTION (shown dynamically) ─── -->
+      <div id="coApplicantFinancialSection" style="display:none;">
+        <div class="section-divider"></div>
+        <div id="coApplicantFinancialBlocks">
+          <!-- Co-applicant financial blocks injected here by JS -->
+        </div>
+      </div>
+
       <div class="section-divider"></div>
       <p class="sub-section-label">Supporting Documents <span style="color:#C0392B;">*</span></p>
-      <p style="font-size:13px;color:#8C8578;font-weight:300;margin-bottom:22px;line-height:1.65;">Upload recent pay stubs, your employment letter, or NOA/T1 for self-employed applicants. Accepted: PDF, JPG, PNG. Max 5MB total across all uploads.</p>
+      <p style="font-size:13px;color:#8C8578;font-weight:300;margin-bottom:22px;line-height:1.65;">Upload recent pay stubs, your employment letter, or NOA/T1 for self-employed applicants. Accepted: PDF, JPG, PNG. Max 10MB total across all uploads.</p>
 
       <div class="field-wrap" id="financialUploadWrap">
         <div class="upload-zone" id="financialDocsZone" role="button" aria-label="Upload financial documents">
@@ -1483,16 +1491,6 @@
       valid = req('businessActivities') & valid;
       valid = req('maintenanceNotify') & valid;
       valid = req('minorConsumables') & valid;
-      valid = req('idType') & valid;
-      // ID upload required
-      if (uploadedFiles.id.length === 0) {
-        document.getElementById('idUploadError').style.display = 'block';
-        document.getElementById('idDocsZone').style.borderColor = '#C0392B';
-        valid = false;
-      } else {
-        document.getElementById('idUploadError').style.display = 'none';
-        document.getElementById('idDocsZone').style.borderColor = '';
-      }
       valid = req('currentAddress') & valid;
       valid = req('currentCity') & valid;
       valid = req('currentProvince') & valid;
@@ -1501,6 +1499,16 @@
       valid = req('reasonForLeaving') & valid;
     }
     if (step === 2) {
+      // ID fields (now live in Step 2)
+      valid = req('idType') & valid;
+      if (uploadedFiles.id.length === 0) {
+        document.getElementById('idUploadError').style.display = 'block';
+        document.getElementById('idDocsZone').style.borderColor = '#C0392B';
+        valid = false;
+      } else {
+        document.getElementById('idUploadError').style.display = 'none';
+        document.getElementById('idDocsZone').style.borderColor = '';
+      }
       valid = req('employmentStatus') & valid;
       const emp = document.getElementById('employmentStatus').value;
       if (emp === 'Employed — Full-Time' || emp === 'Employed — Part-Time') {
@@ -1529,6 +1537,54 @@
         document.getElementById('financialDocsZone').style.borderColor = '';
       }
       valid = req('lateRent24') & valid;
+
+      // ── Validate co-applicant financial blocks ──
+      document.querySelectorAll('[data-coa-serial]').forEach(block => {
+        const s = block.dataset.coaSerial;
+        const empSel = document.getElementById('coa_' + s + '_employment_status');
+        if (!empSel) return;
+        const empWrap = empSel.closest('.field-wrap');
+        if (!empSel.value) {
+          empWrap && empWrap.classList.add('has-error');
+          valid = false;
+        } else {
+          empWrap && empWrap.classList.remove('has-error');
+          const val = empSel.value;
+          if (val === 'Employed — Full-Time' || val === 'Employed — Part-Time') {
+            valid = req('coa_' + s + '_employerName')      & valid;
+            valid = req('coa_' + s + '_jobTitle')          & valid;
+            valid = req('coa_' + s + '_employerPhone')     & valid;
+            valid = req('coa_' + s + '_employmentLength')  & valid;
+            valid = req('coa_' + s + '_grossIncome')       & valid;
+          }
+          if (val === 'Contract / Freelance') valid = req('coa_' + s + '_contractIncome')  & valid;
+          if (val === 'Self-Employed')        valid = req('coa_' + s + '_selfIncome')       & valid;
+          if (val === 'Retired' || val === 'Student' || val === 'Other')
+                                              valid = req('coa_' + s + '_retiredIncome')    & valid;
+        }
+
+        // ID type
+        const idTypeSel = document.getElementById('coa_' + s + '_idType');
+        if (idTypeSel) {
+          const idWrap = idTypeSel.closest('.field-wrap');
+          if (!idTypeSel.value) { idWrap && idWrap.classList.add('has-error'); valid = false; }
+          else { idWrap && idWrap.classList.remove('has-error'); }
+        }
+
+        // ID upload — co-applicant files share the uploadedFiles.id bucket (submitted as id_documents)
+        // We just check the shared bucket has at least something; the upload error element
+        // serves as a prompt but we don't block if the primary ID was already uploaded there.
+        const errEl  = document.getElementById('coApplicantIdUploadErr_' + s);
+        const zoneEl = document.getElementById('coApplicantIdZone_' + s);
+        if (uploadedFiles.id.length === 0) {
+          if (errEl)  errEl.style.display = 'block';
+          if (zoneEl) zoneEl.style.borderColor = '#C0392B';
+          valid = false;
+        } else {
+          if (errEl)  errEl.style.display = 'none';
+          if (zoneEl) zoneEl.style.borderColor = '';
+        }
+      });
     }
     if (step === 3) {
       const noPrior = document.getElementById('noPriorRental').checked;
@@ -1588,8 +1644,12 @@
     id: []
   };
 
+  function getAllUploadedFiles() {
+    return [...uploadedFiles.financial, ...uploadedFiles.id];
+  }
+
   // ─── FORM SUBMIT ───
-  const MAKE_WEBHOOK = 'https://hook.us2.make.com/ueppfqtdi9je7uadso8u1wrvy0e7p6bi';
+  const MAKE_WEBHOOK = 'https://hook.us2.make.com/1ot0l3bkp1qee5pg13k1fbilik1rhgei';
 
   // Convert a File to a base64 data string
   function fileToBase64(file) {
@@ -1714,14 +1774,237 @@
         this.style.background = this.checked ? '#1A1A18' : 'transparent';
         this.style.borderColor = this.checked ? '#1A1A18' : 'rgba(26,26,24,0.25)';
         if (this.checked) {
-          this.style.setProperty('--check', '1');
-          // Inject checkmark pseudo-element via inline after-element trick
           this.setAttribute('data-checked', 'true');
         } else {
           this.removeAttribute('data-checked');
         }
+        // Rebuild co-applicant financial section in Step 2
+        refreshCoApplicantFinancialBlocks();
       });
     }
+  }
+
+  // ─── CO-APPLICANT FINANCIAL BLOCKS ───
+  // Call this whenever occupant co-applicant checkboxes change.
+  // Reads all currently-checked co-applicant boxes in Step 1 and
+  // renders matching financial + ID-upload blocks in Step 2.
+  function refreshCoApplicantFinancialBlocks() {
+    const section   = document.getElementById('coApplicantFinancialSection');
+    const container = document.getElementById('coApplicantFinancialBlocks');
+    if (!section || !container) return;
+
+    // Collect checked co-applicants (serial number + name)
+    const coApplicants = [];
+    document.querySelectorAll('input[type="checkbox"][id^="occupant_"][id$="_co_applicant"]').forEach(cb => {
+      if (cb.checked) {
+        const serial = cb.id.replace('occupant_', '').replace('_co_applicant', '');
+        const nameEl = document.getElementById('occupant_' + serial + '_name');
+        const label  = (nameEl && nameEl.value.trim()) ? nameEl.value.trim() : 'Occupant ' + serial;
+        coApplicants.push({ serial, label });
+      }
+    });
+
+    if (coApplicants.length === 0) {
+      section.style.display = 'none';
+      return;
+    }
+
+    section.style.display = 'block';
+
+    // Build set of serials currently rendered
+    const existingSerials = new Set(
+      [...container.querySelectorAll('[data-coa-serial]')].map(el => el.dataset.coaSerial)
+    );
+    const newSerials = new Set(coApplicants.map(c => c.serial));
+
+    // Remove blocks for de-checked occupants
+    existingSerials.forEach(s => {
+      if (!newSerials.has(s)) {
+        const el = container.querySelector('[data-coa-serial="' + s + '"]');
+        if (el) el.remove();
+      }
+    });
+
+    // Add/update blocks for checked occupants
+    coApplicants.forEach(({ serial, label }) => {
+      if (existingSerials.has(serial)) {
+        // Update the heading label in case name was typed
+        const heading = container.querySelector('[data-coa-serial="' + serial + '"] .coa-heading');
+        if (heading) heading.textContent = label + ' — Co-Applicant';
+        return;
+      }
+
+      const idZoneId   = 'coApplicantIdZone_'     + serial;
+      const uploadErr  = 'coApplicantIdUploadErr_' + serial;
+      const empId      = 'coa_' + serial + '_employment_status';
+
+      const block = document.createElement('div');
+      block.dataset.coaSerial = serial;
+      block.style.cssText = 'margin-bottom:36px;';
+
+      block.innerHTML =
+        '<p class="form-section-label" style="margin-bottom:6px;">Co-Applicant</p>' +
+        '<h3 class="coa-heading" style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(18px,3vw,22px);font-weight:300;letter-spacing:-0.01em;color:#1A1A18;margin-bottom:28px;line-height:1.2;">' + label + ' — Co-Applicant</h3>' +
+
+        // ── Government ID (first) ──
+        '<p class="sub-section-label">Government ID <span style="color:#C0392B;">*</span></p>' +
+        '<div class="grid-2">' +
+          '<div class="field-wrap">' +
+            '<label for="coa_' + serial + '_idType">ID Type *</label>' +
+            '<select class="field-input" id="coa_' + serial + '_idType" name="coa_' + serial + '_id_type" aria-required="true">' +
+              '<option value="">Select…</option>' +
+              '<option value="drivers_license">Driver\'s Licence</option>' +
+              '<option value="passport">Passport</option>' +
+              '<option value="pr_card">Permanent Resident Card</option>' +
+              '<option value="other">Other Government ID</option>' +
+            '</select>' +
+            '<div class="error-msg" role="alert">Please select an ID type.</div>' +
+          '</div>' +
+          '<div class="field-wrap">' +
+            '<label>ID Number</label>' +
+            '<input class="field-input" type="text" name="coa_' + serial + '_id_number" placeholder="Document number">' +
+          '</div>' +
+        '</div>' +
+        '<div class="field-wrap">' +
+          '<label>Upload Government ID <span style="color:#C0392B;">*</span></label>' +
+          '<div class="upload-zone" id="' + idZoneId + '" role="button" aria-label="Upload co-applicant identity document">' +
+            '<input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload co-applicant ID" onchange="showCoaIdIndicator(this,\'' + serial + '\'); handleFiles(event,\'idFileList\')">' +
+            '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="1.2" style="margin:0 auto 8px;display:block;" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>' +
+            '<p style="font-size:13px;color:#4A4840;font-weight:400;margin-bottom:4px;">Drag &amp; drop ID, or tap to browse</p>' +
+            '<p style="font-size:11px;color:#8C8578;letter-spacing:0.03em;">Driver\'s Licence · Passport · Government Photo ID · PDF, JPG or PNG</p>' +
+          '</div>' +
+          '<div class="error-msg" id="' + uploadErr + '" role="alert">Please upload a government-issued photo ID for this co-applicant.</div>' +
+        '</div>' +
+
+        // ── Employment Status ──
+        '<div class="section-divider" style="margin:28px 0 24px;"></div>' +
+        '<p class="sub-section-label">Employment Status</p>' +
+        '<div class="field-wrap">' +
+          '<label for="' + empId + '">Employment Type *</label>' +
+          '<select class="field-input" id="' + empId + '" name="coa_' + serial + '_employment_status" aria-required="true" onchange="toggleCoaEmployment(\'' + serial + '\',this.value)">' +
+            '<option value="">Select…</option>' +
+            '<option value="Employed — Full-Time">Employed — Full-Time</option>' +
+            '<option value="Employed — Part-Time">Employed — Part-Time</option>' +
+            '<option value="Self-Employed">Self-Employed / Business Owner</option>' +
+            '<option value="Contract / Freelance">Contract / Freelance</option>' +
+            '<option value="Retired">Retired</option>' +
+            '<option value="Student">Student</option>' +
+            '<option value="Other">Other</option>' +
+          '</select>' +
+          '<div class="error-msg" role="alert">Please select employment type.</div>' +
+        '</div>' +
+
+        // ── Employed sub-fields ──
+        '<div id="coa_' + serial + '_employedSection" style="display:none;">' +
+          '<div class="grid-2">' +
+            '<div class="field-wrap"><label>Employer Name *</label><input class="field-input" type="text" id="coa_' + serial + '_employerName" name="coa_' + serial + '_employer_name" placeholder="Company or organization" aria-required="true"><div class="error-msg" role="alert">Please enter the employer\'s name.</div></div>' +
+            '<div class="field-wrap"><label>Job Title *</label><input class="field-input" type="text" id="coa_' + serial + '_jobTitle" name="coa_' + serial + '_job_title" placeholder="Their role" aria-required="true"><div class="error-msg" role="alert">Please enter a job title.</div></div>' +
+          '</div>' +
+          '<div class="grid-2">' +
+            '<div class="field-wrap"><label>Employer Phone *</label><input class="field-input" type="tel" id="coa_' + serial + '_employerPhone" name="coa_' + serial + '_employer_phone" placeholder="HR or manager number" aria-required="true"><div class="error-msg" role="alert">Please enter an employer phone number.</div></div>' +
+            '<div class="field-wrap"><label>Time with Employer *</label>' +
+              '<select class="field-input" id="coa_' + serial + '_employmentLength" name="coa_' + serial + '_employment_length" aria-required="true">' +
+                '<option value="">Select…</option><option>Less than 6 months</option><option>6–12 months</option><option>1–3 years</option><option>3–5 years</option><option>5+ years</option>' +
+              '</select>' +
+              '<div class="error-msg" role="alert">Please select time with employer.</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="grid-2">' +
+            '<div class="field-wrap"><label>Annual Gross Income *</label><input class="field-input" type="text" id="coa_' + serial + '_grossIncome" name="coa_' + serial + '_gross_income" placeholder="$0,000" aria-required="true"><div class="error-msg" role="alert">Please enter income.</div></div>' +
+            '<div class="field-wrap"><label>Pay Frequency</label>' +
+              '<select class="field-input" name="coa_' + serial + '_pay_frequency">' +
+                '<option value="">Select…</option><option>Weekly</option><option>Bi-weekly</option><option>Semi-monthly</option><option>Monthly</option>' +
+              '</select>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // ── Contract sub-fields ──
+        '<div id="coa_' + serial + '_contractSection" style="display:none;">' +
+          '<div class="grid-2">' +
+            '<div class="field-wrap"><label>Primary Client / Company</label><input class="field-input" type="text" name="coa_' + serial + '_contract_client" placeholder="Main client or company"></div>' +
+            '<div class="field-wrap"><label>Annual Gross Income *</label><input class="field-input" type="text" id="coa_' + serial + '_contractIncome" name="coa_' + serial + '_contract_income" placeholder="$0,000" aria-required="true"><div class="error-msg" role="alert">Please enter income.</div></div>' +
+          '</div>' +
+        '</div>' +
+
+        // ── Self-employed sub-fields ──
+        '<div id="coa_' + serial + '_selfEmployedSection" style="display:none;">' +
+          '<div class="grid-2">' +
+            '<div class="field-wrap"><label>Business Name</label><input class="field-input" type="text" name="coa_' + serial + '_business_name" placeholder="Registered business name"></div>' +
+            '<div class="field-wrap"><label>Type of Business</label><input class="field-input" type="text" name="coa_' + serial + '_business_type" placeholder="Industry / nature of work"></div>' +
+          '</div>' +
+          '<div class="grid-2">' +
+            '<div class="field-wrap"><label>Average Annual Income *</label><input class="field-input" type="text" id="coa_' + serial + '_selfIncome" name="coa_' + serial + '_self_employed_income" placeholder="$0,000 (past 2 years avg)" aria-required="true"><div class="error-msg" role="alert">Please enter income.</div></div>' +
+            '<div class="field-wrap"><label>Years in Business</label>' +
+              '<select class="field-input" name="coa_' + serial + '_years_in_business">' +
+                '<option value="">Select…</option><option>Less than 1 year</option><option>1–3 years</option><option>3–5 years</option><option>5+ years</option>' +
+              '</select>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // ── Retired/Student/Other sub-fields ──
+        '<div id="coa_' + serial + '_retiredSection" style="display:none;">' +
+          '<div class="grid-2">' +
+            '<div class="field-wrap"><label>Annual Income *</label><input class="field-input" type="text" id="coa_' + serial + '_retiredIncome" name="coa_' + serial + '_income" placeholder="$0,000" aria-required="true"><div class="error-msg" role="alert">Please enter income or primary source of funds.</div></div>' +
+            '<div class="field-wrap"><label>Primary Income Source</label><input class="field-input" type="text" name="coa_' + serial + '_income_source" placeholder="e.g. CPP, RRSP, student loan…"></div>' +
+          '</div>' +
+        '</div>' +
+
+        // ── Additional income (optional) ──
+        '<div class="section-divider" style="margin:24px 0 20px;"></div>' +
+        '<p class="sub-section-label">Additional Income <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;color:#8C8578;">(optional)</span></p>' +
+        '<div class="grid-2">' +
+          '<div class="field-wrap"><label>Other Income Sources</label><input class="field-input" type="text" name="coa_' + serial + '_additional_income_sources" placeholder="e.g. rental income, investments…"></div>' +
+          '<div class="field-wrap"><label>Annual Amount</label><input class="field-input" type="text" name="coa_' + serial + '_additional_income_amount" placeholder="$0,000"></div>' +
+        '</div>';
+
+      container.appendChild(block);
+
+      // Hook up drag-and-drop for the newly created zone — files go into shared idFileList
+      const coaSerial = serial;
+      const zone = document.getElementById(idZoneId);
+      if (zone) {
+        zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+        zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+        zone.addEventListener('drop', e => {
+          e.preventDefault();
+          zone.classList.remove('drag-over');
+          const input = zone.querySelector('input[type="file"]');
+          if (input && e.dataTransfer.files.length) {
+            const dt = new DataTransfer();
+            Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+            input.files = dt.files;
+            showCoaIdIndicator(input, coaSerial);
+            handleFiles({ target: input }, 'idFileList');
+          }
+        });
+      }
+
+      // Hook up input listeners for real-time error clearing on newly injected fields
+      block.querySelectorAll('.field-input').forEach(inp => {
+        inp.addEventListener('input', () => {
+          const wrap = inp.closest('.field-wrap');
+          if (wrap && inp.value.trim()) wrap.classList.remove('has-error');
+        });
+        inp.addEventListener('change', () => {
+          const wrap = inp.closest('.field-wrap');
+          if (wrap && inp.value.trim()) wrap.classList.remove('has-error');
+        });
+      });
+    });
+  }
+
+  // Toggle co-applicant employment sub-sections
+  function toggleCoaEmployment(serial, val) {
+    const isEmployee = val === 'Employed — Full-Time' || val === 'Employed — Part-Time';
+    const isContract = val === 'Contract / Freelance';
+    const isSelf     = val === 'Self-Employed';
+    const isOther    = val === 'Retired' || val === 'Student' || val === 'Other';
+    document.getElementById('coa_' + serial + '_employedSection').style.display     = isEmployee ? 'block' : 'none';
+    document.getElementById('coa_' + serial + '_contractSection').style.display     = isContract ? 'block' : 'none';
+    document.getElementById('coa_' + serial + '_selfEmployedSection').style.display = isSelf     ? 'block' : 'none';
+    document.getElementById('coa_' + serial + '_retiredSection').style.display      = isOther    ? 'block' : 'none';
   }
 
   // ─── SMOKING TOGGLE ───
@@ -1785,11 +2068,10 @@
   });
 
   // ─── FILE UPLOADS ───
-  const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB total across all uploads
+  const FILE_SIZE_LIMIT = 10 * 1024 * 1024; // 10MB total across all uploads
 
   function getTotalUploadedSize() {
-    return [...uploadedFiles.financial, ...uploadedFiles.id]
-      .reduce((sum, f) => sum + f.size, 0);
+    return getAllUploadedFiles().reduce((sum, f) => sum + f.size, 0);
   }
 
   function handleFiles(e, listId) {
@@ -1798,10 +2080,9 @@
     const container = document.getElementById(listId);
     files.forEach(file => {
       if (getTotalUploadedSize() + file.size > FILE_SIZE_LIMIT) {
-        alert('Total upload limit is 5MB. "' + file.name + '" was not added because it would exceed this limit.');
+        alert('Total upload limit is 10MB. "' + file.name + '" was not added because it would exceed this limit.');
         return;
       }
-      // Store the File object for submission
       uploadedFiles[bucket].push(file);
 
       const pill = document.createElement('div');
@@ -1812,7 +2093,6 @@
         : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C4A882" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>';
       const name = file.name.length > 26 ? file.name.substring(0,23)+'…' : file.name;
       pill.innerHTML = icon + '<span>' + name + '</span><button type="button" aria-label="Remove file">×</button>';
-      // Remove from store when pill is dismissed
       pill.querySelector('button').addEventListener('click', () => {
         uploadedFiles[bucket] = uploadedFiles[bucket].filter(f => f !== file);
         pill.remove();
@@ -1820,9 +2100,32 @@
       });
       container.appendChild(pill);
     });
-    // Reset input so same file can be re-added after removal
     e.target.value = '';
     updateUploadIndicator(listId);
+  }
+
+  // Co-applicant ID indicator — called BEFORE handleFiles clears e.target.value
+  const coaIdCounts = {};
+  function showCoaIdIndicator(input, serial) {
+    const added = input.files ? input.files.length : 0;
+    coaIdCounts[serial] = (coaIdCounts[serial] || 0) + added;
+    const count = coaIdCounts[serial];
+    const indicatorId = 'coaIdIndicator_' + serial;
+    let indicator = document.getElementById(indicatorId);
+    const zone = document.getElementById('coApplicantIdZone_' + serial);
+    if (!zone) return;
+    if (!indicator) {
+      indicator = document.createElement('div');
+      indicator.id = indicatorId;
+      indicator.style.cssText = 'display:flex;align-items:center;gap:8px;margin-top:12px;padding:10px 14px;background:rgba(58,122,92,0.07);border:1px solid rgba(58,122,92,0.22);border-radius:6px;animation:fadeUp 0.25s ease;';
+      indicator.innerHTML =
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3A7A5C" stroke-width="2.5" style="flex-shrink:0;"><polyline points="20,6 9,17 4,12"/></svg>' +
+        '<span id="coaIdIndicatorText_' + serial + '" style="font-size:12px;color:#3A7A5C;font-weight:500;letter-spacing:0.02em;"></span>';
+      zone.parentNode.insertBefore(indicator, zone.nextSibling);
+    }
+    const totalIdCount = document.getElementById('idFileList') ? document.getElementById('idFileList').querySelectorAll('.file-pill').length + added : added;
+    const text = document.getElementById('coaIdIndicatorText_' + serial);
+    if (text) text.textContent = count === 1 ? '1 ID document uploaded — ' + totalIdCount + ' uploaded in total' : count + ' ID documents uploaded — ' + totalIdCount + ' uploaded in total';
   }
 
   function updateUploadIndicator(listId) {
@@ -1844,16 +2147,19 @@
           '<span id="' + indicatorId + '-text" style="font-size:12px;color:#3A7A5C;font-weight:500;letter-spacing:0.02em;"></span>';
         container.parentNode.insertBefore(indicator, container.nextSibling);
       }
-      const label = count === 1 ? '1 document uploaded successfully' : count + ' documents uploaded successfully';
+      const totalIdCount = document.getElementById('idFileList') ? document.getElementById('idFileList').querySelectorAll('.file-pill').length : count;
+      const label = listId === 'financialFileList'
+        ? (count === 1 ? '1 document uploaded successfully' : count + ' documents uploaded successfully')
+        : (count === 1 ? '1 ID document uploaded in total' : count + ' ID documents uploaded in total');
       document.getElementById(indicatorId + '-text').textContent = label;
     } else if (indicator) {
       indicator.remove();
     }
   }
 
-  // Drag highlight
-  ['financialDocsZone','idDocsZone'].forEach(id => {
-    const z = document.getElementById(id);
+  // Drag highlight — reusable for static and dynamically-added upload zones
+  function attachDragHandlers(zoneId, listId) {
+    const z = document.getElementById(zoneId);
     if (!z) return;
     z.addEventListener('dragover', e => { e.preventDefault(); z.classList.add('drag-over'); });
     z.addEventListener('dragleave', () => z.classList.remove('drag-over'));
@@ -1861,15 +2167,18 @@
       e.preventDefault();
       z.classList.remove('drag-over');
       const input = z.querySelector('input[type="file"]');
-      const listId = z.id === 'idDocsZone' ? 'idFileList' : 'financialFileList';
       if (input && e.dataTransfer.files.length) {
-        // Manually dispatch with dropped files
         const dt = new DataTransfer();
         Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
         input.files = dt.files;
         handleFiles({ target: input }, listId);
       }
     });
+  }
+
+  ['financialDocsZone','idDocsZone'].forEach(id => {
+    const listId = id === 'idDocsZone' ? 'idFileList' : 'financialFileList';
+    attachDragHandlers(id, listId);
   });
 
   // ─── NO PRIOR RENTAL TOGGLE ───
