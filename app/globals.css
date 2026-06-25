@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --white: #FFFFFF;
+  --off-white: #FAFAFA;
+  --charcoal: #111111;
+  --border: #EAEAEA;
+  --accent: #8B7355;
+  --accent-light: rgba(139, 115, 85, 0.08);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--white);
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Hide default cursor */
+* {
+  cursor: none !important;
+}
+
+/* Selection */
+::selection {
+  background: var(--charcoal);
+  color: var(--white);
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 1px solid var(--charcoal);
+  outline-offset: 4px;
+}
